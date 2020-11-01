@@ -7,6 +7,7 @@ namespace Dorset_OOP_Project
         static void Main(string[] args)
         {
             //1stcommit
+            //Student : OOP Group 14 Paul Froidefond 23192, Yoan Gabison 23208, Baptiste Gaidou 22845, Clarysse GIELEN 23394, Eliott TOURTOULOU 23409
             Application schoolApplication = new Application();
             Student student1 = new Student("student1", "sc", "student1@app.com", "0");//userID=1 password=0
             schoolApplication.AddNewUser(student1);
