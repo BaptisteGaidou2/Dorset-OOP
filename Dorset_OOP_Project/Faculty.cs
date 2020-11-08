@@ -6,44 +6,44 @@ namespace Dorset_OOP_Project
 {
     public class Faculty : User
     {
-        private List<Discipline> disciplineTeaching;
+        public List<Discipline> DisciplineTeaching { get; set; }
+
         public Faculty(string lastName, string firstName) : base(lastName, firstName)
         {
-            disciplineTeaching = new List<Discipline>();
+            DisciplineTeaching = new List<Discipline>();
         }
         public bool ContainDiscipline(Discipline discipline)
         {
-            bool contain = false;
             int index = 0;
-            while (disciplineTeaching != null && index < disciplineTeaching.Count && contain == true)
+            while (DisciplineTeaching != null && index < DisciplineTeaching.Count)
             {
-                if (disciplineTeaching[index].DisciplineID == discipline.DisciplineID)
+                if (DisciplineTeaching[index].DisciplineID == discipline.DisciplineID)
                 {
-                    contain = true;
+                    return true;
                 }
             }
-            return contain;
+            return false;
         }
+
+        public void AddDiscipline(Discipline discipline)
+        {
+            DisciplineTeaching.Add(discipline);
+        }
+
+        public void RemoveDiscipline(Discipline discipline)
+        {
+            DisciplineTeaching.Remove(discipline);
+        }
+
         public Faculty(string lastName, string firstName, string email, string password) : base(lastName, firstName, email, password)
         {
 
-            disciplineTeaching = new List<Discipline>();
+            DisciplineTeaching = new List<Discipline>();
         }
 
         public Faculty(string lastName, string firstName, string email, string password, int userID) : base(lastName, firstName, email, password, userID)
         {
-            disciplineTeaching = new List<Discipline>();
-        }
-        public List<Discipline> DisciplineTeaching
-        {
-            get
-            {
-                return disciplineTeaching;
-            }
-            set
-            {
-                disciplineTeaching = value;
-            }
+            DisciplineTeaching = new List<Discipline>();
         }
     }
 }
