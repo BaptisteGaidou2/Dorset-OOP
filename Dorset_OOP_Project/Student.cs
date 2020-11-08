@@ -6,43 +6,35 @@ namespace Dorset_OOP_Project
 {
     public class Student : User
     {
-        private List<Discipline> disciplineStudying;
+        public List<Discipline> DisciplineStudying { get; set; }
+
         public Student(string lastName, string firstName) : base(lastName, firstName)
         {
-            disciplineStudying = new List<Discipline>();
+            DisciplineStudying = new List<Discipline>();
         }
         public Student(string lastName, string firstName, string email, string password) : base(lastName, firstName, email, password)
         {
-            disciplineStudying = new List<Discipline>();
+            DisciplineStudying = new List<Discipline>();
         }
 
         public Student(string lastName, string firstName, string email, string password, int userID) : base(lastName, firstName, email, password, userID)
         {
-            disciplineStudying = new List<Discipline>();
+            DisciplineStudying = new List<Discipline>();
         }
-        public List<Discipline> DisciplineStudying
+
+        public void AddDiscipline(Discipline discipline)
         {
-            get
-            {
-                return disciplineStudying;
-            }
-            set
-            {
-                disciplineStudying = value;
-            }
+            DisciplineStudying.Add(discipline);
         }
+
+        public void RemoveDiscipline(Discipline discipline)
+        {
+            DisciplineStudying.Remove(discipline);
+        }
+
         public bool ContainDiscipline(Discipline discipline)
         {
-            bool contain = false;
-            int index = 0;
-            while (disciplineStudying != null && index < disciplineStudying.Count)
-            {
-                if (disciplineStudying[index].DisciplineID == discipline.DisciplineID)
-                {
-                    contain = true;
-                }
-            }
-            return contain;
+            return DisciplineStudying.Contains(discipline);
         }
     }
 }

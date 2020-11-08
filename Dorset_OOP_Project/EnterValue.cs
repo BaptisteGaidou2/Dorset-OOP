@@ -24,10 +24,28 @@ namespace Dorset_OOP_Project
                 }
                 if (!validAnswer)
                 {
-                    Console.WriteLine("You type an invalid answer");
+                    Console.WriteLine("You typmesqe an invalid answer");
                 }
             }
             return answer;
+        }
+
+        public static int AskingNumber(string message, int min, int max)
+        {
+            int number = min - 1;
+            do
+            {
+                Console.WriteLine(message);
+                try
+                {
+                    number = Convert.ToInt32(Console.ReadLine());
+                }
+                catch(FormatException)
+                {
+                    Console.WriteLine("The input was not an integer");
+                }
+            } while (number < min || number > max);
+            return number;
         }
     }
 }

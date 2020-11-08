@@ -6,112 +6,69 @@ namespace Dorset_OOP_Project
 {
     public class Discipline
     {
-        private string disciplineName;
-        private int disciplineID;
-        private List<Student> studentEnrolled;
-        private List<Faculty> facultyEnrolled;
+        public string DisciplineName { get; set; }
+        public int DisciplineID { get; set; }
+        public List<Student> StudentEnrolled { get; set; }
+        public List<Faculty> FacultyEnrolled { get; set; }
+
         public Discipline(string disciplineName)
         {
-            studentEnrolled = new List<Student>();
-            facultyEnrolled = new List<Faculty>();
-            this.disciplineName = disciplineName;
-
+            StudentEnrolled = new List<Student>();
+            FacultyEnrolled = new List<Faculty>();
+            DisciplineName = disciplineName;
         }
-        #region
-        public string DisciplineName
-        {
-            set
-            {
-                disciplineName = value;
-            }
-            get
-            {
-                return disciplineName;
-            }
-        }
-        public int DisciplineID
-        {
-            set
-            {
-                disciplineID = value;
-            }
-            get
-            {
-                return disciplineID;
-            }
-        }
-        public List<Student> StudentEnrolled
-        {
-            set
-            {
-                studentEnrolled = value;
-            }
-            get
-            {
-                return studentEnrolled;
-            }
-        }
-        public List<Faculty> FacultyEnrolled
-        {
-            set
-            {
-                facultyEnrolled = value;
-            }
-            get
-            {
-                return facultyEnrolled;
-            }
-        }
-        #endregion
+  
         public string PublicInformation()
         {
-            return $"name : {disciplineName} | ID : {disciplineID}";
+            return $"name : {DisciplineName} | ID : {DisciplineID}";
         }
+
         public bool EnrollAStudent(User student)
         {
-            bool enrolled = false;
             if (student is Student)
             {
                 Student castStudent = (Student)student;
-                if (!castStudent.ContainInAStudentList(studentEnrolled))
+                if(StudentEnrolled.Contains(castStudent))
                 {
-                    studentEnrolled.Add(castStudent);
-                    Console.WriteLine($"The student {castStudent.UserID} has been enrolled");
-                    enrolled = true;
+                    Console.WriteLine($"The student {castStudent.UserID} had already been enrolled");
+                    return false;
                 }
                 else
                 {
-                    Console.WriteLine($"The student {castStudent.UserID} had already been enrolled");
+                    StudentEnrolled.Add(castStudent);
+                    Console.WriteLine($"The student {castStudent.UserID} has been enrolled");
+                    return true;
                 }
             }
             else
             {
                 Console.WriteLine($"This user {student.UserID} isn't a student");
+                return false;
             }
-            return enrolled;
         }
+
         public bool EnrollAFaculty(User faculty)
         {
-            bool enrolled = false;
             if (faculty is Faculty)
             {
                 Faculty castFaculty = (Faculty)faculty;
-                if (!castFaculty.ContainInAFacultyList(facultyEnrolled))
+                if(FacultyEnrolled.Contains(castFaculty))
                 {
-                    facultyEnrolled.Add(castFaculty);
-                    Console.WriteLine($"The faculty has {castFaculty.UserID} been enrolled");
-                    enrolled = true;
+                    Console.WriteLine($"The faculty {castFaculty.UserID} had already been enrolled");
+                    return false;
                 }
                 else
                 {
-                    Console.WriteLine($"The faculty {castFaculty.UserID} had already been enrolled");
+                    FacultyEnrolled.Add(castFaculty);
+                    Console.WriteLine($"The faculty {castFaculty.UserID} has been enrolled");
+                    return true;
                 }
             }
             else
             {
                 Console.WriteLine($"This user {faculty.UserID} isn't a faculty");
+                return false;
             }
-            return enrolled;
         }
     }
 }
