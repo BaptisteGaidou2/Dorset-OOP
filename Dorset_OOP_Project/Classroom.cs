@@ -7,29 +7,41 @@ namespace Dorset_OOP_Project
     public class Classroom
     {
         public int ClassRoomID { get; set; }
-        public string ClassroomName{ get; set; }
-        public Faculty ClassRoomFaculty { get; set; }
+        public string ClassroomName { get; set; }
+        public List<Faculty>ClassRoomFaculties { get; set; }
         public List<Student> ClassRoomStudents { get; set; }
-        public List<Discipline> ClassRoomDisciplines { get; set; }
-        public Classroom(string _classRoomName)
+        public Discipline ClassRoomDiscipline { get; set; }
+        public Classroom(string _classRoomName, List<Faculty> _classRoomFaculties, Discipline _classRoomDiscipline)
         {
             ClassroomName = _classRoomName;
+            ClassRoomFaculties = _classRoomFaculties;
+            ClassRoomDiscipline = _classRoomDiscipline;
             ClassRoomStudents = new List<Student>();
-            ClassRoomDisciplines = new List<Discipline>();
         }
+        public bool AddStudent(Student newStudent)
+        {
+            bool possible = false;
+            if (!ClassRoomStudents.Contains(newStudent))
+            {
+                ClassRoomStudents.Add(newStudent);
+                UpdateClassRoomEnrolment();
+                possible = true;
+            }
+            return possible;
+        } 
         public bool UpdateClassRoomEnrolment()
         {
             bool possible = false;
-            if (ClassRoomFaculty != null && ClassRoomStudents != null && ClassRoomStudents.Count != 0 && ClassRoomDisciplines != null && ClassRoomDisciplines.Count != 0)
+            if (ClassRoomFaculties != null && ClassRoomStudents != null && ClassRoomStudents.Count != 0)
             {
                 possible = true;
-                for (int indexDiscipline = 0; indexDiscipline < ClassRoomDisciplines.Count; indexDiscipline++)
+                for (int indexStudent = 0; indexStudent < ClassRoomStudents.Count; indexStudent++)
                 {
-                    ClassRoomDisciplines[indexDiscipline].EnrollAFaculty(ClassRoomFaculty);
-                    for(int indexStudent = 0; indexStudent < ClassRoomStudents.Count; indexStudent++)
-                    {
-                        ClassRoomDisciplines[indexDiscipline].EnrollAStudent(ClassRoomStudents[indexStudent]);
-                    }
+                    ClassRoomDiscipline.EnrollAStudent(ClassRoomStudents[indexStudent]);
+                }
+                for (int indexFaculty = 0; indexFaculty < ClassRoomStudents.Count; indexFaculty++)
+                {
+                    ClassRoomDiscipline.EnrollAFaculty(ClassRoomStudents[indexFaculty]);
                 }
             }
             return possible;
@@ -37,7 +49,12 @@ namespace Dorset_OOP_Project
         public string ClassRoomInformation()
         {
             string information = "";
-            information += $"Classroom ID : {ClassRoomID}\nClassroom name : {ClassroomName}\nFaculty teaching {ClassRoomFaculty.PublicApplicationInformation()}";
+            information += $"Classroom ID : {ClassRoomID}\nClassroom name : {ClassroomName}\nDiscipline teaching {ClassRoomDiscipline.PublicInformation()}\nFaculties Teaching";
+            for (int indexFaculty = 0; indexFaculty < ClassRoomStudents.Count; indexFaculty++)
+            {
+                information += $"{ClassRoomFaculties[indexFaculty].PublicApplicationInformation()}";
+            }
+            information += "\nStudents";
             for (int indexStudent = 0; indexStudent < ClassRoomStudents.Count; indexStudent++)
             {
                 information += $"\n{ClassRoomStudents[indexStudent].PublicApplicationInformation()}";

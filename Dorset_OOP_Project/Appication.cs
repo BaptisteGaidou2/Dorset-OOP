@@ -9,8 +9,10 @@ namespace Dorset_OOP_Project
     {
         public List<Discipline> DisciplineList { get; set; }
         public List<User> UserList { get; set; }
+        public List<Classroom> Classrooms { get; set; }
         public int LastUserID { get; set; }
         public int LastDisciplineID { get; set; }
+        public int LastClassroomID { get; set; }
         public int CurrentIndexUser { get; set; }
         public int CurrentIndexDiscipline { get; set; }
         
@@ -18,9 +20,12 @@ namespace Dorset_OOP_Project
         {
             UserList = new List<User>();
             DisciplineList = new List<Discipline>();
+            Classrooms = new List<Classroom>();
             Administrator firstAdmin = new Administrator("Admin", "First", "fa@app.com", "0", 0);
             UserList.Add(firstAdmin);
             LastUserID = 0;
+            LastDisciplineID = 0;
+
         }
 
         public void StartingMenu()
@@ -165,7 +170,7 @@ namespace Dorset_OOP_Project
             bool logout = false;
             while (!logout)
             {
-                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Go to the discipline menu\n4 : Add a new user\n5 : Log out", 1, 5);
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Go to the discipline menu\n4 : Add a new user\n4 : Go to the Classroom Menu\n5 : Log out", 1, 5);
                 switch (answer)
                 {
                     case 1:
@@ -214,14 +219,57 @@ namespace Dorset_OOP_Project
                         }
                         break;
                     #endregion
-
                     case 5:
+                        #region
+                        logout = ClassRoomMenu_Discipline();
+                        #endregion
+                        break;
+                    case 6:
                         #region
                         logout = true;
                         break;
                         #endregion
                 }
             }
+        }
+        public bool ClassRoomMenu_Discipline()
+        {
+            bool logout = false;
+            bool stayInTheClassRoomMenu = true;
+            while (stayInTheClassRoomMenu)
+            {
+                int classroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Create a new classroom\n2 : Edit a new classroom\n3 : See Classroom information\n4 : Go back to the previous menu\n5 : Log out", 1, 5);
+                switch (classroomAnswer)
+                {
+                    //need write all code 
+                    case 1:
+                        #region
+                         break;
+                    #endregion
+                    case 2:
+                        #region
+                        break;
+                    #endregion
+                    case 3:
+                        #region
+                        
+                        break;
+                    #endregion
+                    case 4:
+                        #region
+                        stayInTheClassRoomMenu = false;
+                        break;
+                    #endregion
+                    case 5:
+                        #region
+                        stayInTheClassRoomMenu = false;
+                        logout = true;
+                        break;
+                        #endregion
+                }
+            }
+            CurrentIndexDiscipline = -1;
+            return logout;
         }
         public bool DisciplineMenu_Administrator()
         {
@@ -649,7 +697,11 @@ namespace Dorset_OOP_Project
             LastUserID++;
             return LastUserID;
         }
-
+        public int PutANewClassroomID()
+        {
+            LastClassroomID++;
+            return LastClassroomID;
+        }
         public bool AddNewUser(User newUser)
         {
             bool added = false;
