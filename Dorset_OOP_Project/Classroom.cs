@@ -29,6 +29,17 @@ namespace Dorset_OOP_Project
             }
             return possible;
         } 
+        public bool AddFaculty(Faculty newfaculty)
+        {
+            bool possible = false;
+            if (!ClassRoomFaculties.Contains(newfaculty))
+            {
+                ClassRoomFaculties.Add(newfaculty);
+                UpdateClassRoomEnrolment();
+                possible = true;
+            }
+            return possible;
+        }
         public bool UpdateClassRoomEnrolment()
         {
             bool possible = false;

@@ -7,10 +7,12 @@ namespace Dorset_OOP_Project
     public class Student : User
     {
         public List<Discipline> DisciplineStudying { get; set; }
+        public List<Classroom> ClassroomStudying { get; set; }
 
         public Student(string lastName, string firstName) : base(lastName, firstName)
         {
             DisciplineStudying = new List<Discipline>();
+            ClassroomStudying = new List<Classroom>();
         }
         public Student(string lastName, string firstName, string email, string password) : base(lastName, firstName, email, password)
         {

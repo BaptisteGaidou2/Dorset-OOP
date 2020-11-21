@@ -317,7 +317,60 @@ namespace Dorset_OOP_Project
                         int classroomIDanswer = ChoosingClassroomID();
                         if (classroomIDanswer != -1)
                         {
+                            bool stayInTheEditClassroom = true;
+                            while (stayInTheEditClassroom)
+                            {
+                                int editClassroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : add a student\n2 : Edit a faculty\n3 : See the classroom information\n4 : Go back to the previous menu\n5 : Log out", 1, 5);
+                                switch (editClassroomAnswer)
+                                {
+                                    case 1:
+                                        int studentIDAnswer = ChoosingStudentID();
+                                        if (studentIDAnswer != -1)
+                                        {
+                                            bool added = Classrooms[IndexClassroomID(classroomIDanswer)].AddStudent((Student)UserList[IndexUserID(studentIDAnswer)]);
+                                            if (added)
+                                            {
+                                                Console.WriteLine($"{UserList[IndexUserID(studentIDAnswer)].PublicApplicationInformation()} has been added");
 
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine($"This student can't  be added : {UserList[IndexUserID(studentIDAnswer)].PublicApplicationInformation()}\nBecause he had allready been added");
+
+                                            }
+                                        }
+                                        break;
+                                    case 2:
+                                        int facultyIDAnswer = ChoosingAFacultyID();
+                                        if (facultyIDAnswer != -1)
+                                        {
+                                            bool added = Classrooms[IndexClassroomID(classroomIDanswer)].AddFaculty((Faculty)UserList[IndexUserID(facultyIDAnswer)]);
+                                            if (added)
+                                            {
+                                                Console.WriteLine($"{UserList[IndexUserID(facultyIDAnswer)].PublicApplicationInformation()} has been added");
+
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine($"This faculty can't  be added : {UserList[IndexUserID(facultyIDAnswer)].PublicApplicationInformation()}\nBecause he had allready been added");
+
+                                            }
+                                        }
+                                        break;
+                                    case 3:
+                                        Console.WriteLine(Classrooms[IndexClassroomID(classroomIDanswer)].ClassRoomInformation());
+                                        break;
+                                    case 4:
+                                        stayInTheEditClassroom = false;
+                                        break;
+                                    case 5:
+                                        stayInTheEditClassroom = false;
+                                        stayInTheClassRoomMenu = false;
+                                        logout = true;
+                                        break;
+
+                                }
+                            }
                         }
                         break;
                     #endregion
