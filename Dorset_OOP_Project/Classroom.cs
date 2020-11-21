@@ -50,15 +50,26 @@ namespace Dorset_OOP_Project
         {
             string information = "";
             information += $"Classroom ID : {ClassRoomID}\nClassroom name : {ClassroomName}\nDiscipline teaching {ClassRoomDiscipline.PublicInformation()}\nFaculties Teaching";
-            for (int indexFaculty = 0; indexFaculty < ClassRoomStudents.Count; indexFaculty++)
+            for (int indexFaculty = 0; indexFaculty < ClassRoomFaculties.Count; indexFaculty++)
             {
-                information += $"{ClassRoomFaculties[indexFaculty].PublicApplicationInformation()}";
+                information += $"\n{ClassRoomFaculties[indexFaculty].PublicApplicationInformation()}";
             }
             information += "\nStudents";
             for (int indexStudent = 0; indexStudent < ClassRoomStudents.Count; indexStudent++)
             {
                 information += $"\n{ClassRoomStudents[indexStudent].PublicApplicationInformation()}";
             }
+            return information;
+        }
+        public string ClassroomEssentialInformation()
+        {
+            string information = "";
+            information += $"Classroom ID : {ClassRoomID}\nClassroom name : {ClassroomName}\nDiscipline teaching {ClassRoomDiscipline.PublicInformation()}\nFaculties Teaching";
+            for (int indexFaculty = 0; indexFaculty < ClassRoomStudents.Count; indexFaculty++)
+            {
+                information += $"\n{ClassRoomFaculties[indexFaculty].PublicApplicationInformation()}";
+            }
+            information += $"\nNumber of students : {ClassRoomStudents.Count}";
             return information;
         }
     }
