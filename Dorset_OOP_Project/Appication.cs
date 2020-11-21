@@ -24,7 +24,8 @@ namespace Dorset_OOP_Project
             Administrator firstAdmin = new Administrator("Admin", "First", "fa@app.com", "0", 0);
             UserList.Add(firstAdmin);
             LastUserID = 0;
-            LastDisciplineID = 0;
+            LastDisciplineID = -1;
+            LastClassroomID = -1;
 
         }
 
@@ -170,7 +171,7 @@ namespace Dorset_OOP_Project
             bool logout = false;
             while (!logout)
             {
-                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Go to the discipline menu\n4 : Add a new user\n4 : Go to the Classroom Menu\n5 : Log out", 1, 5);
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Go to the discipline menu\n4 : Add a new user\n5 : Go to the Classroom Menu\n6 : Log out", 1, 6);
                 switch (answer)
                 {
                     case 1:
@@ -238,19 +239,71 @@ namespace Dorset_OOP_Project
             bool stayInTheClassRoomMenu = true;
             while (stayInTheClassRoomMenu)
             {
-                int classroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Create a new classroom\n2 : Edit a new classroom\n3 : See Classroom information\n4 : Go back to the previous menu\n5 : Log out", 1, 5);
+                int classroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Create a new classroom\n2 : Edit a new classroom\n3 : See Classrooms information\n4 : Go back to the previous menu\n5 : Log out", 1, 5);
                 switch (classroomAnswer)
                 {
                     //need write all code 
                     case 1:
                         #region
-                         break;
+                        Console.WriteLine("Enter the classroom name");
+                        string classroomNameAnswer = Console.ReadLine();
+                        List<Faculty> facultiesAnswer = new List<Faculty>();
+                        bool finishAddFaculties = false;
+                        while (!finishAddFaculties)
+                        {
+                            int addOrLeaveAnswer = EnterValue.AskingNumber("Enter do you want to do\n1 : Add a faculty\n2 : Stop adding faculties", 1, 2);
+                            switch (addOrLeaveAnswer)
+                            {
+                                case 1:
+                                    int facultyIDAnswer = ChoosingAFacultyID();
+                                    if (facultyIDAnswer != -1)
+                                    {
+                                        facultiesAnswer.Add((Faculty)UserList[IndexUserID(facultyIDAnswer)]);
+                                    }
+                                    break;
+                                case 2:
+                                    finishAddFaculties = true;
+                                    break;
+                            }
+                        }
+                        List<Student> studentsAnswer = new List<Student>();
+                        bool finishAddStudents = false;
+                        while (!finishAddStudents)
+                        {
+                            int addOrLeaveAnswer = EnterValue.AskingNumber("Enter do you want to do\n1 : Add a student\n2 : Stop adding faculties", 1, 2);
+                            switch (addOrLeaveAnswer)
+                            {
+                                case 1:
+                                    int studentIDAnswer = ChoosingStudentID();
+                                    if (studentIDAnswer != -1)
+                                    {
+                                        studentsAnswer.Add((Student)UserList[IndexUserID(studentIDAnswer)]);
+                                    }
+                                    break;
+                                case 2:
+                                    finishAddStudents = true;
+                                    break;
+                            }
+                        }
+                        int disciplineIDAnswer = -1;
+                        while (disciplineIDAnswer==-1)//BOUCLE INFINI SI JAMAIS CREER DE DISCIPLINE AUPARAVANT SADGE AUTRE METHODE UN AVIS carglass et la ? FAIRE  DES SOUS CAS et creer un constructeur de classroom sans discipline?Interdire l'accès avant qu'il y ait une discilpline sinon? et pr la 1ere consultation c'est gratuit
+                        {
+                            disciplineIDAnswer=ChoosingDisciplineID();
+                        }
+                        Discipline disciplineAnswer = DisciplineList[IndexDisciplineID(disciplineIDAnswer)];
+                        Classrooms.Add(new Classroom(classroomNameAnswer, facultiesAnswer, studentsAnswer, disciplineAnswer));
+                        Classrooms[Classrooms.Count - 1].ClassRoomID = PutANewClassroomID();
+                        break;
                     #endregion
                     case 2:
                         #region
                         break;
                     #endregion
                     case 3:
+                        foreach(Classroom classroom in Classrooms)
+                        {
+                            Console.WriteLine(classroom.ClassRoomInformation());
+                        }
                         #region
                         
                         break;
@@ -392,10 +445,11 @@ namespace Dorset_OOP_Project
             while (!logout)
             {
                 int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Log out", 1, 3);
+                Faculty facultyCurrentUser = (Faculty)UserList[IndexUserID(CurrentIndexUser)];
                 switch (answer)
                 {
                     case 1:
-                        Console.WriteLine(UserList[CurrentIndexUser].PersonalInformation());
+                        facultyCurrentUser.PersonalInformation();
                         break;
                     case 2:
                         int switchAttribute = EnterValue.AskingNumber("enter the information you want to change\n1 : email\n2 : password\n3 : nothing", 1, 3);
@@ -403,11 +457,11 @@ namespace Dorset_OOP_Project
                         {
                             case 1:
                                 Console.WriteLine("Enter the new email addres");
-                                UserList[CurrentIndexUser].Email = Console.ReadLine();
+                                facultyCurrentUser.Email = Console.ReadLine();
                                 break;
                             case 2:
                                 Console.WriteLine("Enter the new password");
-                                UserList[CurrentIndexUser].Password = Console.ReadLine();
+                                facultyCurrentUser.Password = Console.ReadLine();
                                 break;
                         }
                         break;
@@ -702,6 +756,7 @@ namespace Dorset_OOP_Project
             LastClassroomID++;
             return LastClassroomID;
         }
+
         public bool AddNewUser(User newUser)
         {
             bool added = false;
@@ -748,6 +803,12 @@ namespace Dorset_OOP_Project
         public void AddNewAdministrator(string firstName, string lastName, string email, string password)
         {
             UserList.Add(new Administrator(firstName, lastName, email, password, PutANewUserID()));
+        }
+
+        public void AddClassroom(string classroomName,List<Faculty> facultiesTeaching,List<Student> studentsStudying,Discipline discipline)
+        {
+            Classrooms.Add(new Classroom(classroomName, facultiesTeaching, studentsStudying, discipline));
+            Classrooms[Classrooms.Count - 1].ClassRoomID = PutANewClassroomID();
         }
 
         public void AddDiscipline(Discipline newDiscipline)
