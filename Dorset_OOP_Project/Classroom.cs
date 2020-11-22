@@ -11,12 +11,15 @@ namespace Dorset_OOP_Project
         public List<Faculty>ClassRoomFaculties { get; set; }
         public List<Student> ClassRoomStudents { get; set; }
         public Discipline ClassRoomDiscipline { get; set; }
-        public Classroom(string _classRoomName, List<Faculty> _classRoomFaculties,List<Student> _classRoomStudents,Discipline _classRoomDiscipline)
+        public List<Timetable> Timetables { get; set; }
+
+        public Classroom(string classRoomName, List<Faculty> classRoomFaculties,List<Student> classRoomStudents,Discipline classRoomDiscipline, List<Timetable> timetables)
         {
-            ClassroomName = _classRoomName;
-            ClassRoomFaculties = _classRoomFaculties;
-            ClassRoomStudents = _classRoomStudents;
-            ClassRoomDiscipline = _classRoomDiscipline;
+            ClassroomName = classRoomName;
+            ClassRoomFaculties = classRoomFaculties;
+            ClassRoomStudents = classRoomStudents;
+            ClassRoomDiscipline = classRoomDiscipline;
+            Timetables = timetables;
         }
         public bool AddStudent(Student newStudent)
         {
