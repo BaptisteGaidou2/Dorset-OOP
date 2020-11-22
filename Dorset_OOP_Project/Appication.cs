@@ -312,7 +312,7 @@ namespace Dorset_OOP_Project
                         Console.WriteLine($"The classroom has been succesfully created\n{Classrooms[Classrooms.Count - 1].ClassRoomInformation()}");
                         break;
                     #endregion
-                    case 2://NEED TO MAKE THE EDIT THING
+                    case 2:
                         #region
                         int classroomIDanswer = ChoosingClassroomID();
                         if (classroomIDanswer != -1)
