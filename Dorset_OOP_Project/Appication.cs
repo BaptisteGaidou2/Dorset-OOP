@@ -437,7 +437,6 @@ namespace Dorset_OOP_Project
                                         {
                                             if (DisciplineList[CurrentIndexDiscipline].EnrollAStudent(UserList[IndexUserID(userIDAnswer)]))
                                             {
-                                                AddDiscplineAttribute_Student(userIDAnswer, disciplineIDAnswer);
                                                 Console.WriteLine($"The student with ID {userIDAnswer} has been added");
                                             }
                                             else
@@ -460,8 +459,7 @@ namespace Dorset_OOP_Project
                                         {
                                             if (DisciplineList[CurrentIndexDiscipline].EnrollAFaculty(UserList[IndexUserID(facultyIDAnswer)]))
                                             {
-                                                AddDiscplineAttribute_Faculty(facultyIDAnswer, disciplineIDAnswer);
-                                                Console.WriteLine($"The faculty with ID {facultyIDAnswer} has been added");
+                                                 Console.WriteLine($"The faculty with ID {facultyIDAnswer} has been added");
                                             }
                                             else
                                             {
@@ -938,44 +936,7 @@ namespace Dorset_OOP_Project
             DisciplineList.Add(newDiscipline);
         }
 
-        public bool AddDiscplineAttribute_Student(int userIDStudent, int disciplineID)
-        {
-            bool added = false;
-            if (ContainUserID(userIDStudent) && ContainDisciplineID(disciplineID))
-            {
-                int indexUserList = IndexUserID(userIDStudent);
-                int indexdDisciplineList = IndexDisciplineID(disciplineID);
-                if (UserList[indexUserList] is Student)
-                {
-                    Student studentAddingDiscipline = (Student)UserList[indexUserList];
-                    if (!studentAddingDiscipline.ContainDiscipline(DisciplineList[indexdDisciplineList]))
-                    {
-                        studentAddingDiscipline.DisciplineStudying.Add(DisciplineList[indexdDisciplineList]);
-                        added = true;
-                    }
-                }
-            }
-            return added;
-        }
-        public bool AddDiscplineAttribute_Faculty(int userIDFaculty, int disciplineID)
-        {
-            bool added = false;
-            if (ContainUserID(userIDFaculty) && ContainDisciplineID(disciplineID))
-            {
-                int indexList = IndexUserID(userIDFaculty);
-                int indexdDisciplineList = IndexDisciplineID(disciplineID);
-                if (UserList[indexList] is Faculty)
-                {
-                    Faculty studentAddingDiscipline = (Faculty)UserList[indexList];
-                    if (!studentAddingDiscipline.ContainDiscipline(DisciplineList[indexdDisciplineList]))
-                    {
-                        studentAddingDiscipline.DisciplineTeaching.Add(DisciplineList[indexdDisciplineList]);
-                        added = true;
-                    }
-                }
-            }
-            return added;
-        }
+        
 
         public bool ContainUserID(int userID)
         {

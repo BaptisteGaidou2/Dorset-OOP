@@ -23,5 +23,17 @@ namespace Dorset_OOP_Project
         {
             
         }
+        public List<Discipline> DisciplinesStudying()
+        {
+            List<Discipline> discplinesStudying = new List<Discipline>();
+            foreach(Classroom classroom in ClassroomStudying)
+            {
+                if(!discplinesStudying.Contains(classroom.ClassRoomDiscipline))
+                {
+                    discplinesStudying.Add(classroom.ClassRoomDiscipline);
+                }
+            }
+            return discplinesStudying;
+        }
     }
 }

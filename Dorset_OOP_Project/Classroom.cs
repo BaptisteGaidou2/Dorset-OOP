@@ -21,13 +21,19 @@ namespace Dorset_OOP_Project
             ClassRoomDiscipline = classRoomDiscipline;
             Timetables = timetables;
         }
+        public Classroom(string classRoomName, List<Faculty> classRoomFaculties, List<Student> classRoomStudents, Discipline classRoomDiscipline)
+        {
+            ClassroomName = classRoomName;
+            ClassRoomFaculties = classRoomFaculties;
+            ClassRoomStudents = classRoomStudents;
+            ClassRoomDiscipline = classRoomDiscipline;
+        }
         public bool AddStudent(Student newStudent)
         {
             bool possible = false;
             if (!ClassRoomStudents.Contains(newStudent))
             {
                 ClassRoomStudents.Add(newStudent);
-                UpdateClassRoomEnrolment();
                 possible = true;
             }
             return possible;
@@ -38,25 +44,7 @@ namespace Dorset_OOP_Project
             if (!ClassRoomFaculties.Contains(newfaculty))
             {
                 ClassRoomFaculties.Add(newfaculty);
-                UpdateClassRoomEnrolment();
                 possible = true;
-            }
-            return possible;
-        }
-        public bool UpdateClassRoomEnrolment()
-        {
-            bool possible = false;
-            if (ClassRoomFaculties != null && ClassRoomStudents != null && ClassRoomStudents.Count != 0)
-            {
-                possible = true;
-                for (int indexStudent = 0; indexStudent < ClassRoomStudents.Count; indexStudent++)
-                {
-                    ClassRoomDiscipline.EnrollAStudent(ClassRoomStudents[indexStudent]);
-                }
-                for (int indexFaculty = 0; indexFaculty < ClassRoomStudents.Count; indexFaculty++)
-                {
-                    ClassRoomDiscipline.EnrollAFaculty(ClassRoomStudents[indexFaculty]);
-                }
             }
             return possible;
         }

@@ -6,44 +6,35 @@ namespace Dorset_OOP_Project
 {
     public class Faculty : User
     {
-        public List<Discipline> DisciplineTeaching { get; set; }
+        public List<Classroom> ClassroomsTeaching { get; set; }
 
         public Faculty(string lastName, string firstName) : base(lastName, firstName)
         {
-            DisciplineTeaching = new List<Discipline>();
+            ClassroomsTeaching = new List<Classroom>();
         }
-        public bool ContainDiscipline(Discipline discipline)
+        public List<Discipline> DisciplinesTeaching()
         {
-            int index = 0;
-            while (DisciplineTeaching != null && index < DisciplineTeaching.Count)
+            List<Discipline> discplinesTeaching = new List<Discipline>();
+            foreach (Classroom classroom in ClassroomsTeaching)
             {
-                if (DisciplineTeaching[index].DisciplineID == discipline.DisciplineID)
+                if (!discplinesTeaching.Contains(classroom.ClassRoomDiscipline))
                 {
-                    return true;
+                    discplinesTeaching.Add(classroom.ClassRoomDiscipline);
                 }
             }
-            return false;
+            return discplinesTeaching;
         }
 
-        public void AddDiscipline(Discipline discipline)
-        {
-            DisciplineTeaching.Add(discipline);
-        }
-
-        public void RemoveDiscipline(Discipline discipline)
-        {
-            DisciplineTeaching.Remove(discipline);
-        }
 
         public Faculty(string lastName, string firstName, string email, string password) : base(lastName, firstName, email, password)
         {
 
-            DisciplineTeaching = new List<Discipline>();
+            ClassroomsTeaching = new List<Classroom>();
         }
 
         public Faculty(string lastName, string firstName, string email, string password, int userID) : base(lastName, firstName, email, password, userID)
         {
-            DisciplineTeaching = new List<Discipline>();
+            ClassroomsTeaching = new List<Classroom>();
         }
     }
 }
