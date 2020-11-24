@@ -24,6 +24,14 @@ namespace Dorset_OOP_Project
             }
             return discplinesTeaching;
         }
+        public override string PublicApplicationInformation()
+        {
+            return $"{base.PublicApplicationInformation()} | type : faculty ";
+        }
+        public override string PersonalInformation()
+        {
+            return $"{base.PersonalInformation()} | type : faculty ";
+        }
         public bool AddClassroom(Classroom classroom)
         {
             bool added = false;
@@ -34,7 +42,6 @@ namespace Dorset_OOP_Project
             }
             return added;
         }
-
         public Faculty(string lastName, string firstName, string email, string password) : base(lastName, firstName, email, password)
         {
 
@@ -45,5 +52,6 @@ namespace Dorset_OOP_Project
         {
             ClassroomsTeaching = new List<Classroom>();
         }
+
     }
 }

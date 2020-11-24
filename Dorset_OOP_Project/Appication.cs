@@ -14,7 +14,6 @@ namespace Dorset_OOP_Project
         public int LastDisciplineID { get; set; }
         public int LastClassroomID { get; set; }
         public int CurrentIndexUser { get; set; }
-        public int CurrentIndexDiscipline { get; set; }
 
         public Application()
         {
@@ -131,7 +130,6 @@ namespace Dorset_OOP_Project
                     HomePage_Faculty();
                 }
                 CurrentIndexUser = -1;
-                CurrentIndexDiscipline = -1;
             }
         }
         public void HomePage_Student()
@@ -146,18 +144,7 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(UserList[CurrentIndexUser].PersonalInformation());
                         break;
                     case 2:
-                        int switchAttribute = EnterValue.AskingNumber("enter the information you want to change\n1 : email\n2 : password\n3 : nothing", 1, 3);
-                        switch (switchAttribute)
-                        {
-                            case 1:
-                                Console.WriteLine("Enter the new email addres");
-                                UserList[CurrentIndexUser].Email = Console.ReadLine();
-                                break;
-                            case 2:
-                                Console.WriteLine("Enter the new password");
-                                UserList[CurrentIndexUser].Password = Console.ReadLine();
-                                break;
-                        }
+                        UserList[CurrentIndexUser].ChangeInformation();
                         break;
                     case 3:
                         logout = true;
@@ -165,7 +152,6 @@ namespace Dorset_OOP_Project
                 }
             }
         }
-
         public void HomePage_Administrator()
         {
             bool logout = false;
@@ -181,18 +167,7 @@ namespace Dorset_OOP_Project
                     #endregion
                     case 2:
                         #region
-                        int switchAttribute = EnterValue.AskingNumber("enter the information you want to change\n1 : email\n2 : password\n3 : nothing", 1, 3);
-                        switch (switchAttribute)
-                        {
-                            case 1:
-                                Console.WriteLine("Enter the new email addres");
-                                UserList[CurrentIndexUser].Email = Console.ReadLine();
-                                break;
-                            case 2:
-                                Console.WriteLine("Enter the new password");
-                                UserList[CurrentIndexUser].Password = Console.ReadLine();
-                                break;
-                        }
+                        UserList[CurrentIndexUser].ChangeInformation();
                         break;
                     #endregion
                     case 3:
@@ -236,7 +211,7 @@ namespace Dorset_OOP_Project
             bool stayInTheClassRoomMenu = true;
             while (stayInTheClassRoomMenu)
             {
-                int classroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Create a new classroom\n2 : Edit a classroom\n3 : See Classrooms information\n4 : Go back to the previous menu\n5 : Log out", 1, 5);
+                int classroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Create a new classroom\n2 : Edit a classroom\n3 : See all classrooms information\n4 : Go back to the previous menu\n5 : Log out", 1, 5);
                 switch (classroomAnswer)
                 {
                     case 1:
@@ -389,6 +364,8 @@ namespace Dorset_OOP_Project
                                         }
                                         break;
                                     case 4:
+                                        Console.WriteLine("Enter the name you want");
+                                        choosenClassroom.ClassroomName = Console.ReadLine();
                                         break;
                                     case 5:
                                         Console.WriteLine(choosenClassroom.ClassRoomInformation());
@@ -428,7 +405,6 @@ namespace Dorset_OOP_Project
                         #endregion
                 }
             }
-            CurrentIndexDiscipline = -1;
             return logout;
         }
         public bool DisciplineMenu_Administrator()
@@ -437,7 +413,7 @@ namespace Dorset_OOP_Project
             bool stayInTheDisciplineMenu = true;
             while (stayInTheDisciplineMenu)
             {
-                int disciplineAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Create a new discipline\n2 : Edit a discipline (you will need the ID of the discipline)\n3 : See discipline information\n4 : Go back to the previous menu\n5 : Log out", 1, 5);
+                int disciplineAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Create a new discipline\n2 : Edit a discipline\n3 : See all disciplines information\n4 : Go back to the previous menu\n5 : Log out", 1, 5);
                 switch (disciplineAnswer)
                 {
                     case 1:
@@ -454,10 +430,10 @@ namespace Dorset_OOP_Project
                         int disciplineIDAnswer = ChoosingDisciplineID();
                         if (disciplineIDAnswer != -1)
                         {
+                            Discipline choosenDiscipline = DisciplineList[(IndexDisciplineID(disciplineIDAnswer))];
                             bool stayInChooseFunction = true;
                             while (stayInChooseFunction)
                             {
-                                CurrentIndexDiscipline = IndexDisciplineID(disciplineIDAnswer);
                                 int enrollAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Enroll student\n2 : See all student information\n3 : Enroll a faculty\n4 : See all faculty information\n5 : Go back to the previous menu\n6 : Log out", 1, 6);
                                 switch (enrollAnswer)
                                 {
@@ -467,7 +443,7 @@ namespace Dorset_OOP_Project
                                         int userIDAnswer = ChoosingStudentID();
                                         if (userIDAnswer != -1)
                                         {
-                                            if (DisciplineList[CurrentIndexDiscipline].EnrollAStudent(UserList[IndexUserID(userIDAnswer)]))
+                                            if (choosenDiscipline.EnrollAStudent(UserList[IndexUserID(userIDAnswer)]))
                                             {
                                                 Console.WriteLine($"The student with ID {userIDAnswer} has been added");
                                             }
@@ -489,7 +465,7 @@ namespace Dorset_OOP_Project
                                         int facultyIDAnswer = ChoosingAFacultyID();
                                         if (facultyIDAnswer != -1)
                                         {
-                                            if (DisciplineList[CurrentIndexDiscipline].EnrollAFaculty(UserList[IndexUserID(facultyIDAnswer)]))
+                                            if (choosenDiscipline.EnrollAFaculty(UserList[IndexUserID(facultyIDAnswer)]))
                                             {
                                                 Console.WriteLine($"The faculty with ID {facultyIDAnswer} has been added");
                                             }
@@ -540,7 +516,6 @@ namespace Dorset_OOP_Project
                         #endregion
                 }
             }
-            CurrentIndexDiscipline = -1;
             return logout;
         }
         public void HomePage_Faculty()
@@ -548,28 +523,23 @@ namespace Dorset_OOP_Project
             bool logout = false;
             while (!logout)
             {
-                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Log out", 1, 3);
-                Faculty facultyCurrentUser = (Faculty)UserList[IndexUserID(CurrentIndexUser)];
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : See information about one of your student\n4 : Put a mark\n5 : Log out", 1, 5);
+                Faculty facultyCurrentUser = (Faculty)UserList[CurrentIndexUser];
                 switch (answer)
                 {
                     case 1:
                         facultyCurrentUser.PersonalInformation();
                         break;
                     case 2:
-                        int switchAttribute = EnterValue.AskingNumber("enter the information you want to change\n1 : email\n2 : password\n3 : nothing", 1, 3);
-                        switch (switchAttribute)
-                        {
-                            case 1:
-                                Console.WriteLine("Enter the new email addres");
-                                facultyCurrentUser.Email = Console.ReadLine();
-                                break;
-                            case 2:
-                                Console.WriteLine("Enter the new password");
-                                facultyCurrentUser.Password = Console.ReadLine();
-                                break;
-                        }
+                        facultyCurrentUser.ChangeInformation();
                         break;
-                    case 3:
+                    case 3://need to start
+                        Console.WriteLine("NOTHING MADE");
+                        break;
+                    case 4://need to start
+                        Console.WriteLine("NOTHING MADE");
+                        break;
+                    case 5:
                         logout = true;
                         break;
                 }
@@ -969,7 +939,6 @@ namespace Dorset_OOP_Project
         }
 
 
-
         public bool ContainUserID(int userID)
         {
             return UserList.Any(i => i.UserID == userID);
@@ -1020,7 +989,6 @@ namespace Dorset_OOP_Project
                 {
                     if (UserList[index] is Student)
                     {
-                        Student Studentinformation = (Student)UserList[index];
                         information += $"[{numberStudent}] {UserList[index].PublicApplicationInformation()}\n";
                         numberStudent++;
                     }
@@ -1043,7 +1011,6 @@ namespace Dorset_OOP_Project
                 {
                     if (UserList[index] is Faculty)
                     {
-                        Faculty Studentinformation = (Faculty)UserList[index];
                         information += $"[{numberFaculties}] {UserList[index].PublicApplicationInformation()}\n";
                         numberFaculties++;
                     }
@@ -1064,9 +1031,8 @@ namespace Dorset_OOP_Project
             {
                 for (int index = 0; index < UserList.Count; index++)
                 {
-                    if (UserList[index] is Faculty)
+                    if (UserList[index] is Administrator)
                     {
-                        Faculty Studentinformation = (Faculty)UserList[index];
                         information += $"[{numberAdministrator}] {UserList[index].PublicApplicationInformation()}\n";
                         numberAdministrator++;
                     }

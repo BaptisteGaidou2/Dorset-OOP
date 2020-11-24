@@ -39,14 +39,36 @@ namespace Dorset_OOP_Project
             return UserID == otherUser.UserID;
         }
 
-        public string PublicApplicationInformation()
+        public virtual string PublicApplicationInformation()
         {
             return $"First Name : {FirstName} | Last Name : {LastName} | ID : {UserID}";
         }
-
-        public string PersonalInformation()
+        public virtual string PersonalInformation()
         {
             return $"First Name : {FirstName} | Last Name : {LastName} | ID : {UserID} | e-mail : {Email} | password : {Password}";
+        }
+        public void ChangeInformation()
+        {
+            int switchAttribute = EnterValue.AskingNumber("enter the information you want to change\n1 : email\n2 : password\n3 : last name\n4 : first name\n5 : nothing", 1, 5);
+            switch (switchAttribute)
+            {
+                case 1:
+                    Console.WriteLine("Enter the new email addres");
+                    Email = Console.ReadLine();
+                    break;
+                case 2:
+                    Console.WriteLine("Enter the new password");
+                    Password = Console.ReadLine();
+                    break;
+                case 3:
+                    Console.WriteLine("Enter your last name");
+                    Email = Console.ReadLine();
+                    break;
+                case 4:
+                    Console.WriteLine("Enter your first name");
+                    Password = Console.ReadLine();
+                    break;
+            }
         }
     }
 }

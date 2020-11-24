@@ -47,5 +47,14 @@ namespace Dorset_OOP_Project
             }
             return discplinesStudying;
         }
+        public override string PublicApplicationInformation()
+        {
+            return $"{base.PublicApplicationInformation()} | type : student";
+        }
+
+        public override string PersonalInformation()
+        {
+            return $"{base.PersonalInformation()} | type : student ";
+        }
     }
 }
