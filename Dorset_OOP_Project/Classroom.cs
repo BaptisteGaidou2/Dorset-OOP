@@ -13,6 +13,8 @@ namespace Dorset_OOP_Project
         public Discipline ClassRoomDiscipline { get; set; }
         public List<Timetable> Timetables { get; set; }
 
+        
+
         public Classroom(string classRoomName, List<Faculty> classRoomFaculties,List<Student> classRoomStudents,Discipline classRoomDiscipline, List<Timetable> timetables)
         {
             ClassroomName = classRoomName;

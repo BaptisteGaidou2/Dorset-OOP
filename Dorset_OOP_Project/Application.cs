@@ -545,7 +545,7 @@ namespace Dorset_OOP_Project
                 }
             }
         }
-
+        
         public int ChoosingAUserID()
         {
             int iDchoosen = -1;
@@ -1066,7 +1066,7 @@ namespace Dorset_OOP_Project
             string information = "";
             if (Classrooms != null && Classrooms.Count != 0)
             {
-                for (int index = 0; index < DisciplineList.Count; index++)
+                for (int index = 0; index < Classrooms.Count; index++)
                 {
                     information += $"[{index}] {Classrooms[index].ClassroomEssentialInformation()}\n";
                 }
