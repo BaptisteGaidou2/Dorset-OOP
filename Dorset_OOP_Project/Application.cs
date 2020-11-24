@@ -44,7 +44,7 @@ namespace Dorset_OOP_Project
                         }
                         break;
                     case 2:
-                        Console.WriteLine(UsersPublicInformation());
+                        Console.WriteLine(GenericFunction.UsersPublicInformation(UserList));
                         break;
                     case 3:
                         break;
@@ -66,7 +66,7 @@ namespace Dorset_OOP_Project
             {
                 int userIDAnswer = EnterValue.AskingNumber("Enter your userID", 0, UserList[UserList.Count - 1].UserID);
 
-                if (ContainUserID(userIDAnswer))
+                if (GenericFunction.ContainUserID(userIDAnswer,UserList))
                 {
                     bool tryingTypePassword = true;
                     while (tryingTypePassword)
@@ -76,13 +76,13 @@ namespace Dorset_OOP_Project
                         {
                             Console.WriteLine("Enter your password");
                             string answerPassword = Console.ReadLine();
-                            if (answerPassword == UserList[IndexUserID(userIDAnswer)].Password)
+                            if (answerPassword == UserList[GenericFunction.IndexUserID(userIDAnswer,UserList)].Password)
                             {
                                 Console.WriteLine("Sucessfully logging");
                                 tryingTypePassword = false;
                                 endingLoginFuction = true;
                                 succesfullLogin = true;
-                                CurrentIndexUser = IndexUserID(userIDAnswer);
+                                CurrentIndexUser = GenericFunction.IndexUserID(userIDAnswer,UserList);
                             }
                             else
                             {
@@ -226,12 +226,12 @@ namespace Dorset_OOP_Project
                             switch (addOrLeaveAnswer)
                             {
                                 case 1:
-                                    int facultyIDAnswer = ChoosingAFacultyID();
+                                    int facultyIDAnswer = GenericFunction.ChoosingAFacultyID(UserList);
                                     if (facultyIDAnswer != -1)
                                     {
-                                        if (!facultiesAnswer.Contains(UserList[IndexUserID(facultyIDAnswer)]))
+                                        if (!facultiesAnswer.Contains(UserList[GenericFunction.IndexUserID(facultyIDAnswer,UserList)]))
                                         {
-                                            facultiesAnswer.Add((Faculty)UserList[IndexUserID(facultyIDAnswer)]);
+                                            facultiesAnswer.Add((Faculty)UserList[GenericFunction.IndexUserID(facultyIDAnswer,UserList)]);
                                             Console.WriteLine($"{facultiesAnswer[facultiesAnswer.Count - 1].PublicApplicationInformation()} has been added");
                                         }
                                         else
@@ -253,12 +253,12 @@ namespace Dorset_OOP_Project
                             switch (addOrLeaveAnswer)
                             {
                                 case 1:
-                                    int studentIDAnswer = ChoosingStudentID();
+                                    int studentIDAnswer = GenericFunction.ChoosingStudentID(UserList);
                                     if (studentIDAnswer != -1)
                                     {
-                                        if (!studentsAnswer.Contains(UserList[IndexUserID(studentIDAnswer)]))
+                                        if (!studentsAnswer.Contains(UserList[GenericFunction.IndexUserID(studentIDAnswer,UserList)]))
                                         {
-                                            studentsAnswer.Add((Student)UserList[IndexUserID(studentIDAnswer)]);
+                                            studentsAnswer.Add((Student)UserList[GenericFunction.IndexUserID(studentIDAnswer,UserList)]);
                                             Console.WriteLine($"{studentsAnswer[studentsAnswer.Count - 1].PublicApplicationInformation()} has been added");
                                         }
                                         else
@@ -279,10 +279,10 @@ namespace Dorset_OOP_Project
                             switch (addOrLeaveAnswer)
                             {
                                 case 1:
-                                    int disciplineIDAnswer = ChoosingDisciplineID();
+                                    int disciplineIDAnswer = GenericFunction.ChoosingDisciplineID(DisciplineList);
                                     if (disciplineIDAnswer != -1)
                                     {
-                                        Discipline disciplineAnswer = DisciplineList[IndexDisciplineID(disciplineIDAnswer)];
+                                        Discipline disciplineAnswer = DisciplineList[GenericFunction.IndexDisciplineID(disciplineIDAnswer,DisciplineList)];
                                         Classrooms.Add(new Classroom(classroomNameAnswer, facultiesAnswer, studentsAnswer, disciplineAnswer));
                                         Classrooms[Classrooms.Count - 1].ClassRoomID = PutANewClassroomID();
                                         Console.WriteLine($"The classroom has been succesfully created\n{Classrooms[Classrooms.Count - 1].ClassRoomInformation()}");
@@ -310,10 +310,10 @@ namespace Dorset_OOP_Project
                     #endregion
                     case 2:
                         #region
-                        int classroomIDanswer = ChoosingClassroomID();
+                        int classroomIDanswer = GenericFunction.ChoosingClassroomID(Classrooms);
                         if (classroomIDanswer != -1)
                         {
-                            Classroom choosenClassroom = Classrooms[IndexClassroomID(classroomIDanswer)];
+                            Classroom choosenClassroom = Classrooms[GenericFunction.IndexClassroomID(classroomIDanswer,Classrooms)];
                             bool stayInTheEditClassroom = true;
                             while (stayInTheEditClassroom)
                             {
@@ -321,10 +321,10 @@ namespace Dorset_OOP_Project
                                 switch (editClassroomAnswer)
                                 {
                                     case 1:
-                                        int studentIDAnswer = ChoosingStudentID();
+                                        int studentIDAnswer = GenericFunction.ChoosingStudentID(UserList);
                                         if (studentIDAnswer != -1)
                                         {
-                                            Student choosenStudent = (Student)UserList[IndexUserID(studentIDAnswer)];
+                                            Student choosenStudent = (Student)UserList[GenericFunction.IndexUserID(studentIDAnswer,UserList)];
                                             bool added = choosenClassroom.AddStudent(choosenStudent);
                                             if (added)
                                             {
@@ -339,10 +339,10 @@ namespace Dorset_OOP_Project
                                         }
                                         break;
                                     case 2:
-                                        int facultyIDAnswer = ChoosingAFacultyID();
+                                        int facultyIDAnswer = GenericFunction.ChoosingAFacultyID(UserList);
                                         if (facultyIDAnswer != -1)
                                         {
-                                            Faculty choosenFaculty = (Faculty)UserList[IndexUserID(facultyIDAnswer)];
+                                            Faculty choosenFaculty = (Faculty)UserList[GenericFunction.IndexUserID(facultyIDAnswer,UserList)];
                                             bool added = choosenClassroom.AddFaculty(choosenFaculty);
                                             if (added)
                                             {
@@ -357,10 +357,10 @@ namespace Dorset_OOP_Project
                                         }
                                         break;
                                     case 3:
-                                        int disciplineIDAnswer = ChoosingDisciplineID();
+                                        int disciplineIDAnswer = GenericFunction.ChoosingDisciplineID(DisciplineList);
                                         if (disciplineIDAnswer != -1)
                                         {
-                                            choosenClassroom.ClassRoomDiscipline = DisciplineList[IndexDisciplineID(disciplineIDAnswer)];
+                                            choosenClassroom.ClassRoomDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(disciplineIDAnswer,DisciplineList)];
                                         }
                                         break;
                                     case 4:
@@ -427,10 +427,10 @@ namespace Dorset_OOP_Project
                     #endregion
                     case 2:
                         #region
-                        int disciplineIDAnswer = ChoosingDisciplineID();
+                        int disciplineIDAnswer = GenericFunction.ChoosingDisciplineID(DisciplineList);
                         if (disciplineIDAnswer != -1)
                         {
-                            Discipline choosenDiscipline = DisciplineList[(IndexDisciplineID(disciplineIDAnswer))];
+                            Discipline choosenDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(disciplineIDAnswer,DisciplineList)];
                             bool stayInChooseFunction = true;
                             while (stayInChooseFunction)
                             {
@@ -440,10 +440,10 @@ namespace Dorset_OOP_Project
                                     case 1:
                                         #region
                                         Console.WriteLine("Enter the ID of the student you want to add");
-                                        int userIDAnswer = ChoosingStudentID();
+                                        int userIDAnswer = GenericFunction.ChoosingStudentID(UserList);
                                         if (userIDAnswer != -1)
                                         {
-                                            if (choosenDiscipline.EnrollAStudent(UserList[IndexUserID(userIDAnswer)]))
+                                            if (choosenDiscipline.EnrollAStudent(UserList[GenericFunction.IndexUserID(userIDAnswer,UserList)]))
                                             {
                                                 Console.WriteLine($"The student with ID {userIDAnswer} has been added");
                                             }
@@ -456,16 +456,16 @@ namespace Dorset_OOP_Project
                                     #endregion
                                     case 2:
                                         #region
-                                        Console.WriteLine(StudentsInformation());
+                                        Console.WriteLine(GenericFunction.StudentsInformation(UserList));
                                         break;
                                     #endregion
                                     case 3:
                                         #region
                                         Console.WriteLine("Enter the ID of the faculty you want to add");
-                                        int facultyIDAnswer = ChoosingAFacultyID();
+                                        int facultyIDAnswer = GenericFunction.ChoosingAFacultyID(UserList);
                                         if (facultyIDAnswer != -1)
                                         {
-                                            if (choosenDiscipline.EnrollAFaculty(UserList[IndexUserID(facultyIDAnswer)]))
+                                            if (choosenDiscipline.EnrollAFaculty(UserList[GenericFunction.IndexUserID(facultyIDAnswer,UserList)]))
                                             {
                                                 Console.WriteLine($"The faculty with ID {facultyIDAnswer} has been added");
                                             }
@@ -478,7 +478,7 @@ namespace Dorset_OOP_Project
                                     #endregion
                                     case 4:
                                         #region
-                                        Console.WriteLine(FacultiesInformation());
+                                        Console.WriteLine(GenericFunction.FacultiesInformation(UserList));
                                         break;
                                     #endregion
                                     case 5:
@@ -500,7 +500,7 @@ namespace Dorset_OOP_Project
                     #endregion
                     case 3:
                         #region
-                        Console.WriteLine(DisciplinesInformation());
+                        Console.WriteLine(GenericFunction.DisciplinesInformation(DisciplineList));
                         break;
                     #endregion
                     case 4:
@@ -546,321 +546,321 @@ namespace Dorset_OOP_Project
             }
         }
         
-        public int ChoosingAUserID()
-        {
-            int iDchoosen = -1;
-            bool stayInTheFunction = true;
-            while (stayInTheFunction)
-            {
-                int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID\n2 : Choose a userID and the user information\n3 : Go to the previous menu", 1, 3);
-                switch (methodChoiceAnswer)
-                {
-                    case 1:
-                        Console.WriteLine("Enter the userID");
-                        int userIDAnswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDAnswer))
-                        {
-                            iDchoosen = userIDAnswer;
-                            stayInTheFunction = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 2:
-                        Console.WriteLine("All user information :");
-                        Console.WriteLine(UsersPublicInformation());
-                        Console.WriteLine("Enter the UserID of the user you want to choose");
-                        int userIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDChoosen))
-                        {
-                            iDchoosen = userIDChoosen;
-                            stayInTheFunction = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 3:
-                        iDchoosen = -1;
-                        stayInTheFunction = false;
-                        break;
-                }
-            }
-            return iDchoosen;
-        }
-        public int ChoosingStudentID()
-        {
-            int iDchoosen = -1;
-            bool stayInTheFunction = true;
-            while (stayInTheFunction)
-            {
-                int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID of a student\n2 : Choose a userID and the student information\n3 : Go to the previous menu", 1, 3);
-                switch (methodChoiceAnswer)
-                {
-                    case 1:
-                        Console.WriteLine("Enter the userID");
-                        int userIDAnswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDAnswer))
-                        {
-                            if (UserList[IndexUserID(userIDAnswer)] is Student)
-                            {
-                                iDchoosen = userIDAnswer;
-                                stayInTheFunction = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("The userID is not corresponding to a student");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 2:
-                        Console.WriteLine("All student information :");
-                        Console.WriteLine(StudentsInformation());
-                        Console.WriteLine("Enter the UserID of the student you want to choose");
-                        int userIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDChoosen))
-                        {
-                            if (UserList[IndexUserID(userIDChoosen)] is Student)
-                            {
-                                iDchoosen = userIDChoosen;
-                                stayInTheFunction = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("The userID is not corresponding to a Student");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 3:
-                        iDchoosen = -1;
-                        stayInTheFunction = false;
-                        break;
-                }
-            }
-            return iDchoosen;
-        }
-        public int ChoosingAAdministratorID()
-        {
-            int iDchoosen = -1;
-            bool stayInTheFunction = true;
-            while (stayInTheFunction)
-            {
-                int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID of an administrator\n2 : Choose a userID and the administrator information\n3 : Go to the previous menu", 1, 3);
-                switch (methodChoiceAnswer)
-                {
-                    case 1:
-                        Console.WriteLine("Enter the userID");
-                        int userIDAnswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDAnswer))
-                        {
-                            if (UserList[IndexUserID(userIDAnswer)] is Administrator)
-                            {
-                                iDchoosen = userIDAnswer;
-                                stayInTheFunction = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("The userID is not corresponding to an aministrator");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 2:
-                        Console.WriteLine("All administrator information :");
-                        Console.WriteLine();
-                        Console.WriteLine("Enter the UserID of the administrator you want to choose");
-                        int userIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDChoosen))
-                        {
-                            if (UserList[IndexUserID(userIDChoosen)] is Administrator)
-                            {
-                                iDchoosen = userIDChoosen;
-                                stayInTheFunction = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("The userID is not corresponding to an administrator");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 3:
-                        iDchoosen = -1;
-                        stayInTheFunction = false;
-                        break;
-                }
-            }
-            return iDchoosen;
-        }
-        public int ChoosingAFacultyID()
-        {
-            int iDchoosen = -1;
-            bool stayInTheFunction = true;
-            while (stayInTheFunction)
-            {
-                int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID of a faculty\n2 : Choose a userID and the faculty information\n3 : Go to the previous menu", 1, 3);
-                switch (methodChoiceAnswer)
-                {
-                    case 1:
-                        Console.WriteLine("Enter the userID");
-                        int userIDAnswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDAnswer))
-                        {
-                            if (UserList[IndexUserID(userIDAnswer)] is Faculty)
-                            {
-                                iDchoosen = userIDAnswer;
+        //public int ChoosingAUserID()
+        //{
+        //    int iDchoosen = -1;
+        //    bool stayInTheFunction = true;
+        //    while (stayInTheFunction)
+        //    {
+        //        int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID\n2 : Choose a userID and the user information\n3 : Go to the previous menu", 1, 3);
+        //        switch (methodChoiceAnswer)
+        //        {
+        //            case 1:
+        //                Console.WriteLine("Enter the userID");
+        //                int userIDAnswer = Convert.ToInt32(Console.ReadLine());
+        //                if (ContainUserID(userIDAnswer))
+        //                {
+        //                    iDchoosen = userIDAnswer;
+        //                    stayInTheFunction = false;
+        //                }
+        //                else
+        //                {
+        //                    Console.WriteLine("There is not this user ID in the database");
+        //                }
+        //                break;
+        //            case 2:
+        //                Console.WriteLine("All user information :");
+        //                Console.WriteLine(UsersPublicInformation());
+        //                Console.WriteLine("Enter the UserID of the user you want to choose");
+        //                int userIDChoosen = Convert.ToInt32(Console.ReadLine());
+        //                if (ContainUserID(userIDChoosen))
+        //                {
+        //                    iDchoosen = userIDChoosen;
+        //                    stayInTheFunction = false;
+        //                }
+        //                else
+        //                {
+        //                    Console.WriteLine("There is not this user ID in the database");
+        //                }
+        //                break;
+        //            case 3:
+        //                iDchoosen = -1;
+        //                stayInTheFunction = false;
+        //                break;
+        //        }
+        //    }
+        //    return iDchoosen;
+        //}
+        //public int ChoosingStudentID()
+        //{
+        //    int iDchoosen = -1;
+        //    bool stayInTheFunction = true;
+        //    while (stayInTheFunction)
+        //    {
+        //        int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID of a student\n2 : Choose a userID and the student information\n3 : Go to the previous menu", 1, 3);
+        //        switch (methodChoiceAnswer)
+        //        {
+        //            case 1:
+        //                Console.WriteLine("Enter the userID");
+        //                int userIDAnswer = Convert.ToInt32(Console.ReadLine());
+        //                if (ContainUserID(userIDAnswer))
+        //                {
+        //                    if (UserList[IndexUserID(userIDAnswer)] is Student)
+        //                    {
+        //                        iDchoosen = userIDAnswer;
+        //                        stayInTheFunction = false;
+        //                    }
+        //                    else
+        //                    {
+        //                        Console.WriteLine("The userID is not corresponding to a student");
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    Console.WriteLine("There is not this user ID in the database");
+        //                }
+        //                break;
+        //            case 2:
+        //                Console.WriteLine("All student information :");
+        //                Console.WriteLine(StudentsInformation());
+        //                Console.WriteLine("Enter the UserID of the student you want to choose");
+        //                int userIDChoosen = Convert.ToInt32(Console.ReadLine());
+        //                if (ContainUserID(userIDChoosen))
+        //                {
+        //                    if (UserList[IndexUserID(userIDChoosen)] is Student)
+        //                    {
+        //                        iDchoosen = userIDChoosen;
+        //                        stayInTheFunction = false;
+        //                    }
+        //                    else
+        //                    {
+        //                        Console.WriteLine("The userID is not corresponding to a Student");
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    Console.WriteLine("There is not this user ID in the database");
+        //                }
+        //                break;
+        //            case 3:
+        //                iDchoosen = -1;
+        //                stayInTheFunction = false;
+        //                break;
+        //        }
+        //    }
+        //    return iDchoosen;
+        //}
+        //public int ChoosingAAdministratorID()
+        //{
+        //    int iDchoosen = -1;
+        //    bool stayInTheFunction = true;
+        //    while (stayInTheFunction)
+        //    {
+        //        int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID of an administrator\n2 : Choose a userID and the administrator information\n3 : Go to the previous menu", 1, 3);
+        //        switch (methodChoiceAnswer)
+        //        {
+        //            case 1:
+        //                Console.WriteLine("Enter the userID");
+        //                int userIDAnswer = Convert.ToInt32(Console.ReadLine());
+        //                if (ContainUserID(userIDAnswer))
+        //                {
+        //                    if (UserList[IndexUserID(userIDAnswer)] is Administrator)
+        //                    {
+        //                        iDchoosen = userIDAnswer;
+        //                        stayInTheFunction = false;
+        //                    }
+        //                    else
+        //                    {
+        //                        Console.WriteLine("The userID is not corresponding to an aministrator");
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    Console.WriteLine("There is not this user ID in the database");
+        //                }
+        //                break;
+        //            case 2:
+        //                Console.WriteLine("All administrator information :");
+        //                Console.WriteLine();
+        //                Console.WriteLine("Enter the UserID of the administrator you want to choose");
+        //                int userIDChoosen = Convert.ToInt32(Console.ReadLine());
+        //                if (ContainUserID(userIDChoosen))
+        //                {
+        //                    if (UserList[IndexUserID(userIDChoosen)] is Administrator)
+        //                    {
+        //                        iDchoosen = userIDChoosen;
+        //                        stayInTheFunction = false;
+        //                    }
+        //                    else
+        //                    {
+        //                        Console.WriteLine("The userID is not corresponding to an administrator");
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    Console.WriteLine("There is not this user ID in the database");
+        //                }
+        //                break;
+        //            case 3:
+        //                iDchoosen = -1;
+        //                stayInTheFunction = false;
+        //                break;
+        //        }
+        //    }
+        //    return iDchoosen;
+        //}
+        //public int ChoosingAFacultyID()
+        //{
+        //    int iDchoosen = -1;
+        //    bool stayInTheFunction = true;
+        //    while (stayInTheFunction)
+        //    {
+        //        int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID of a faculty\n2 : Choose a userID and the faculty information\n3 : Go to the previous menu", 1, 3);
+        //        switch (methodChoiceAnswer)
+        //        {
+        //            case 1:
+        //                Console.WriteLine("Enter the userID");
+        //                int userIDAnswer = Convert.ToInt32(Console.ReadLine());
+        //                if (ContainUserID(userIDAnswer))
+        //                {
+        //                    if (UserList[IndexUserID(userIDAnswer)] is Faculty)
+        //                    {
+        //                        iDchoosen = userIDAnswer;
 
-                                stayInTheFunction = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("The userID is not corresponding to a faculty");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 2:
-                        Console.WriteLine("All faculty information :");
-                        Console.WriteLine(FacultiesInformation());
-                        Console.WriteLine("Enter the UserID of the faculty you want to choose");
-                        int userIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDChoosen))
-                        {
-                            if (UserList[IndexUserID(userIDChoosen)] is Faculty)
-                            {
-                                iDchoosen = userIDChoosen;
-                                stayInTheFunction = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("The userID is not corresponding to an faculty");
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 3:
-                        iDchoosen = -1;
-                        stayInTheFunction = false;
-                        break;
-                }
-            }
-            return iDchoosen;
-        }
-        public int ChoosingDisciplineID()
-        {
-            int iDchoosen = -1;
-            bool stayInTheFunction = true;
-            while (stayInTheFunction)
-            {
-                int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a discipline ID\n2 : Choose a discipline ID and the see disciplines information\n3 : Go to the previous menu", 1, 3);
-                switch (methodChoiceAnswer)
-                {
-                    case 1:
-                        Console.WriteLine("Enter the disciplineID");
-                        int disciplineIDanswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainDisciplineID(disciplineIDanswer))
-                        {
-                            iDchoosen = disciplineIDanswer;
-                            stayInTheFunction = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this discipline ID in the database");
-                        }
-                        break;
-                    case 2:
-                        Console.WriteLine("All discipline information :");
-                        Console.WriteLine(DisciplinesInformation());
-                        Console.WriteLine("Enter the disciplineID of the discipline you want to choose");
-                        int disciplineIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainDisciplineID(disciplineIDChoosen))
-                        {
-                            iDchoosen = disciplineIDChoosen;
-                            stayInTheFunction = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this discipline ID in the database");
-                        }
-                        break;
-                    case 3:
-                        iDchoosen = -1;
-                        stayInTheFunction = false;
-                        break;
-                }
-            }
-            return iDchoosen;
-        }
+        //                        stayInTheFunction = false;
+        //                    }
+        //                    else
+        //                    {
+        //                        Console.WriteLine("The userID is not corresponding to a faculty");
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    Console.WriteLine("There is not this user ID in the database");
+        //                }
+        //                break;
+        //            case 2:
+        //                Console.WriteLine("All faculty information :");
+        //                Console.WriteLine(FacultiesInformation());
+        //                Console.WriteLine("Enter the UserID of the faculty you want to choose");
+        //                int userIDChoosen = Convert.ToInt32(Console.ReadLine());
+        //                if (ContainUserID(userIDChoosen))
+        //                {
+        //                    if (UserList[IndexUserID(userIDChoosen)] is Faculty)
+        //                    {
+        //                        iDchoosen = userIDChoosen;
+        //                        stayInTheFunction = false;
+        //                    }
+        //                    else
+        //                    {
+        //                        Console.WriteLine("The userID is not corresponding to an faculty");
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    Console.WriteLine("There is not this user ID in the database");
+        //                }
+        //                break;
+        //            case 3:
+        //                iDchoosen = -1;
+        //                stayInTheFunction = false;
+        //                break;
+        //        }
+        //    }
+        //    return iDchoosen;
+        //}
+        //public int ChoosingDisciplineID()
+        //{
+        //    int iDchoosen = -1;
+        //    bool stayInTheFunction = true;
+        //    while (stayInTheFunction)
+        //    {
+        //        int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a discipline ID\n2 : Choose a discipline ID and the see disciplines information\n3 : Go to the previous menu", 1, 3);
+        //        switch (methodChoiceAnswer)
+        //        {
+        //            case 1:
+        //                Console.WriteLine("Enter the disciplineID");
+        //                int disciplineIDanswer = Convert.ToInt32(Console.ReadLine());
+        //                if (ContainDisciplineID(disciplineIDanswer))
+        //                {
+        //                    iDchoosen = disciplineIDanswer;
+        //                    stayInTheFunction = false;
+        //                }
+        //                else
+        //                {
+        //                    Console.WriteLine("There is not this discipline ID in the database");
+        //                }
+        //                break;
+        //            case 2:
+        //                Console.WriteLine("All discipline information :");
+        //                Console.WriteLine(DisciplinesInformation());
+        //                Console.WriteLine("Enter the disciplineID of the discipline you want to choose");
+        //                int disciplineIDChoosen = Convert.ToInt32(Console.ReadLine());
+        //                if (ContainDisciplineID(disciplineIDChoosen))
+        //                {
+        //                    iDchoosen = disciplineIDChoosen;
+        //                    stayInTheFunction = false;
+        //                }
+        //                else
+        //                {
+        //                    Console.WriteLine("There is not this discipline ID in the database");
+        //                }
+        //                break;
+        //            case 3:
+        //                iDchoosen = -1;
+        //                stayInTheFunction = false;
+        //                break;
+        //        }
+        //    }
+        //    return iDchoosen;
+        //}
 
-        public int ChoosingClassroomID()
-        {
-            int iDchoosen = -1;
-            bool stayInTheFunction = true;
-            while (stayInTheFunction)
-            {
-                int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a classroom ID\n2 : Choose a classroom ID and the see disciplines information\n3 : Go to the previous menu", 1, 3);
-                switch (methodChoiceAnswer)
-                {
-                    case 1:
-                        Console.WriteLine("Enter the classroomID");
-                        int classroomIDanswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainClassroomID(classroomIDanswer))
-                        {
-                            iDchoosen = classroomIDanswer;
-                            stayInTheFunction = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this classroom ID in the database");
-                        }
-                        break;
-                    case 2:
-                        Console.WriteLine("All classroom information :");
-                        Console.WriteLine(ClassroomsEssentialInformation());
-                        Console.WriteLine("Enter the classroomID of the classroom you want to choose");
-                        int classroomIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainClassroomID(classroomIDChoosen))
-                            if (ContainClassroomID(classroomIDChoosen))
-                            {
-                                iDchoosen = classroomIDChoosen;
-                                stayInTheFunction = false;
-                            }
-                            else
-                            {
-                                Console.WriteLine("There is not this classroom ID in the database");
-                            }
-                        break;
-                    case 3:
-                        iDchoosen = -1;
-                        stayInTheFunction = false;
-                        break;
-                }
-            }
-            return iDchoosen;
-        }
+        //public int ChoosingClassroomID()
+        //{
+        //    int iDchoosen = -1;
+        //    bool stayInTheFunction = true;
+        //    while (stayInTheFunction)
+        //    {
+        //        int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a classroom ID\n2 : Choose a classroom ID and the see disciplines information\n3 : Go to the previous menu", 1, 3);
+        //        switch (methodChoiceAnswer)
+        //        {
+        //            case 1:
+        //                Console.WriteLine("Enter the classroomID");
+        //                int classroomIDanswer = Convert.ToInt32(Console.ReadLine());
+        //                if (ContainClassroomID(classroomIDanswer))
+        //                {
+        //                    iDchoosen = classroomIDanswer;
+        //                    stayInTheFunction = false;
+        //                }
+        //                else
+        //                {
+        //                    Console.WriteLine("There is not this classroom ID in the database");
+        //                }
+        //                break;
+        //            case 2:
+        //                Console.WriteLine("All classroom information :");
+        //                Console.WriteLine(ClassroomsEssentialInformation());
+        //                Console.WriteLine("Enter the classroomID of the classroom you want to choose");
+        //                int classroomIDChoosen = Convert.ToInt32(Console.ReadLine());
+        //                if (ContainClassroomID(classroomIDChoosen))
+        //                    if (ContainClassroomID(classroomIDChoosen))
+        //                    {
+        //                        iDchoosen = classroomIDChoosen;
+        //                        stayInTheFunction = false;
+        //                    }
+        //                    else
+        //                    {
+        //                        Console.WriteLine("There is not this classroom ID in the database");
+        //                    }
+        //                break;
+        //            case 3:
+        //                iDchoosen = -1;
+        //                stayInTheFunction = false;
+        //                break;
+        //        }
+        //    }
+        //    return iDchoosen;
+        //}
 
         public int PutANewDisciplineID()
         {
@@ -939,144 +939,144 @@ namespace Dorset_OOP_Project
         }
 
 
-        public bool ContainUserID(int userID)
-        {
-            return UserList.Any(i => i.UserID == userID);
-        }
+        //public bool ContainUserID(int userID)
+        //{
+        //    return UserList.Any(i => i.UserID == userID);
+        //}
 
-        public int IndexUserID(int userID)
-        {
-            return UserList.FindIndex(i => i.UserID == userID);
-        }
+        //public int IndexUserID(int userID)
+        //{
+        //    return UserList.FindIndex(i => i.UserID == userID);
+        //}
 
-        public bool ContainDisciplineID(int disciplineID)
-        {
-            return DisciplineList.Any(i => i.DisciplineID == disciplineID);
-        }
+        //public bool ContainDisciplineID(int disciplineID)
+        //{
+        //    return DisciplineList.Any(i => i.DisciplineID == disciplineID);
+        //}
 
-        public int IndexDisciplineID(int disciplineID)
-        {
-            return DisciplineList.FindIndex(i => i.DisciplineID == disciplineID);
-        }
+        //public int IndexDisciplineID(int disciplineID)
+        //{
+        //    return DisciplineList.FindIndex(i => i.DisciplineID == disciplineID);
+        //}
 
-        public bool ContainClassroomID(int classroomID)
-        {
-            return Classrooms.Any(i => i.ClassRoomID == classroomID);
-        }
+        //public bool ContainClassroomID(int classroomID)
+        //{
+        //    return Classrooms.Any(i => i.ClassRoomID == classroomID);
+        //}
 
-        public int IndexClassroomID(int classroomID)
-        {
-            return Classrooms.FindIndex(i => i.ClassRoomID == classroomID);
-        }
+        //public int IndexClassroomID(int classroomID)
+        //{
+        //    return Classrooms.FindIndex(i => i.ClassRoomID == classroomID);
+        //}
 
-        public string UsersPublicInformation()
-        {
-            string information = "";
-            for (int index = 0; index < UserList.Count; index++)
-            {
-                information += $"{UserList[index].PublicApplicationInformation()}\n";
-            }
-            return information;
-        }
+        //public string UsersPublicInformation()
+        //{
+        //    string information = "";
+        //    for (int index = 0; index < UserList.Count; index++)
+        //    {
+        //        information += $"{UserList[index].PublicApplicationInformation()}\n";
+        //    }
+        //    return information;
+        //}
 
-        public string StudentsInformation()
-        {
-            string information = "";
-            int numberStudent = 0;
-            if (UserList != null || UserList.Count != 0)
-            {
-                for (int index = 0; index < UserList.Count; index++)
-                {
-                    if (UserList[index] is Student)
-                    {
-                        information += $"[{numberStudent}] {UserList[index].PublicApplicationInformation()}\n";
-                        numberStudent++;
-                    }
-                }
-            }
-            if (numberStudent == 0)
-            {
-                information += "There is no student user";
-            }
-            return information;
-        }
+        //public string StudentsInformation()
+        //{
+        //    string information = "";
+        //    int numberStudent = 0;
+        //    if (UserList != null || UserList.Count != 0)
+        //    {
+        //        for (int index = 0; index < UserList.Count; index++)
+        //        {
+        //            if (UserList[index] is Student)
+        //            {
+        //                information += $"[{numberStudent}] {UserList[index].PublicApplicationInformation()}\n";
+        //                numberStudent++;
+        //            }
+        //        }
+        //    }
+        //    if (numberStudent == 0)
+        //    {
+        //        information += "There is no student user";
+        //    }
+        //    return information;
+        //}
 
-        public string FacultiesInformation()
-        {
-            string information = "";
-            int numberFaculties = 0;
-            if (UserList != null || UserList.Count != 0)
-            {
-                for (int index = 0; index < UserList.Count; index++)
-                {
-                    if (UserList[index] is Faculty)
-                    {
-                        information += $"[{numberFaculties}] {UserList[index].PublicApplicationInformation()}\n";
-                        numberFaculties++;
-                    }
-                }
-            }
-            if (numberFaculties == 0)
-            {
-                information += "There is no faculty user";
-            }
-            return information;
-        }
+        //public string FacultiesInformation()
+        //{
+        //    string information = "";
+        //    int numberFaculties = 0;
+        //    if (UserList != null || UserList.Count != 0)
+        //    {
+        //        for (int index = 0; index < UserList.Count; index++)
+        //        {
+        //            if (UserList[index] is Faculty)
+        //            {
+        //                information += $"[{numberFaculties}] {UserList[index].PublicApplicationInformation()}\n";
+        //                numberFaculties++;
+        //            }
+        //        }
+        //    }
+        //    if (numberFaculties == 0)
+        //    {
+        //        information += "There is no faculty user";
+        //    }
+        //    return information;
+        //}
 
-        public string AdministratorsInformation()
-        {
-            string information = "";
-            int numberAdministrator = 0;
-            if (UserList != null || UserList.Count != 0)
-            {
-                for (int index = 0; index < UserList.Count; index++)
-                {
-                    if (UserList[index] is Administrator)
-                    {
-                        information += $"[{numberAdministrator}] {UserList[index].PublicApplicationInformation()}\n";
-                        numberAdministrator++;
-                    }
-                }
-            }
-            if (numberAdministrator == 0)
-            {
-                information += "There is no administrator user";
-            }
-            return information;
-        }
+        //public string AdministratorsInformation()
+        //{
+        //    string information = "";
+        //    int numberAdministrator = 0;
+        //    if (UserList != null || UserList.Count != 0)
+        //    {
+        //        for (int index = 0; index < UserList.Count; index++)
+        //        {
+        //            if (UserList[index] is Administrator)
+        //            {
+        //                information += $"[{numberAdministrator}] {UserList[index].PublicApplicationInformation()}\n";
+        //                numberAdministrator++;
+        //            }
+        //        }
+        //    }
+        //    if (numberAdministrator == 0)
+        //    {
+        //        information += "There is no administrator user";
+        //    }
+        //    return information;
+        //}
 
-        public string DisciplinesInformation()
-        {
-            string information = "";
-            if (DisciplineList != null && DisciplineList.Count != 0)
-            {
-                for (int index = 0; index < DisciplineList.Count; index++)
-                {
-                    information += $"[{index}] {DisciplineList[index].PublicInformation()}\n";
-                }
-            }
-            else
-            {
-                information += "There is no discipline created";
-            }
-            return information;
-        }
-        public string ClassroomsEssentialInformation()
-        {
-            string information = "";
-            if (Classrooms != null && Classrooms.Count != 0)
-            {
-                for (int index = 0; index < Classrooms.Count; index++)
-                {
-                    information += $"[{index}] {Classrooms[index].ClassroomEssentialInformation()}\n";
-                }
-            }
-            else
-            {
-                information += "There is no classroom created";
-            }
-            return information;
-        }
+        //public string DisciplinesInformation()
+        //{
+        //    string information = "";
+        //    if (DisciplineList != null && DisciplineList.Count != 0)
+        //    {
+        //        for (int index = 0; index < DisciplineList.Count; index++)
+        //        {
+        //            information += $"[{index}] {DisciplineList[index].PublicInformation()}\n";
+        //        }
+        //    }
+        //    else
+        //    {
+        //        information += "There is no discipline created";
+        //    }
+        //    return information;
+        //}
+        //public string ClassroomsEssentialInformation()
+        //{
+        //    string information = "";
+        //    if (Classrooms != null && Classrooms.Count != 0)
+        //    {
+        //        for (int index = 0; index < Classrooms.Count; index++)
+        //        {
+        //            information += $"[{index}] {Classrooms[index].ClassroomEssentialInformation()}\n";
+        //        }
+        //    }
+        //    else
+        //    {
+        //        information += "There is no classroom created";
+        //    }
+        //    return information;
+        //}
 
     }
 }
