@@ -28,6 +28,12 @@ namespace Dorset_OOP_Project
             ClassRoomStudents = classRoomStudents;
             ClassRoomDiscipline = classRoomDiscipline;
         }
+        public Classroom(string classRoomName, List<Faculty> classRoomFaculties, List<Student> classRoomStudents)
+        {
+            ClassroomName = classRoomName;
+            ClassRoomFaculties = classRoomFaculties;
+            ClassRoomStudents = classRoomStudents;
+        }
         public bool AddStudent(Student newStudent)
         {
             bool possible = false;
@@ -51,27 +57,74 @@ namespace Dorset_OOP_Project
         public string ClassRoomInformation()
         {
             string information = "";
-            information += $"Classroom ID : {ClassRoomID}\nClassroom name : {ClassroomName}\nDiscipline teaching {ClassRoomDiscipline.PublicInformation()}\nFaculties Teaching";
-            for (int indexFaculty = 0; indexFaculty < ClassRoomFaculties.Count; indexFaculty++)
+            information += $"Classroom ID : {ClassRoomID}\nClassroom name : {ClassroomName}\nDiscipline teaching :";
+            if (ClassRoomDiscipline != null)
             {
-                information += $"\n{ClassRoomFaculties[indexFaculty].PublicApplicationInformation()}";
+                information += $"{ClassRoomDiscipline.PublicInformation()}";
             }
-            information += "\nStudents";
-            for (int indexStudent = 0; indexStudent < ClassRoomStudents.Count; indexStudent++)
+            else
             {
-                information += $"\n{ClassRoomStudents[indexStudent].PublicApplicationInformation()}";
+                information += " NaN";
+            }
+            information += "\nFaculties teaching :";
+            if (ClassRoomFaculties != null&&ClassRoomFaculties.Count!=0)
+            {
+                for (int indexFaculty = 0; indexFaculty < ClassRoomFaculties.Count; indexFaculty++)
+                {
+                    information += $"\n{ClassRoomFaculties[indexFaculty].PublicApplicationInformation()}";
+                }
+            }
+            else
+            {
+                information +=" NaN";
+            }
+            information += "\nStudents :";
+            if (ClassRoomStudents != null && ClassRoomStudents.Count!=0)
+            {
+                for (int indexStudent = 0; indexStudent < ClassRoomStudents.Count; indexStudent++)
+                {
+                    information += $"\n{ClassRoomStudents[indexStudent].PublicApplicationInformation()}";
+                }
+            }
+            else
+            {
+                information += " NaN";
             }
             return information;
         }
         public string ClassroomEssentialInformation()
         {
             string information = "";
-            information += $"Classroom ID : {ClassRoomID}\nClassroom name : {ClassroomName}\nDiscipline teaching {ClassRoomDiscipline.PublicInformation()}\nFaculties Teaching";
-            for (int indexFaculty = 0; indexFaculty < ClassRoomStudents.Count; indexFaculty++)
+            information += $"Classroom ID : {ClassRoomID}\nClassroom name : {ClassroomName}\nDiscipline teaching :";
+            if (ClassRoomDiscipline != null)
             {
-                information += $"\n{ClassRoomFaculties[indexFaculty].PublicApplicationInformation()}";
+                information += $"{ClassRoomDiscipline.PublicInformation()}";
             }
-            information += $"\nNumber of students : {ClassRoomStudents.Count}";
+            else
+            {
+                information += " NaN";
+            }
+            information += "\nDiscipline teaching :";
+            if (ClassRoomFaculties != null && ClassRoomFaculties.Count != 0)
+            {
+                for (int indexFaculty = 0; indexFaculty < ClassRoomFaculties.Count; indexFaculty++)
+                {
+                    information += $"\n{ClassRoomFaculties[indexFaculty].PublicApplicationInformation()}";
+                }
+            }
+            else
+            {
+                information += " NaN";
+            }
+            information += "\nNumber of students :"; 
+            if (ClassRoomStudents != null && ClassRoomStudents.Count != 0)
+            {
+                information += $"{ClassRoomStudents.Count}";
+            }
+            else
+            {
+                information += " 0";
+            }
             return information;
         }
     }

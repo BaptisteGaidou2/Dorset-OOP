@@ -15,7 +15,7 @@ namespace Dorset_OOP_Project
         public int LastClassroomID { get; set; }
         public int CurrentIndexUser { get; set; }
         public int CurrentIndexDiscipline { get; set; }
-        
+
         public Application()
         {
             UserList = new List<User>();
@@ -179,7 +179,6 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(UserList[CurrentIndexUser].PersonalInformation());
                         break;
                     #endregion
-
                     case 2:
                         #region
                         int switchAttribute = EnterValue.AskingNumber("enter the information you want to change\n1 : email\n2 : password\n3 : nothing", 1, 3);
@@ -196,13 +195,11 @@ namespace Dorset_OOP_Project
                         }
                         break;
                     #endregion
-
                     case 3:
                         #region
                         logout = DisciplineMenu_Administrator();
                         break;
                     #endregion
-
                     case 4:
                         #region
                         int typeAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a student\n2 : Add a faculty\n3 : Add an administrator\n4 : Go back to the previous menu", 1, 4);
@@ -242,7 +239,6 @@ namespace Dorset_OOP_Project
                 int classroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Create a new classroom\n2 : Edit a classroom\n3 : See Classrooms information\n4 : Go back to the previous menu\n5 : Log out", 1, 5);
                 switch (classroomAnswer)
                 {
-                    //need to finish 
                     case 1:
                         #region
                         Console.WriteLine("Enter the classroom name");
@@ -301,15 +297,40 @@ namespace Dorset_OOP_Project
                                     break;
                             }
                         }
-                        int disciplineIDAnswer = -1;
-                        while (disciplineIDAnswer==-1)//BOUCLE INFINI SI JAMAIS CREER DE DISCIPLINE AUPARAVANT SADGE AUTRE METHODE UN AVIS carglass et la ? FAIRE  DES SOUS CAS et creer un constructeur de classroom sans discipline?Interdire l'accès avant qu'il y ait une discilpline sinon? et pr la 1ere consultation c'est gratuit
+                        bool addADiscipline = false;
+                        if (DisciplineList != null && DisciplineList.Count != 0)
                         {
-                            disciplineIDAnswer=ChoosingDisciplineID();
+                            int addOrLeaveAnswer = EnterValue.AskingNumber("Enter do you want to do\n1 : Add a discipline\n2 : don't add a discipline", 1, 2);
+                            switch (addOrLeaveAnswer)
+                            {
+                                case 1:
+                                    int disciplineIDAnswer = ChoosingDisciplineID();
+                                    if (disciplineIDAnswer != -1)
+                                    {
+                                        Discipline disciplineAnswer = DisciplineList[IndexDisciplineID(disciplineIDAnswer)];
+                                        Classrooms.Add(new Classroom(classroomNameAnswer, facultiesAnswer, studentsAnswer, disciplineAnswer));
+                                        Classrooms[Classrooms.Count - 1].ClassRoomID = PutANewClassroomID();
+                                        Console.WriteLine($"The classroom has been succesfully created\n{Classrooms[Classrooms.Count - 1].ClassRoomInformation()}");
+                                        addADiscipline = true;
+                                    }
+                                    break;
+                            }
+                            if (!addADiscipline)
+                            {
+                                Classrooms.Add(new Classroom(classroomNameAnswer, facultiesAnswer, studentsAnswer));
+                                Classrooms[Classrooms.Count - 1].ClassRoomID = PutANewClassroomID();
+                                Console.WriteLine($"The classroom has been succesfully created\n{Classrooms[Classrooms.Count - 1].ClassRoomInformation()}");
+                            }
+                            foreach (Student student in Classrooms[Classrooms.Count - 1].ClassRoomStudents)
+                            {
+                                student.AddClassroom(Classrooms[Classrooms.Count - 1]);
+                            }
+                            foreach (Faculty faculty in Classrooms[Classrooms.Count - 1].ClassRoomFaculties)
+                            {
+                                faculty.AddClassroom(Classrooms[Classrooms.Count - 1]);
+                            }
+                            break;
                         }
-                        Discipline disciplineAnswer = DisciplineList[IndexDisciplineID(disciplineIDAnswer)];
-                        Classrooms.Add(new Classroom(classroomNameAnswer, facultiesAnswer, studentsAnswer, disciplineAnswer));
-                        Classrooms[Classrooms.Count - 1].ClassRoomID = PutANewClassroomID();
-                        Console.WriteLine($"The classroom has been succesfully created\n{Classrooms[Classrooms.Count - 1].ClassRoomInformation()}");
                         break;
                     #endregion
                     case 2:
@@ -317,25 +338,27 @@ namespace Dorset_OOP_Project
                         int classroomIDanswer = ChoosingClassroomID();
                         if (classroomIDanswer != -1)
                         {
+                            Classroom choosenClassroom = Classrooms[IndexClassroomID(classroomIDanswer)];
                             bool stayInTheEditClassroom = true;
                             while (stayInTheEditClassroom)
                             {
-                                int editClassroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : add a student\n2 : Edit a faculty\n3 : See the classroom information\n4 : Go back to the previous menu\n5 : Log out", 1, 5);
+                                int editClassroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a student\n2 : Add a faculty\n3 : Switch the discipline\n4 : Switch the classroom name\n5 : See the classroom information\n6 : Go back to the previous menu\n7 : Log out", 1, 7);
                                 switch (editClassroomAnswer)
                                 {
                                     case 1:
                                         int studentIDAnswer = ChoosingStudentID();
                                         if (studentIDAnswer != -1)
                                         {
-                                            bool added = Classrooms[IndexClassroomID(classroomIDanswer)].AddStudent((Student)UserList[IndexUserID(studentIDAnswer)]);
+                                            Student choosenStudent = (Student)UserList[IndexUserID(studentIDAnswer)];
+                                            bool added = choosenClassroom.AddStudent(choosenStudent);
                                             if (added)
                                             {
-                                                Console.WriteLine($"{UserList[IndexUserID(studentIDAnswer)].PublicApplicationInformation()} has been added");
-
+                                                choosenStudent.AddClassroom(choosenClassroom);
+                                                Console.WriteLine($"{choosenStudent.PublicApplicationInformation()} has been added");
                                             }
                                             else
                                             {
-                                                Console.WriteLine($"This student can't  be added : {UserList[IndexUserID(studentIDAnswer)].PublicApplicationInformation()}\nBecause he had allready been added");
+                                                Console.WriteLine($"This student can't  be added : {choosenStudent.PublicApplicationInformation()}\nBecause he had allready been added");
 
                                             }
                                         }
@@ -344,26 +367,36 @@ namespace Dorset_OOP_Project
                                         int facultyIDAnswer = ChoosingAFacultyID();
                                         if (facultyIDAnswer != -1)
                                         {
-                                            bool added = Classrooms[IndexClassroomID(classroomIDanswer)].AddFaculty((Faculty)UserList[IndexUserID(facultyIDAnswer)]);
+                                            Faculty choosenFaculty = (Faculty)UserList[IndexUserID(facultyIDAnswer)];
+                                            bool added = choosenClassroom.AddFaculty(choosenFaculty);
                                             if (added)
                                             {
-                                                Console.WriteLine($"{UserList[IndexUserID(facultyIDAnswer)].PublicApplicationInformation()} has been added");
-
+                                                choosenFaculty.AddClassroom(choosenClassroom);
+                                                Console.WriteLine($"{choosenFaculty.PublicApplicationInformation()} has been added");
                                             }
                                             else
                                             {
-                                                Console.WriteLine($"This faculty can't  be added : {UserList[IndexUserID(facultyIDAnswer)].PublicApplicationInformation()}\nBecause he had allready been added");
+                                                Console.WriteLine($"This faculty can't  be added : {choosenFaculty.PublicApplicationInformation()}\nBecause he had allready been added");
 
                                             }
                                         }
                                         break;
                                     case 3:
-                                        Console.WriteLine(Classrooms[IndexClassroomID(classroomIDanswer)].ClassRoomInformation());
+                                        int disciplineIDAnswer = ChoosingDisciplineID();
+                                        if (disciplineIDAnswer != -1)
+                                        {
+                                            choosenClassroom.ClassRoomDiscipline = DisciplineList[IndexDisciplineID(disciplineIDAnswer)];
+                                        }
                                         break;
                                     case 4:
-                                        stayInTheEditClassroom = false;
                                         break;
                                     case 5:
+                                        Console.WriteLine(choosenClassroom.ClassRoomInformation());
+                                        break;
+                                    case 6:
+                                        stayInTheEditClassroom = false;
+                                        break;
+                                    case 7:
                                         stayInTheEditClassroom = false;
                                         stayInTheClassRoomMenu = false;
                                         logout = true;
@@ -375,12 +408,11 @@ namespace Dorset_OOP_Project
                         break;
                     #endregion
                     case 3:
-                        foreach(Classroom classroom in Classrooms)
+                        #region
+                        foreach (Classroom classroom in Classrooms)
                         {
                             Console.WriteLine(classroom.ClassRoomInformation());
                         }
-                        #region
-                        
                         break;
                     #endregion
                     case 4:
@@ -459,7 +491,7 @@ namespace Dorset_OOP_Project
                                         {
                                             if (DisciplineList[CurrentIndexDiscipline].EnrollAFaculty(UserList[IndexUserID(facultyIDAnswer)]))
                                             {
-                                                 Console.WriteLine($"The faculty with ID {facultyIDAnswer} has been added");
+                                                Console.WriteLine($"The faculty with ID {facultyIDAnswer} has been added");
                                             }
                                             else
                                             {
@@ -841,15 +873,15 @@ namespace Dorset_OOP_Project
                         Console.WriteLine("Enter the classroomID of the classroom you want to choose");
                         int classroomIDChoosen = Convert.ToInt32(Console.ReadLine());
                         if (ContainClassroomID(classroomIDChoosen))
-                        if (ContainClassroomID(classroomIDChoosen))
-                        {
-                            iDchoosen = classroomIDChoosen;
-                            stayInTheFunction = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this classroom ID in the database");
-                        }
+                            if (ContainClassroomID(classroomIDChoosen))
+                            {
+                                iDchoosen = classroomIDChoosen;
+                                stayInTheFunction = false;
+                            }
+                            else
+                            {
+                                Console.WriteLine("There is not this classroom ID in the database");
+                            }
                         break;
                     case 3:
                         iDchoosen = -1;
@@ -924,7 +956,7 @@ namespace Dorset_OOP_Project
             UserList.Add(new Administrator(firstName, lastName, email, password, PutANewUserID()));
         }
 
-        public void AddClassroom(string classroomName,List<Faculty> facultiesTeaching,List<Student> studentsStudying,Discipline discipline)
+        public void AddClassroom(string classroomName, List<Faculty> facultiesTeaching, List<Student> studentsStudying, Discipline discipline)
         {
             Classrooms.Add(new Classroom(classroomName, facultiesTeaching, studentsStudying, discipline));
             Classrooms[Classrooms.Count - 1].ClassRoomID = PutANewClassroomID();
@@ -936,7 +968,7 @@ namespace Dorset_OOP_Project
             DisciplineList.Add(newDiscipline);
         }
 
-        
+
 
         public bool ContainUserID(int userID)
         {
@@ -950,7 +982,7 @@ namespace Dorset_OOP_Project
 
         public bool ContainDisciplineID(int disciplineID)
         {
-            return DisciplineList.Any(i => i.DisciplineID== disciplineID);
+            return DisciplineList.Any(i => i.DisciplineID == disciplineID);
         }
 
         public int IndexDisciplineID(int disciplineID)

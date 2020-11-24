@@ -16,12 +16,24 @@ namespace Dorset_OOP_Project
         }
         public Student(string lastName, string firstName, string email, string password) : base(lastName, firstName, email, password)
         {
-            
+            Attendances = new List<Attendance>();
+            ClassroomStudying = new List<Classroom>();
         }
 
         public Student(string lastName, string firstName, string email, string password, int userID) : base(lastName, firstName, email, password, userID)
         {
-            
+            Attendances = new List<Attendance>();
+            ClassroomStudying = new List<Classroom>();
+        }
+        public bool AddClassroom(Classroom classroom)
+        {
+            bool added = false;
+            if (ClassroomStudying==null||ClassroomStudying.Count==0||!ClassroomStudying.Contains(classroom))
+            {
+                ClassroomStudying.Add(classroom);
+                added = true;
+            }
+            return added;
         }
         public List<Discipline> DisciplinesStudying()
         {

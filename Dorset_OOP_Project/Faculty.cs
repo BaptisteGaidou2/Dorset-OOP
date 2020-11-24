@@ -24,7 +24,16 @@ namespace Dorset_OOP_Project
             }
             return discplinesTeaching;
         }
-
+        public bool AddClassroom(Classroom classroom)
+        {
+            bool added = false;
+            if (ClassroomsTeaching==null||ClassroomsTeaching.Count==0||!ClassroomsTeaching.Contains(classroom))
+            {
+                ClassroomsTeaching.Add(classroom);
+                added = true;
+            }
+            return added;
+        }
 
         public Faculty(string lastName, string firstName, string email, string password) : base(lastName, firstName, email, password)
         {
