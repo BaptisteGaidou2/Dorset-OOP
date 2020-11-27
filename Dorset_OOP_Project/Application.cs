@@ -317,7 +317,7 @@ namespace Dorset_OOP_Project
                             bool stayInTheEditClassroom = true;
                             while (stayInTheEditClassroom)
                             {
-                                int editClassroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a student\n2 : Add a faculty\n3 : Switch the discipline\n4 : Switch the classroom name\n5 : See the classroom information\n6 : Go back to the previous menu\n7 : Log out", 1, 7);
+                                int editClassroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a student\n2 : Add a faculty\n3 : Switch the discipline\n4 : Switch the classroom name\n5 : Edit time slots of the classroom\n6 : See the classroom information\n7 : Go back to the previous menu\n8 : Log out", 1, 8);
                                 switch (editClassroomAnswer)
                                 {
                                     case 1:
@@ -368,12 +368,15 @@ namespace Dorset_OOP_Project
                                         choosenClassroom.ClassroomName = Console.ReadLine();
                                         break;
                                     case 5:
-                                        Console.WriteLine(choosenClassroom.ClassRoomInformation());
+                                        choosenClassroom.EditTimeTable();
                                         break;
                                     case 6:
-                                        stayInTheEditClassroom = false;
+                                        Console.WriteLine(choosenClassroom.ClassRoomInformation());
                                         break;
                                     case 7:
+                                        stayInTheEditClassroom = false;
+                                        break;
+                                    case 8:
                                         stayInTheEditClassroom = false;
                                         stayInTheClassRoomMenu = false;
                                         logout = true;
@@ -434,7 +437,7 @@ namespace Dorset_OOP_Project
                             bool stayInChooseFunction = true;
                             while (stayInChooseFunction)
                             {
-                                int enrollAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Enroll student\n2 : See all student information\n3 : Enroll a faculty\n4 : See all faculty information\n5 : Go back to the previous menu\n6 : Log out", 1, 6);
+                                int enrollAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Enroll student\n2 : See all students information\n3 : Enroll a faculty\n4 : See all faculty information\n5 : Go back to the previous menu\n6 : Log out", 1, 6);
                                 switch (enrollAnswer)
                                 {
                                     case 1:

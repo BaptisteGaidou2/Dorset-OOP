@@ -6,6 +6,93 @@ namespace Dorset_OOP_Project
 {
     public static class GenericFunction
     {
+        public static string FromIndexToDay(int index)
+        {
+            string day = "";
+            switch (index)
+            {
+                case 1:
+                    day = "MONDAY";
+                    break;
+                case 2:
+                    day = "TUESDAY";
+                    break;
+                case 3:
+                    day = "WEDNESDAY";
+                    break;
+                case 4:
+                    day = "THURSDAY";
+                    break;
+                case 5:
+                    day = "FRIDAY";
+                    break;
+                case 6:
+                    day = "SATURDAY";
+                    break;
+            }
+            return day;
+        }
+        public static string TimesSlotsInformation(List<TimeSlot> list)
+        {
+            string information = "";
+            if (list != null && list.Count != 0)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    information += $"\n[index : {i}] {list[i].Information()}";
+                }
+            }
+            else
+            {
+                information += "There is no time slots";
+            }
+            return information;
+        }
+        public static int ChoosingIndexTimeSlotList(List<TimeSlot> list)
+        {
+            int index = -1;
+            if (list != null && list.Count == 0)
+            {
+                bool stayInTheFunction = true;
+                while (stayInTheFunction)
+                {
+                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose the index of the time slot you want to select\n2 : Go to the previous menu", 1, 2);
+                    switch (methodChoiceAnswer)
+                    {
+                        case 1:
+                            Console.WriteLine(TimesSlotsInformation(list));
+                            Console.WriteLine("Enter the index of the time slot you want to select");
+                            try
+                            {
+                                index = Convert.ToInt32(Console.ReadLine());
+                            }
+                            catch (FormatException)
+                            {
+                                Console.WriteLine("The input was not an integer");
+                            }
+                            if (index < 0 || index >= list.Count)
+                            {
+                                Console.WriteLine("There isn't this index");
+                                index = -1;
+                            }
+                            else
+                            {
+                                stayInTheFunction = false;
+                            }
+                            break;
+                        case 2:
+                            stayInTheFunction = false;
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("There is no time slot");
+            }
+            return index;
+        }
+        
         //Choosing a ID from a list
         #region
         public static int ChoosingAUserID(List<User> list)
@@ -20,7 +107,7 @@ namespace Dorset_OOP_Project
                     case 1:
                         Console.WriteLine("Enter the userID");
                         int userIDAnswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDAnswer,list))
+                        if (ContainUserID(userIDAnswer, list))
                         {
                             iDchoosen = userIDAnswer;
                             stayInTheFunction = false;
@@ -35,7 +122,7 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(UsersPublicInformation(list));
                         Console.WriteLine("Enter the UserID of the user you want to choose");
                         int userIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDChoosen,list))
+                        if (ContainUserID(userIDChoosen, list))
                         {
                             iDchoosen = userIDChoosen;
                             stayInTheFunction = false;
@@ -65,9 +152,9 @@ namespace Dorset_OOP_Project
                     case 1:
                         Console.WriteLine("Enter the userID");
                         int userIDAnswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDAnswer,list))
+                        if (ContainUserID(userIDAnswer, list))
                         {
-                            if (list[IndexUserID(userIDAnswer,list)] is Student)
+                            if (list[IndexUserID(userIDAnswer, list)] is Student)
                             {
                                 iDchoosen = userIDAnswer;
                                 stayInTheFunction = false;
@@ -87,9 +174,9 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(StudentsInformation(list));
                         Console.WriteLine("Enter the UserID of the student you want to choose");
                         int userIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDChoosen,list))
+                        if (ContainUserID(userIDChoosen, list))
                         {
-                            if (list[IndexUserID(userIDChoosen,list)] is Student)
+                            if (list[IndexUserID(userIDChoosen, list)] is Student)
                             {
                                 iDchoosen = userIDChoosen;
                                 stayInTheFunction = false;
@@ -123,7 +210,15 @@ namespace Dorset_OOP_Project
                 {
                     case 1:
                         Console.WriteLine("Enter the userID");
-                        int userIDAnswer = Convert.ToInt32(Console.ReadLine());
+                        int userIDAnswer = -1;
+                        try
+                        {
+                            userIDAnswer = Convert.ToInt32(Console.ReadLine());
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("The input was not an integer");
+                        }
                         if (ContainUserID_FromStudentList(userIDAnswer, list))
                         {
                             if (list[IndexUserID_StudentList(userIDAnswer, list)] is Student)
@@ -183,9 +278,9 @@ namespace Dorset_OOP_Project
                     case 1:
                         Console.WriteLine("Enter the userID");
                         int userIDAnswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDAnswer,list))
+                        if (ContainUserID(userIDAnswer, list))
                         {
-                            if (list[IndexUserID(userIDAnswer,list)] is Administrator)
+                            if (list[IndexUserID(userIDAnswer, list)] is Administrator)
                             {
                                 iDchoosen = userIDAnswer;
                                 stayInTheFunction = false;
@@ -205,9 +300,9 @@ namespace Dorset_OOP_Project
                         Console.WriteLine();
                         Console.WriteLine("Enter the UserID of the administrator you want to choose");
                         int userIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDChoosen,list))
+                        if (ContainUserID(userIDChoosen, list))
                         {
-                            if (list[IndexUserID(userIDChoosen,list)] is Administrator)
+                            if (list[IndexUserID(userIDChoosen, list)] is Administrator)
                             {
                                 iDchoosen = userIDChoosen;
                                 stayInTheFunction = false;
@@ -242,9 +337,9 @@ namespace Dorset_OOP_Project
                     case 1:
                         Console.WriteLine("Enter the userID");
                         int userIDAnswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDAnswer,list))
+                        if (ContainUserID(userIDAnswer, list))
                         {
-                            if (list[IndexUserID(userIDAnswer,list)] is Faculty)
+                            if (list[IndexUserID(userIDAnswer, list)] is Faculty)
                             {
                                 iDchoosen = userIDAnswer;
 
@@ -265,9 +360,9 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(FacultiesInformation(list));
                         Console.WriteLine("Enter the UserID of the faculty you want to choose");
                         int userIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDChoosen,list))
+                        if (ContainUserID(userIDChoosen, list))
                         {
-                            if (list[IndexUserID(userIDChoosen,list)] is Faculty)
+                            if (list[IndexUserID(userIDChoosen, list)] is Faculty)
                             {
                                 iDchoosen = userIDChoosen;
                                 stayInTheFunction = false;
@@ -362,7 +457,7 @@ namespace Dorset_OOP_Project
                     case 1:
                         Console.WriteLine("Enter the disciplineID");
                         int disciplineIDanswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainDisciplineID(disciplineIDanswer,list))
+                        if (ContainDisciplineID(disciplineIDanswer, list))
                         {
                             iDchoosen = disciplineIDanswer;
                             stayInTheFunction = false;
@@ -377,7 +472,7 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(DisciplinesInformation(list));
                         Console.WriteLine("Enter the disciplineID of the discipline you want to choose");
                         int disciplineIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainDisciplineID(disciplineIDChoosen,list))
+                        if (ContainDisciplineID(disciplineIDChoosen, list))
                         {
                             iDchoosen = disciplineIDChoosen;
                             stayInTheFunction = false;
@@ -407,7 +502,7 @@ namespace Dorset_OOP_Project
                     case 1:
                         Console.WriteLine("Enter the classroomID");
                         int classroomIDanswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainClassroomID(classroomIDanswer,list))
+                        if (ContainClassroomID(classroomIDanswer, list))
                         {
                             iDchoosen = classroomIDanswer;
                             stayInTheFunction = false;
@@ -422,8 +517,8 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(ClassroomsEssentialInformation(list));
                         Console.WriteLine("Enter the classroomID of the classroom you want to choose");
                         int classroomIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainClassroomID(classroomIDChoosen,list))
-                            if (ContainClassroomID(classroomIDChoosen,list))
+                        if (ContainClassroomID(classroomIDChoosen, list))
+                            if (ContainClassroomID(classroomIDChoosen, list))
                             {
                                 iDchoosen = classroomIDChoosen;
                                 stayInTheFunction = false;
@@ -590,6 +685,8 @@ namespace Dorset_OOP_Project
             }
             return information;
         }
+        
+        
         #endregion
         //Find the index with an ID
         #region

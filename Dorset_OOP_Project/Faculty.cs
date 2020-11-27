@@ -12,6 +12,13 @@ namespace Dorset_OOP_Project
         {
             ClassroomsTeaching = new List<Classroom>();
         }
+        public void RemoveClassroom_FromAnID(int classroomID)
+        {
+            if (GenericFunction.ContainClassroomID(classroomID, ClassroomsTeaching))
+            {
+                ClassroomsTeaching.RemoveAt(GenericFunction.IndexClassroomID(classroomID, ClassroomsTeaching));
+            }
+        }
         public List<Discipline> DisciplinesTeaching()
         {
             List<Discipline> discplinesTeaching = new List<Discipline>();
