@@ -563,11 +563,120 @@ namespace Dorset_OOP_Project
                     case 2:
                         facultyCurrentUser.ChangeInformation();
                         break;
-                    case 3://need to start
-                        Console.WriteLine("NOTHING MADE");
+                    case 3:
+                        facultyCurrentUser.MenuSeeStudentInformation();
                         break;
                     case 4://need to start
-                        Console.WriteLine("NOTHING MADE");
+                        bool addingNotes = true;
+                        while (addingNotes)
+                        {
+                            int answerClassroom = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose a classroom\n2 : Leave this menu", 1, 2);
+                            switch (answerClassroom)
+                            {
+                                case 1:
+                                    int classroomID = GenericFunction.ChoosingClassroomID(facultyCurrentUser.ClassroomsTeaching);
+                                    if (classroomID != -1)
+                                    {
+                                        Classroom choosenClassroom = facultyCurrentUser.ClassroomsTeaching[GenericFunction.IndexClassroomID(classroomID, facultyCurrentUser.ClassroomsTeaching)];
+                                        bool stayStudent = true;
+                                        while (stayStudent)
+                                        {
+                                            int answerStudent = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose a student\n2 : Choose an other classroom\n3 : Leave this menu", 1, 3);
+                                            switch (answerStudent)
+                                            {
+                                                case 1:
+                                                    int studentID = GenericFunction.ChoosingStudentID_FromListStudent(choosenClassroom.ClassRoomStudents);
+                                                    if (studentID != -1)
+                                                    {
+                                                        Student choosenStudent = choosenClassroom.ClassRoomStudents[GenericFunction.IndexUserID_StudentList(studentID, choosenClassroom.ClassRoomStudents)];
+                                                        List<Exam> examPossible = new List<Exam>();
+                                                        foreach (Exam exam in Exams)
+                                                        {
+                                                            if (exam.ExamDiscipline == choosenClassroom.ClassRoomDiscipline)
+                                                            {
+                                                                examPossible.Add(exam);
+                                                            }
+                                                        }
+                                                        bool stayInThisExam = true;
+                                                        while (stayInThisExam)
+                                                        {
+                                                            int answerExam = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose an exam\n2 : Choose an other student\n3 : Choose an other classroom\n4 : Leave this menu", 1, 4);
+                                                            switch (answerExam)
+                                                            {
+                                                                case 1:
+                                                                    int indexExam = GenericFunction.ChoosingIndexExamList(examPossible);
+                                                                    if (indexExam != -1)
+                                                                    {
+                                                                        Exam choosenExam = examPossible[indexExam];
+                                                                        Console.WriteLine("Enter the note value between 0 and 20");
+                                                                        double noteValue = -1;
+                                                                        try
+                                                                        {
+                                                                            noteValue = Convert.ToDouble(Console.ReadLine());
+                                                                        }
+                                                                        catch (FormatException)
+                                                                        {
+                                                                            Console.WriteLine("The input was not a double");
+                                                                        }
+                                                                        if (noteValue >= 0 && noteValue <= 20)
+                                                                        {
+                                                                            Note newNote = new Note(choosenExam, noteValue);
+                                                                            choosenStudent.NotesReceive.Add(newNote);
+                                                                            Console.WriteLine("The note has been added");
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            Console.WriteLine("the entered value ins't between 0 and 20");
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        stayInThisExam = false;
+                                                                    }
+                                                                    break;
+                                                                case 2:
+                                                                    stayInThisExam = false;
+                                                                    break;
+                                                                case 3:
+                                                                    stayInThisExam = false;
+                                                                    stayStudent = false;
+                                                                    break;
+                                                                case 4:
+                                                                    stayInThisExam = false;
+                                                                    stayStudent = false;
+                                                                    addingNotes = false;
+                                                                    break;
+
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        stayStudent = false;
+                                                    }
+                                                    break;
+                                                case 2:
+                                                    stayStudent = false;
+                                                    break;
+                                                case 3:
+                                                    stayStudent = false;
+                                                    addingNotes = false;
+                                                    break;
+
+                                            }
+                                            
+                                        }
+                                    }
+                                    else
+                                    {
+                                        addingNotes = false;
+                                    }
+                                    break;
+                                case 2:
+                                    addingNotes = false;
+                                    break;
+                            }
+                        }
                         break;
                     case 5:
                         logout = true;

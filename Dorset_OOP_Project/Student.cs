@@ -45,11 +45,13 @@ namespace Dorset_OOP_Project
         {
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
+            NotesReceive = new List<Note>();
         }
         public Student(string lastName, string firstName, string email, string password) : base(lastName, firstName, email, password)
         {
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
+            NotesReceive = new List<Note>();
         }
 
         public Student(string lastName, string firstName, string email, string password, int userID) : base(lastName, firstName, email, password, userID)
