@@ -53,7 +53,49 @@ namespace Dorset_OOP_Project
             }
             return discplinesStudying;
         }
-        public List<List<List<string>>> TimeTableList()
+        public List<List<List<TimeTableAffichage>>> TimeTableList()
+        {
+             List<List<List<TimeTableAffichage>>> timetable = new List<List<List<TimeTableAffichage>>>();
+            for (int weekIndex = 0; weekIndex <= 9; weekIndex++)
+            {
+                List<List<TimeTableAffichage>> initialiseWeek_index = new List<List<TimeTableAffichage>>();
+                for (int indexDay = 0; indexDay < 7; indexDay++)
+                {
+                    List<TimeTableAffichage> initialiseDay_index = new List<TimeTableAffichage>();
+                    for (int indexHours = 0; indexHours <= 12; indexHours++)//hours 8 ->index = 0 hours 20 ->index =12
+                    {
+                        initialiseDay_index.Add(new TimeTableAffichage { DisciplineNameTS = " ", FirstNameTeacher = " ", LastNameTeacher = " " });
+                    }
+                    initialiseWeek_index.Add(initialiseDay_index);
+                }
+                timetable.Add(initialiseWeek_index);
+            }
+            foreach (Classroom classroom in ClassroomStudying)
+            {
+                string disciplineName = classroom.ClassRoomDiscipline.DisciplineName;
+                foreach (TimeSlot timeslot in classroom.Timetables)
+                {
+                    string firstNameTeacher = " ";
+                    string lastNameTeacher = " ";
+                    string disciplineNameTS = " ";
+                    if (timeslot.Teacher != null && timeslot.Teacher.FirstName != null)
+                    {
+                        firstNameTeacher = timeslot.Teacher.FirstName;
+                    }
+                    if (timeslot.Teacher != null && timeslot.Teacher.LastName != null)
+                    {
+                        lastNameTeacher = timeslot.Teacher.LastName;
+                    }
+                    if (classroom.ClassRoomDiscipline != null && classroom.ClassRoomDiscipline.DisciplineName != null)
+                    {
+                        disciplineNameTS = classroom.ClassRoomDiscipline.DisciplineName;
+                    }
+                    timetable[timeslot.Week - 1][timeslot.Day - 1][timeslot.StartingTime - 8] = new TimeTableAffichage { FirstNameTeacher = firstNameTeacher, LastNameTeacher = lastNameTeacher, DisciplineNameTS = disciplineNameTS };
+                }
+            }
+            return timetable;
+        }
+        public List<List<List<string>>> TimeTableList2()
         {
             List<List<List<string>>> timetable = new List<List<List<string>>>();
             for (int weekIndex = 0; weekIndex <= 9; weekIndex++)
@@ -82,29 +124,54 @@ namespace Dorset_OOP_Project
         }
         public string TimeTableToString(int week)
         {
-            string affichage = "";
-            List<List<List<string>>> timetable = TimeTableList();
-            for(int indexDay = 0; indexDay < 6; indexDay++)
+            int space = 12;
+            string affichage = GenericFunction.AddSpace("", space);
+            List<List<List<TimeTableAffichage>>> timetable = TimeTableList();
+            for (int indexDay = 1; indexDay <= 6; indexDay++)
             {
-                if (indexDay == 0)
+                affichage += GenericFunction.AddSpace($"{GenericFunction.FromIndexToDay(indexDay)}", space);
+            }
+            for (int indexHours = 0; indexHours <= 12; indexHours++)//hours 8 ->index = 0 hours 20 ->index =12
+            {
+                for (int indexLineInformation = 0; indexLineInformation <= 2; indexLineInformation++)
                 {
-                    affichage += $"      {GenericFunction.FromIndexToDay(indexDay + 1)}";
-                }
-                for (int indexHours = 0; indexHours <= 12; indexHours++)//hours 8 ->index = 0 hours 20 ->index =12
-                {
-                    affichage+=$"{indexHours+8}     ";
-                    if (timetable[week][indexDay][indexHours] != "")
+                    switch (indexLineInformation)
                     {
-                        affichage+=timetable[week][indexDay][indexHours];
+                        case 0:
+                            GenericFunction.AddSpace("", space);
+                            break;
+                        case 1:
+                            affichage += GenericFunction.AddSpace($"\t{indexHours + 8}H", space);
+                            break;
+                        case 2:
+                            affichage += GenericFunction.AddSpace("", space);
+                            break;
                     }
-                    else
+                    for (int indexDay = 0; indexDay <= 6; indexDay++)
                     {
-                        affichage += "\n\n\n";
+                        if (timetable[week - 1][indexDay][indexHours] != null)
+                        {
+                            switch (indexLineInformation)
+                            {
+                                case 0:
+                                    affichage += GenericFunction.AddSpace(timetable[week - 1][indexDay][indexHours].DisciplineNameTS, space);
+                                    break;
+                                case 1:
+                                    affichage += GenericFunction.AddSpace(timetable[week - 1][indexDay][indexHours].FirstNameTeacher, space);
+                                    break;
+                                case 2:
+                                    affichage += GenericFunction.AddSpace(timetable[week - 1][indexDay][indexHours].LastNameTeacher, space);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            GenericFunction.AddSpace("", space);
+                        }
                     }
+                    affichage += "\n";
                 }
             }
-           
-
             return affichage;
         }
         
@@ -118,7 +185,7 @@ namespace Dorset_OOP_Project
                     {
                         case 1:
                             int week = EnterValue.AskingNumber("enter the week you want to see", 1, 10);
-
+                        Console.WriteLine(TimeTableToString(week));
                                 
                            
                             break;

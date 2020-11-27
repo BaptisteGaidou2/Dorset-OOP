@@ -137,16 +137,20 @@ namespace Dorset_OOP_Project
             bool logout = false;
             while (!logout)
             {
-                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Log out", 1, 3);
+                Student currentStudent = (Student)UserList[CurrentIndexUser];
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : see timetable\n4 : Log out", 1, 4);
                 switch (answer)
                 {
                     case 1:
-                        Console.WriteLine(UserList[CurrentIndexUser].PersonalInformation());
+                        Console.WriteLine(currentStudent.PersonalInformation());
                         break;
                     case 2:
-                        UserList[CurrentIndexUser].ChangeInformation();
+                        currentStudent.ChangeInformation();
                         break;
                     case 3:
+                        currentStudent.TimeTableMenu();
+                            break;
+                    case 4:
                         logout = true;
                         break;
                 }
@@ -934,6 +938,12 @@ namespace Dorset_OOP_Project
             Classrooms.Add(new Classroom(classroomName, facultiesTeaching, studentsStudying, discipline));
             Classrooms[Classrooms.Count - 1].ClassRoomID = PutANewClassroomID();
         }
+        public void AddClassroom(string classroomName, Discipline discipline)
+        {
+            Classrooms.Add(new Classroom(classroomName, discipline));
+            Classrooms[Classrooms.Count - 1].ClassRoomID = PutANewClassroomID();
+        }
+
 
         public void AddDiscipline(Discipline newDiscipline)
         {

@@ -151,6 +151,21 @@ namespace Dorset_OOP_Project
             ClassRoomStudents = classRoomStudents;
             Timetables = new List<TimeSlot>();
         }
+        public Classroom(string classRoomName)
+        {
+            ClassroomName = classRoomName;
+            ClassRoomFaculties = new List<Faculty>();
+            ClassRoomStudents = new List<Student>();
+            Timetables = new List<TimeSlot>();
+        }
+        public Classroom(string classRoomName,Discipline discipline)
+        {
+            ClassroomName = classRoomName;
+            ClassRoomDiscipline = discipline;
+            ClassRoomFaculties = new List<Faculty>();
+            ClassRoomStudents = new List<Student>();
+            Timetables = new List<TimeSlot>();
+        }
         public bool AddStudent(Student newStudent)
         {
             bool possible = false;

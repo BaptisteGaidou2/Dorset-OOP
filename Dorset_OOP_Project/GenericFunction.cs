@@ -6,6 +6,14 @@ namespace Dorset_OOP_Project
 {
     public static class GenericFunction
     {
+        public static string AddSpace(string message,int length)
+        {
+            while (message.Length < length)
+            {
+                message += " ";
+            }
+            return message;
+        }
         public static string FromIndexToDay(int index)
         {
             string day = "";
