@@ -6,7 +6,7 @@ namespace Dorset_OOP_Project
 {
     public static class GenericFunction
     {
-        public static  string ExamListInformation(List<Exam> list)
+        public static string NoteListInformation(List<Note> list)
         {
             string information = "";
             if (list != null && list.Count != 0)
@@ -18,11 +18,11 @@ namespace Dorset_OOP_Project
             }
             else
             {
-                information += "There is no exams ";
+                information += "There is no notes ";
             }
             return information;
         }
-        public static int ChoosingIndexExamList(List<Exam> list)
+        public static int ChoosingIndexNoteList(List<Note> list)
         {
             int index = -1;
             if (list != null && list.Count == 0)
@@ -30,12 +30,12 @@ namespace Dorset_OOP_Project
                 bool stayInTheFunction = true;
                 while (stayInTheFunction)
                 {
-                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose the index of the time slot you want to select\n2 : Go to the previous menu", 1, 2);
+                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose the index of the note you want to select\n2 : Go to the previous menu", 1, 2);
                     switch (methodChoiceAnswer)
                     {
                         case 1:
-                            Console.WriteLine(ExamListInformation(list));
-                            Console.WriteLine("Enter the index of the time slot you want to select");
+                            Console.WriteLine(NoteListInformation(list));
+                            Console.WriteLine("Enter the index of the note you want to select");
                             try
                             {
                                 index = Convert.ToInt32(Console.ReadLine());
@@ -62,7 +62,67 @@ namespace Dorset_OOP_Project
             }
             else
             {
-                Console.WriteLine("There is no time slot");
+                Console.WriteLine("There is no notes");
+            }
+            return index;
+        }
+        public static  string ExamListInformation(List<Exam> list)
+        {
+            string information = "";
+            if (list != null && list.Count != 0)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    information += $"\n[index : {i}] {list[i].Information()}";
+                }
+            }
+            else
+            {
+                information += "There is no exams ";
+            }
+            return information;
+        }
+        public static int ChoosingIndexExamList(List<Exam> list)
+        {
+            int index = -1;
+            if (list != null && list.Count == 0)
+            {
+                bool stayInTheFunction = true;
+                while (stayInTheFunction)
+                {
+                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose the index of exam you want to select\n2 : Go to the previous menu", 1, 2);
+                    switch (methodChoiceAnswer)
+                    {
+                        case 1:
+                            Console.WriteLine(ExamListInformation(list));
+                            Console.WriteLine("Enter the index of the exam you want to select");
+                            try
+                            {
+                                index = Convert.ToInt32(Console.ReadLine());
+                            }
+                            catch (FormatException)
+                            {
+                                Console.WriteLine("The input was not an integer");
+                            }
+                            if (index < 0 || index >= list.Count)
+                            {
+                                Console.WriteLine("There isn't this index");
+                                index = -1;
+                            }
+                            else
+                            {
+                                stayInTheFunction = false;
+                            }
+                            break;
+                        case 2:
+                            stayInTheFunction = false;
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("There is no exams");
             }
             return index;
         }

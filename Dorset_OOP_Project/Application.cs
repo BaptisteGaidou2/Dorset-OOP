@@ -638,7 +638,29 @@ namespace Dorset_OOP_Project
                                                                                     }
                                                                                     break;
                                                                                 case 2:
-
+                                                                                    int indexNote = GenericFunction.ChoosingIndexNoteList(choosenStudent.NotesReceive);
+                                                                                    if (indexNote != -1)
+                                                                                    {
+                                                                                        Console.WriteLine("Enter the note value between 0 and 20");
+                                                                                        double newNoteValue = -1;
+                                                                                        try
+                                                                                        {
+                                                                                            newNoteValue = Convert.ToDouble(Console.ReadLine());
+                                                                                        }
+                                                                                        catch (FormatException)
+                                                                                        {
+                                                                                            Console.WriteLine("The input was not a double");
+                                                                                        }
+                                                                                        if (newNoteValue >= 0 && newNoteValue <= 20)
+                                                                                        {
+                                                                                            choosenStudent.NotesReceive[indexNote].NoteValue=newNoteValue;
+                                                                                            Console.WriteLine("The note has been changed");
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            Console.WriteLine("the entered value ins't between 0 and 20");
+                                                                                        }
+                                                                                    }
                                                                                     break;
                                                                                 case 3:
                                                                                     stayEdit = false;
@@ -719,7 +741,6 @@ namespace Dorset_OOP_Project
                 }
             }
         }
-        
         //public int ChoosingAUserID()
         //{
         //    int iDchoosen = -1;
