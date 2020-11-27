@@ -8,12 +8,38 @@ namespace Dorset_OOP_Project
     {
         public List<Classroom> ClassroomStudying { get; set; }
         public List<Attendance> Attendances { get; set; }
+        public List<Note> NotesReceive { get; set; }
         public void RemoveClassroom_FromAnID(int classroomID)
         {
             if (GenericFunction.ContainClassroomID(classroomID, ClassroomStudying))
             {
                 ClassroomStudying.RemoveAt(GenericFunction.IndexClassroomID(classroomID,ClassroomStudying));
             }
+        }
+        public void SeeAllNotes()
+        {
+            foreach (Discipline discipline in DisciplinesStudying())
+            {
+                Console.WriteLine(SeeNotesFromADiscipline(discipline));
+            }
+        }
+        
+        public string SeeNotesFromADiscipline(Discipline discipline)
+        {
+            string information = "";
+            int notesInThisDiscipline = 0;
+            foreach (Note studentNotes in NotesReceive)
+            {
+                if (studentNotes.ExamNote.ExamDiscipline == discipline)
+                {
+                    information += studentNotes.Information()+"\n\n";
+                }
+            }
+            if (notesInThisDiscipline == 0)
+            {
+                information+="No notes in this discipline";
+            }
+            return information;
         }
         public Student(string lastName, string firstName) : base(lastName, firstName)
         {
@@ -52,6 +78,15 @@ namespace Dorset_OOP_Project
                 }
             }
             return discplinesStudying;
+        }
+        public string SeeDisciplineStudying()
+        {
+            string info = "";
+            foreach(Discipline discipline in DisciplinesStudying())
+            {
+                info+=(discipline.PublicInformation());
+            }
+            return info;
         }
         public List<List<List<TimeTableAffichage>>> TimeTableList()
         {

@@ -4,14 +4,18 @@ using System.Text;
 
 namespace Dorset_OOP_Project
 {
-    class Note
+    public class Note
     {
-        private Exam ExamNote { get; set; }
-        private float NoteValue { get; set; }
+        public Exam ExamNote { get; set; }
+        public float NoteValue { get; set; }
         public Note(Exam _examNote,float _noteValue)
         {
             ExamNote = _examNote;
             NoteValue=_noteValue;
+        }
+        public string Information()
+        {
+            return $"NOTE : {NoteValue} \n{ExamNote.Information()}";
         }
     }
 }

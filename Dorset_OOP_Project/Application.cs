@@ -7,6 +7,7 @@ namespace Dorset_OOP_Project
 {
     public class Application
     {
+        public List<Exam> Exams { get; set; }
         public List<Discipline> DisciplineList { get; set; }
         public List<User> UserList { get; set; }
         public List<Classroom> Classrooms { get; set; }
@@ -138,7 +139,7 @@ namespace Dorset_OOP_Project
             while (!logout)
             {
                 Student currentStudent = (Student)UserList[CurrentIndexUser];
-                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : see timetable\n4 : Log out", 1, 4);
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : See timetable\n4 : See Notes\n5 : See date Exam\n6 : See discipline studying\n7 : Log out", 1, 7);
                 switch (answer)
                 {
                     case 1:
@@ -151,6 +152,28 @@ namespace Dorset_OOP_Project
                         currentStudent.TimeTableMenu();
                             break;
                     case 4:
+                        currentStudent.SeeAllNotes();
+                        break;
+                    case 5:
+                        if (Exams != null && Exams.Count != 0)
+                        {
+                            foreach (Exam exam in Exams)
+                            {
+                                if (currentStudent.DisciplinesStudying()!=null && exam.ExamDiscipline != null)
+                                {
+                                    if (currentStudent.DisciplinesStudying().Contains(exam.ExamDiscipline))
+                                    {
+                                        Console.WriteLine(exam.Information());
+                                    }
+                                }
+                            }
+                        }
+                        
+                        break;
+                    case 6:
+                        Console.WriteLine(GenericFunction.DisciplinesInformation(currentStudent.DisciplinesStudying()));
+                        break;
+                    case 7:
                         logout = true;
                         break;
                 }
