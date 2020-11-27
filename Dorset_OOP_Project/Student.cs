@@ -142,7 +142,7 @@ namespace Dorset_OOP_Project
                 for (int indexDay = 0; indexDay < 7; indexDay++)
                 {
                     List<TimeTableAffichage> initialiseDay_index = new List<TimeTableAffichage>();
-                    for (int indexHours = 0; indexHours <= 12; indexHours++)//hours 8 ->index = 0 hours 20 ->index =12
+                    for (int indexHours = 0; indexHours <= 11; indexHours++)//hours 8 ->index = 0 hours 19 ->index =11
                     {
                         initialiseDay_index.Add(new TimeTableAffichage { DisciplineNameTS = " ", FirstNameTeacher = " ", LastNameTeacher = " " });
                     }
@@ -184,7 +184,7 @@ namespace Dorset_OOP_Project
                 for (int indexDay = 0; indexDay < 7; indexDay++)
                 {
                     List<string> initialiseDay_index = new List<string>();
-                    for (int indexHours = 0; indexHours <= 12; indexHours++)//hours 8 ->index = 0 hours 20 ->index =12
+                    for (int indexHours = 0; indexHours <= 11; indexHours++)//hours 8 ->index = 0 hours 19 ->index =11
                     {
                         initialiseDay_index.Add("");
                     }
@@ -211,17 +211,26 @@ namespace Dorset_OOP_Project
             {
                 affichage += GenericFunction.AddSpace($"{GenericFunction.FromIndexToDay(indexDay)}", space);
             }
-            for (int indexHours = 0; indexHours <= 12; indexHours++)//hours 8 ->index = 0 hours 20 ->index =12
+            affichage += "\n";
+            for (int indexHours = 0; indexHours <= 11; indexHours++)//hours 8 ->index = 0 hours 19 ->index =11
             {
+                for(int indexSeparation_Day=0;indexSeparation_Day<7;indexSeparation_Day++)
+                {
+                    for (int indexSeparation = 1; indexSeparation <= space; indexSeparation++)
+                    {
+                        affichage += "-";
+                    }
+                }
+                affichage += "\n";
                 for (int indexLineInformation = 0; indexLineInformation <= 2; indexLineInformation++)
                 {
                     switch (indexLineInformation)
                     {
                         case 0:
-                            GenericFunction.AddSpace("", space);
+                            affichage+=GenericFunction.AddSpace("", space);
                             break;
                         case 1:
-                            affichage += GenericFunction.AddSpace($"\t{indexHours + 8}H", space);
+                            affichage += GenericFunction.AddSpace($"   {indexHours + 8}H-{indexHours + 9}H", space);
                             break;
                         case 2:
                             affichage += GenericFunction.AddSpace("", space);
