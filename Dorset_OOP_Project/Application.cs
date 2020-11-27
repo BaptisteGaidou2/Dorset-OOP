@@ -553,7 +553,7 @@ namespace Dorset_OOP_Project
             bool logout = false;
             while (!logout)
             {
-                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : See information about one of your student\n4 : Put a mark\n5 : Log out", 1, 5);
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : See information about one of your student\n4 : Change/Add a mark\n5 : Log out", 1, 5);
                 Faculty facultyCurrentUser = (Faculty)UserList[CurrentIndexUser];
                 switch (answer)
                 {
@@ -566,7 +566,8 @@ namespace Dorset_OOP_Project
                     case 3:
                         facultyCurrentUser.MenuSeeStudentInformation();
                         break;
-                    case 4://need to start
+                    case 4:
+                        #region
                         bool addingNotes = true;
                         while (addingNotes)
                         {
@@ -608,26 +609,59 @@ namespace Dorset_OOP_Project
                                                                     if (indexExam != -1)
                                                                     {
                                                                         Exam choosenExam = examPossible[indexExam];
-                                                                        Console.WriteLine("Enter the note value between 0 and 20");
-                                                                        double noteValue = -1;
-                                                                        try
+                                                                        bool stayEdit = true;
+                                                                        while (stayEdit)
                                                                         {
-                                                                            noteValue = Convert.ToDouble(Console.ReadLine());
+                                                                            int editChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a new notes\n2 : Change a note\n3 : Choose an other exam\n4 :  Choose an other student\n5 : Choose an other classroom\n6 : Leave this menu", 1, 6);
+                                                                            switch (editChoice)
+                                                                            {
+                                                                                case 1:
+                                                                                    Console.WriteLine("Enter the note value between 0 and 20");
+                                                                                    double noteValue = -1;
+                                                                                    try
+                                                                                    {
+                                                                                        noteValue = Convert.ToDouble(Console.ReadLine());
+                                                                                    }
+                                                                                    catch (FormatException)
+                                                                                    {
+                                                                                        Console.WriteLine("The input was not a double");
+                                                                                    }
+                                                                                    if (noteValue >= 0 && noteValue <= 20)
+                                                                                    {
+                                                                                        Note newNote = new Note(choosenExam, noteValue);
+                                                                                        choosenStudent.NotesReceive.Add(newNote);
+                                                                                        Console.WriteLine("The note has been added");
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        Console.WriteLine("the entered value ins't between 0 and 20");
+                                                                                    }
+                                                                                    break;
+                                                                                case 2:
+
+                                                                                    break;
+                                                                                case 3:
+                                                                                    stayEdit = false;
+                                                                                    break;
+                                                                                case 4:
+                                                                                    stayEdit = false;
+                                                                                    stayInThisExam = false;
+                                                                                    break;
+                                                                                case 5:
+                                                                                    stayEdit = false;
+                                                                                    stayInThisExam = false;
+                                                                                    stayStudent = false;
+                                                                                    break;
+                                                                                case 6:
+                                                                                    stayEdit = false;
+                                                                                    stayInThisExam = false;
+                                                                                    stayStudent = false;
+                                                                                    addingNotes = false;
+                                                                                    break;
+                                                                            }
+                                                                            
                                                                         }
-                                                                        catch (FormatException)
-                                                                        {
-                                                                            Console.WriteLine("The input was not a double");
-                                                                        }
-                                                                        if (noteValue >= 0 && noteValue <= 20)
-                                                                        {
-                                                                            Note newNote = new Note(choosenExam, noteValue);
-                                                                            choosenStudent.NotesReceive.Add(newNote);
-                                                                            Console.WriteLine("The note has been added");
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            Console.WriteLine("the entered value ins't between 0 and 20");
-                                                                        }
+                                                                        
                                                                     }
                                                                     else
                                                                     {
@@ -678,6 +712,7 @@ namespace Dorset_OOP_Project
                             }
                         }
                         break;
+                    #endregion
                     case 5:
                         logout = true;
                         break;
