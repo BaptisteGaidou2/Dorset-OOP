@@ -271,127 +271,142 @@ namespace Dorset_OOP_Project
         }
         public static int ChoosingStudentID(List<User> list)
         {
+
             int iDchoosen = -1;
-            bool stayInTheFunction = true;
-            while (stayInTheFunction)
-            {
-                int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID of a student\n2 : Choose a userID and the student information\n3 : Go to the previous menu", 1, 3);
-                switch (methodChoiceAnswer)
+            if (list != null && list.Count == 0)
+            { 
+                bool stayInTheFunction = true;
+                while (stayInTheFunction)
                 {
-                    case 1:
-                        Console.WriteLine("Enter the userID");
-                        int userIDAnswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDAnswer, list))
-                        {
-                            if (list[IndexUserID(userIDAnswer, list)] is Student)
+                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID of a student\n2 : Choose a userID and the student information\n3 : Go to the previous menu", 1, 3);
+                    switch (methodChoiceAnswer)
+                    {
+                        case 1:
+                            Console.WriteLine("Enter the userID");
+                            int userIDAnswer = Convert.ToInt32(Console.ReadLine());
+                            if (ContainUserID(userIDAnswer, list))
                             {
-                                iDchoosen = userIDAnswer;
-                                stayInTheFunction = false;
+                                if (list[IndexUserID(userIDAnswer, list)] is Student)
+                                {
+                                    iDchoosen = userIDAnswer;
+                                    stayInTheFunction = false;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("The userID is not corresponding to a student");
+                                }
                             }
                             else
                             {
-                                Console.WriteLine("The userID is not corresponding to a student");
+                                Console.WriteLine("There is not this user ID in the database");
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 2:
-                        Console.WriteLine("All student information :");
-                        Console.WriteLine(StudentsInformation(list));
-                        Console.WriteLine("Enter the UserID of the student you want to choose");
-                        int userIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDChoosen, list))
-                        {
-                            if (list[IndexUserID(userIDChoosen, list)] is Student)
+                            break;
+                        case 2:
+                            Console.WriteLine("All student information :");
+                            Console.WriteLine(StudentsInformation(list));
+                            Console.WriteLine("Enter the UserID of the student you want to choose");
+                            int userIDChoosen = Convert.ToInt32(Console.ReadLine());
+                            if (ContainUserID(userIDChoosen, list))
                             {
-                                iDchoosen = userIDChoosen;
-                                stayInTheFunction = false;
+                                if (list[IndexUserID(userIDChoosen, list)] is Student)
+                                {
+                                    iDchoosen = userIDChoosen;
+                                    stayInTheFunction = false;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("The userID is not corresponding to a Student");
+                                }
                             }
                             else
                             {
-                                Console.WriteLine("The userID is not corresponding to a Student");
+                                Console.WriteLine("There is not this user ID in the database");
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 3:
-                        iDchoosen = -1;
-                        stayInTheFunction = false;
-                        break;
+                            break;
+                        case 3:
+                            iDchoosen = -1;
+                            stayInTheFunction = false;
+                            break;
+                    }
                 }
+            }
+            else
+            {
+                Console.WriteLine("There is no user");
             }
             return iDchoosen;
         }
         public static int ChoosingStudentID_FromListStudent(List<Student> list)
         {
             int iDchoosen = -1;
-            bool stayInTheFunction = true;
-            while (stayInTheFunction)
+            if (list != null && list.Count == 0)
             {
-                int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID of a student\n2 : Choose a userID and the student information\n3 : Go to the previous menu", 1, 3);
-                switch (methodChoiceAnswer)
+                bool stayInTheFunction = true;
+                while (stayInTheFunction)
                 {
-                    case 1:
-                        Console.WriteLine("Enter the userID");
-                        int userIDAnswer = -1;
-                        try
-                        {
-                            userIDAnswer = Convert.ToInt32(Console.ReadLine());
-                        }
-                        catch (FormatException)
-                        {
-                            Console.WriteLine("The input was not an integer");
-                        }
-                        if (ContainUserID_FromStudentList(userIDAnswer, list))
-                        {
-                            if (list[IndexUserID_StudentList(userIDAnswer, list)] is Student)
+                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID of a student\n2 : Choose a userID and the student information\n3 : Go to the previous menu", 1, 3);
+                    switch (methodChoiceAnswer)
+                    {
+                        case 1:
+                            Console.WriteLine("Enter the userID");
+                            int userIDAnswer = -1;
+                            try
                             {
-                                iDchoosen = userIDAnswer;
-                                stayInTheFunction = false;
+                                userIDAnswer = Convert.ToInt32(Console.ReadLine());
+                            }
+                            catch (FormatException)
+                            {
+                                Console.WriteLine("The input was not an integer");
+                            }
+                            if (ContainUserID_FromStudentList(userIDAnswer, list))
+                            {
+                                if (list[IndexUserID_StudentList(userIDAnswer, list)] is Student)
+                                {
+                                    iDchoosen = userIDAnswer;
+                                    stayInTheFunction = false;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("The userID is not corresponding to a student");
+                                }
                             }
                             else
                             {
-                                Console.WriteLine("The userID is not corresponding to a student");
+                                Console.WriteLine("There is not this user ID in the database");
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 2:
-                        Console.WriteLine("All student information :");
-                        Console.WriteLine(StudentsInformation_FromAStudentList(list));
-                        Console.WriteLine("Enter the UserID of the student you want to choose");
-                        int userIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID_FromStudentList(userIDChoosen, list))
-                        {
-                            if (list[IndexUserID_StudentList(userIDChoosen, list)] is Student)
+                            break;
+                        case 2:
+                            Console.WriteLine("All student information :");
+                            Console.WriteLine(StudentsInformation_FromAStudentList(list));
+                            Console.WriteLine("Enter the UserID of the student you want to choose");
+                            int userIDChoosen = Convert.ToInt32(Console.ReadLine());
+                            if (ContainUserID_FromStudentList(userIDChoosen, list))
                             {
-                                iDchoosen = userIDChoosen;
-                                stayInTheFunction = false;
+                                if (list[IndexUserID_StudentList(userIDChoosen, list)] is Student)
+                                {
+                                    iDchoosen = userIDChoosen;
+                                    stayInTheFunction = false;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("The userID is not corresponding to a Student");
+                                }
                             }
                             else
                             {
-                                Console.WriteLine("The userID is not corresponding to a Student");
+                                Console.WriteLine("There is not this user ID in the database");
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 3:
-                        iDchoosen = -1;
-                        stayInTheFunction = false;
-                        break;
+                            break;
+                        case 3:
+                            iDchoosen = -1;
+                            stayInTheFunction = false;
+                            break;
+                    }
                 }
+            }
+            else
+            {
+                Console.WriteLine("There is no student");
             }
             return iDchoosen;
         }
@@ -457,211 +472,240 @@ namespace Dorset_OOP_Project
         public static int ChoosingAFacultyID(List<User> list)
         {
             int iDchoosen = -1;
-            bool stayInTheFunction = true;
-            while (stayInTheFunction)
+            if (list != null && list.Count == 0)
             {
-                int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID of a faculty\n2 : Choose a userID and the faculty information\n3 : Go to the previous menu", 1, 3);
-                switch (methodChoiceAnswer)
+                bool stayInTheFunction = true;
+                while (stayInTheFunction)
                 {
-                    case 1:
-                        Console.WriteLine("Enter the userID");
-                        int userIDAnswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDAnswer, list))
-                        {
-                            if (list[IndexUserID(userIDAnswer, list)] is Faculty)
+                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID of a faculty\n2 : Choose a userID and the faculty information\n3 : Go to the previous menu", 1, 3);
+                    switch (methodChoiceAnswer)
+                    {
+                        case 1:
+                            Console.WriteLine("Enter the userID");
+                            int userIDAnswer = Convert.ToInt32(Console.ReadLine());
+                            if (ContainUserID(userIDAnswer, list))
                             {
-                                iDchoosen = userIDAnswer;
+                                if (list[IndexUserID(userIDAnswer, list)] is Faculty)
+                                {
+                                    iDchoosen = userIDAnswer;
 
-                                stayInTheFunction = false;
+                                    stayInTheFunction = false;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("The userID is not corresponding to a faculty");
+                                }
                             }
                             else
                             {
-                                Console.WriteLine("The userID is not corresponding to a faculty");
+                                Console.WriteLine("There is not this user ID in the database");
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 2:
-                        Console.WriteLine("All faculty information :");
-                        Console.WriteLine(FacultiesInformation(list));
-                        Console.WriteLine("Enter the UserID of the faculty you want to choose");
-                        int userIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID(userIDChoosen, list))
-                        {
-                            if (list[IndexUserID(userIDChoosen, list)] is Faculty)
+                            break;
+                        case 2:
+                            Console.WriteLine("All faculty information :");
+                            Console.WriteLine(FacultiesInformation(list));
+                            Console.WriteLine("Enter the UserID of the faculty you want to choose");
+                            int userIDChoosen = Convert.ToInt32(Console.ReadLine());
+                            if (ContainUserID(userIDChoosen, list))
                             {
-                                iDchoosen = userIDChoosen;
-                                stayInTheFunction = false;
+                                if (list[IndexUserID(userIDChoosen, list)] is Faculty)
+                                {
+                                    iDchoosen = userIDChoosen;
+                                    stayInTheFunction = false;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("The userID is not corresponding to an faculty");
+                                }
                             }
                             else
                             {
-                                Console.WriteLine("The userID is not corresponding to an faculty");
+                                Console.WriteLine("There is not this user ID in the database");
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 3:
-                        iDchoosen = -1;
-                        stayInTheFunction = false;
-                        break;
+                            break;
+                        case 3:
+                            iDchoosen = -1;
+                            stayInTheFunction = false;
+                            break;
+                    }
                 }
+            }
+            else
+            {
+                Console.WriteLine("There is no user");
             }
             return iDchoosen;
         }
         public static int ChoosingAFacultyID_FromFacultyList(List<Faculty> list)
         {
             int iDchoosen = -1;
-            bool stayInTheFunction = true;
-            while (stayInTheFunction)
+            if (list != null && list.Count == 0)
             {
-                int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID of a faculty\n2 : Choose a userID and the faculty information\n3 : Go to the previous menu", 1, 3);
-                switch (methodChoiceAnswer)
+                bool stayInTheFunction = true;
+                while (stayInTheFunction)
                 {
-                    case 1:
-                        Console.WriteLine("Enter the userID");
-                        int userIDAnswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID_FromFacultyList(userIDAnswer, list))
-                        {
-                            if (list[IndexUserID_FacultyList(userIDAnswer, list)] is Faculty)
+                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a user ID of a faculty\n2 : Choose a userID and the faculty information\n3 : Go to the previous menu", 1, 3);
+                    switch (methodChoiceAnswer)
+                    {
+                        case 1:
+                            Console.WriteLine("Enter the userID");
+                            int userIDAnswer = Convert.ToInt32(Console.ReadLine());
+                            if (ContainUserID_FromFacultyList(userIDAnswer, list))
                             {
-                                iDchoosen = userIDAnswer;
+                                if (list[IndexUserID_FacultyList(userIDAnswer, list)] is Faculty)
+                                {
+                                    iDchoosen = userIDAnswer;
 
-                                stayInTheFunction = false;
+                                    stayInTheFunction = false;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("The userID is not corresponding to a faculty");
+                                }
                             }
                             else
                             {
-                                Console.WriteLine("The userID is not corresponding to a faculty");
+                                Console.WriteLine("There is not this user ID in the database");
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 2:
-                        Console.WriteLine("All faculty information :");
-                        Console.WriteLine(FacultiesInformation_FromAFacultyList(list));
-                        Console.WriteLine("Enter the UserID of the faculty you want to choose");
-                        int userIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainUserID_FromFacultyList(userIDChoosen, list))
-                        {
-                            if (list[IndexUserID_FacultyList(userIDChoosen, list)] is Faculty)
+                            break;
+                        case 2:
+                            Console.WriteLine("All faculty information :");
+                            Console.WriteLine(FacultiesInformation_FromAFacultyList(list));
+                            Console.WriteLine("Enter the UserID of the faculty you want to choose");
+                            int userIDChoosen = Convert.ToInt32(Console.ReadLine());
+                            if (ContainUserID_FromFacultyList(userIDChoosen, list))
                             {
-                                iDchoosen = userIDChoosen;
-                                stayInTheFunction = false;
+                                if (list[IndexUserID_FacultyList(userIDChoosen, list)] is Faculty)
+                                {
+                                    iDchoosen = userIDChoosen;
+                                    stayInTheFunction = false;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("The userID is not corresponding to an faculty");
+                                }
                             }
                             else
                             {
-                                Console.WriteLine("The userID is not corresponding to an faculty");
+                                Console.WriteLine("There is not this user ID in the database");
                             }
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this user ID in the database");
-                        }
-                        break;
-                    case 3:
-                        iDchoosen = -1;
-                        stayInTheFunction = false;
-                        break;
+                            break;
+                        case 3:
+                            iDchoosen = -1;
+                            stayInTheFunction = false;
+                            break;
+                    }
                 }
+
+            }
+            else
+            {
+                Console.WriteLine("There is no faculty");
             }
             return iDchoosen;
         }
         public static int ChoosingDisciplineID(List<Discipline> list)
         {
             int iDchoosen = -1;
-            bool stayInTheFunction = true;
-            while (stayInTheFunction)
+            if (list != null && list.Count == 0)
             {
-                int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a discipline ID\n2 : Choose a discipline ID and the see disciplines information\n3 : Go to the previous menu", 1, 3);
-                switch (methodChoiceAnswer)
+                bool stayInTheFunction = true;
+                while (stayInTheFunction)
                 {
-                    case 1:
-                        Console.WriteLine("Enter the disciplineID");
-                        int disciplineIDanswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainDisciplineID(disciplineIDanswer, list))
-                        {
-                            iDchoosen = disciplineIDanswer;
+                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a discipline ID\n2 : Choose a discipline ID and the see disciplines information\n3 : Go to the previous menu", 1, 3);
+                    switch (methodChoiceAnswer)
+                    {
+                        case 1:
+                            Console.WriteLine("Enter the disciplineID");
+                            int disciplineIDanswer = Convert.ToInt32(Console.ReadLine());
+                            if (ContainDisciplineID(disciplineIDanswer, list))
+                            {
+                                iDchoosen = disciplineIDanswer;
+                                stayInTheFunction = false;
+                            }
+                            else
+                            {
+                                Console.WriteLine("There is not this discipline ID in the database");
+                            }
+                            break;
+                        case 2:
+                            Console.WriteLine("All discipline information :");
+                            Console.WriteLine(DisciplinesInformation(list));
+                            Console.WriteLine("Enter the disciplineID of the discipline you want to choose");
+                            int disciplineIDChoosen = Convert.ToInt32(Console.ReadLine());
+                            if (ContainDisciplineID(disciplineIDChoosen, list))
+                            {
+                                iDchoosen = disciplineIDChoosen;
+                                stayInTheFunction = false;
+                            }
+                            else
+                            {
+                                Console.WriteLine("There is not this discipline ID in the database");
+                            }
+                            break;
+                        case 3:
+                            iDchoosen = -1;
                             stayInTheFunction = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this discipline ID in the database");
-                        }
-                        break;
-                    case 2:
-                        Console.WriteLine("All discipline information :");
-                        Console.WriteLine(DisciplinesInformation(list));
-                        Console.WriteLine("Enter the disciplineID of the discipline you want to choose");
-                        int disciplineIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainDisciplineID(disciplineIDChoosen, list))
-                        {
-                            iDchoosen = disciplineIDChoosen;
-                            stayInTheFunction = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this discipline ID in the database");
-                        }
-                        break;
-                    case 3:
-                        iDchoosen = -1;
-                        stayInTheFunction = false;
-                        break;
+                            break;
+                    }
                 }
+            }
+            else
+            {
+                Console.WriteLine("There is no faculty");
             }
             return iDchoosen;
         }
         public static int ChoosingClassroomID(List<Classroom> list)
         {
             int iDchoosen = -1;
-            bool stayInTheFunction = true;
-            while (stayInTheFunction)
+            if (list != null && list.Count == 0)
             {
-                int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a classroom ID\n2 : Choose a classroom ID and the see disciplines information\n3 : Go to the previous menu", 1, 3);
-                switch (methodChoiceAnswer)
+                bool stayInTheFunction = true;
+                while (stayInTheFunction)
                 {
-                    case 1:
-                        Console.WriteLine("Enter the classroomID");
-                        int classroomIDanswer = Convert.ToInt32(Console.ReadLine());
-                        if (ContainClassroomID(classroomIDanswer, list))
-                        {
-                            iDchoosen = classroomIDanswer;
-                            stayInTheFunction = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is not this classroom ID in the database");
-                        }
-                        break;
-                    case 2:
-                        Console.WriteLine("All classroom information :");
-                        Console.WriteLine(ClassroomsEssentialInformation(list));
-                        Console.WriteLine("Enter the classroomID of the classroom you want to choose");
-                        int classroomIDChoosen = Convert.ToInt32(Console.ReadLine());
-                        if (ContainClassroomID(classroomIDChoosen, list))
-                            if (ContainClassroomID(classroomIDChoosen, list))
+                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose by enter a classroom ID\n2 : Choose a classroom ID and the see disciplines information\n3 : Go to the previous menu", 1, 3);
+                    switch (methodChoiceAnswer)
+                    {
+                        case 1:
+                            Console.WriteLine("Enter the classroomID");
+                            int classroomIDanswer = Convert.ToInt32(Console.ReadLine());
+                            if (ContainClassroomID(classroomIDanswer, list))
                             {
-                                iDchoosen = classroomIDChoosen;
+                                iDchoosen = classroomIDanswer;
                                 stayInTheFunction = false;
                             }
                             else
                             {
                                 Console.WriteLine("There is not this classroom ID in the database");
                             }
-                        break;
-                    case 3:
-                        iDchoosen = -1;
-                        stayInTheFunction = false;
-                        break;
+                            break;
+                        case 2:
+                            Console.WriteLine("All classroom information :");
+                            Console.WriteLine(ClassroomsEssentialInformation(list));
+                            Console.WriteLine("Enter the classroomID of the classroom you want to choose");
+                            int classroomIDChoosen = Convert.ToInt32(Console.ReadLine());
+                            if (ContainClassroomID(classroomIDChoosen, list))
+                                if (ContainClassroomID(classroomIDChoosen, list))
+                                {
+                                    iDchoosen = classroomIDChoosen;
+                                    stayInTheFunction = false;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("There is not this classroom ID in the database");
+                                }
+                            break;
+                        case 3:
+                            iDchoosen = -1;
+                            stayInTheFunction = false;
+                            break;
+                    }
                 }
+            }
+            else
+            {
+                Console.WriteLine("There is no faculty");
             }
             return iDchoosen;
         }
@@ -680,7 +724,7 @@ namespace Dorset_OOP_Project
             }
             else
             {
-                information += "There is no classroom created";
+                information += "There is no classroom for this";
             }
             return information;
         }
@@ -696,7 +740,7 @@ namespace Dorset_OOP_Project
             }
             else
             {
-                information += "There is no discipline created";
+                information += "There is no discipline for this";
             }
             return information;
         }
