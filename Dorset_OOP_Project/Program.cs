@@ -16,7 +16,11 @@ namespace Dorset_OOP_Project
             for(int i = 0; i < 30; i++)
             {
                 schoolApplication.AddNewUser(new Student($"student{i}", $"sc{i}", $"student{i}@app.com", $"{i}"));
-                classroom.AddStudent((Student)schoolApplication.UserList[schoolApplication.UserList.Count - 1]);
+                //classroom.AddStudent((Student)schoolApplication.UserList[schoolApplication.UserList.Count - 1]);
+                Student newStud = (Student)schoolApplication.UserList[schoolApplication.UserList.Count - 1];
+                classroom.AddStudent(newStud);
+                newStud.AddClassroom(classroom);
+
             }
             Faculty faculty1 = new Faculty("faculty1", "fc", "faculty1@app.com", "0");//userID=3 password=0
             schoolApplication.AddNewUser(faculty1);

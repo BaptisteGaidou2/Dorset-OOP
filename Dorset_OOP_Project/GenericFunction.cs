@@ -25,7 +25,7 @@ namespace Dorset_OOP_Project
         public static int ChoosingAttendanceNoteList(List<Attendance> list)
         {
             int index = -1;
-            if (list != null && list.Count == 0)
+            if (list != null && list.Count != 0)
             {
                 bool stayInTheFunction = true;
                 while (stayInTheFunction)
@@ -85,7 +85,7 @@ namespace Dorset_OOP_Project
         public static int ChoosingIndexNoteList(List<Note> list)
         {
             int index = -1;
-            if (list != null && list.Count == 0)
+            if (list != null && list.Count != 0)
             {
                 bool stayInTheFunction = true;
                 while (stayInTheFunction)
@@ -145,7 +145,7 @@ namespace Dorset_OOP_Project
         public static int ChoosingIndexExamList(List<Exam> list)
         {
             int index = -1;
-            if (list != null && list.Count == 0)
+            if (list != null && list.Count != 0)
             {
                 bool stayInTheFunction = true;
                 while (stayInTheFunction)
@@ -240,7 +240,7 @@ namespace Dorset_OOP_Project
         public static int ChoosingIndexTimeSlotList(List<TimeSlot> list)
         {
             int index = -1;
-            if (list != null && list.Count == 0)
+            if (list != null && list.Count != 0)
             {
                 bool stayInTheFunction = true;
                 while (stayInTheFunction)
@@ -333,7 +333,7 @@ namespace Dorset_OOP_Project
         {
 
             int iDchoosen = -1;
-            if (list != null && list.Count == 0)
+            if (list != null && list.Count != 0)
             { 
                 bool stayInTheFunction = true;
                 while (stayInTheFunction)
@@ -399,7 +399,7 @@ namespace Dorset_OOP_Project
         public static int ChoosingStudentID_FromListStudent(List<Student> list)
         {
             int iDchoosen = -1;
-            if (list != null && list.Count == 0)
+            if (list != null && list.Count != 0)
             {
                 bool stayInTheFunction = true;
                 while (stayInTheFunction)
@@ -532,7 +532,7 @@ namespace Dorset_OOP_Project
         public static int ChoosingAFacultyID(List<User> list)
         {
             int iDchoosen = -1;
-            if (list != null && list.Count == 0)
+            if (list != null && list.Count != 0)
             {
                 bool stayInTheFunction = true;
                 while (stayInTheFunction)
@@ -599,7 +599,7 @@ namespace Dorset_OOP_Project
         public static int ChoosingAFacultyID_FromFacultyList(List<Faculty> list)
         {
             int iDchoosen = -1;
-            if (list != null && list.Count == 0)
+            if (list != null && list.Count != 0)
             {
                 bool stayInTheFunction = true;
                 while (stayInTheFunction)
@@ -667,7 +667,7 @@ namespace Dorset_OOP_Project
         public static int ChoosingDisciplineID(List<Discipline> list)
         {
             int iDchoosen = -1;
-            if (list != null && list.Count == 0)
+            if (list != null && list.Count != 0)
             {
                 bool stayInTheFunction = true;
                 while (stayInTheFunction)
@@ -719,7 +719,7 @@ namespace Dorset_OOP_Project
         public static int ChoosingClassroomID(List<Classroom> list)
         {
             int iDchoosen = -1;
-            if (list != null && list.Count == 0)
+            if (list != null && list.Count != 0)
             {
                 bool stayInTheFunction = true;
                 while (stayInTheFunction)
@@ -765,7 +765,7 @@ namespace Dorset_OOP_Project
             }
             else
             {
-                Console.WriteLine("There is no faculty");
+                Console.WriteLine("There is no classroom");
             }
             return iDchoosen;
         }

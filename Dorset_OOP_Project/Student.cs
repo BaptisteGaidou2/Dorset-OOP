@@ -44,10 +44,10 @@ namespace Dorset_OOP_Project
             {
                 information += SeeAllNotes();
             }
-            information += "Class missing";
+            information += "Class missing : ";
             if (Attendances != null && Attendances.Count != 0)
             {
-                information += GenericFunction.AttendanceListInformation(Attendances);
+                information += " | "+GenericFunction.AttendanceListInformation(Attendances);
             }
             else
             {
@@ -265,7 +265,7 @@ namespace Dorset_OOP_Project
                     {
                         case 1:
                             int week = EnterValue.AskingNumber("enter the week you want to see", 1, 10);
-                        Console.WriteLine(TimeTableToString(week));
+                            Console.WriteLine(TimeTableToString(week));
                                 
                            
                             break;
@@ -275,8 +275,6 @@ namespace Dorset_OOP_Project
                     }
                 }
             }
-           
-        
         public override string PublicApplicationInformation()
         {
             return $"{base.PublicApplicationInformation()} | type : student";
