@@ -139,7 +139,7 @@ namespace Dorset_OOP_Project
             while (!logout)
             {
                 Student currentStudent = (Student)UserList[CurrentIndexUser];
-                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : See timetable\n4 : See Notes\n5 : See date Exam\n6 : See discipline studying\n7 : Log out", 1, 7);
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : See timetable\n4 : See Notes\n5 : See date Exam\n6 : See discipline studying\n7 : See class missed\n8 : Log out", 1, 8);
                 switch (answer)
                 {
                     case 1:
@@ -152,7 +152,7 @@ namespace Dorset_OOP_Project
                         currentStudent.TimeTableMenu();
                             break;
                     case 4:
-                        currentStudent.SeeAllNotes();
+                        Console.WriteLine(currentStudent.SeeAllNotes());
                         break;
                     case 5:
                         if (Exams != null && Exams.Count != 0)
@@ -174,6 +174,9 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(GenericFunction.DisciplinesInformation(currentStudent.DisciplinesStudying()));
                         break;
                     case 7:
+                        currentStudent.SeeAttenances();
+                        break;
+                    case 8:
                         logout = true;
                         break;
                 }
@@ -184,7 +187,7 @@ namespace Dorset_OOP_Project
             bool logout = false;
             while (!logout)
             {
-                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Go to the discipline menu\n4 : Add a new user\n5 : Go to the Classroom Menu\n6 : Log out", 1, 6);
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Go to the discipline menu\n4 : Go to the Classroom Menu\n5 : Go to the Exam menu\n6 : Go to the user menu\n7 : Log out", 1, 7);
                 switch (answer)
                 {
                     case 1:
@@ -204,6 +207,35 @@ namespace Dorset_OOP_Project
                     #endregion
                     case 4:
                         #region
+                        logout = ClassRoomMenu_Administrator();
+                        break;
+                    #endregion
+                    case 5:
+                        //EXAM MENU
+                        break;
+                    case 6:
+                        #region
+                        UserMenu_Administrator();
+                        break;
+                    #endregion
+                    case 7:
+                        #region
+                        logout = true;
+                        break;
+                        #endregion
+                }
+            }
+        }
+        public void UserMenu_Administrator()
+        {
+            bool stay = true;
+            while (stay)
+            {
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a new user\n2 : Edit a User\n3 : See all users information\n4 : Go back to the previous menu", 1, 4);
+                switch (answer)
+                {
+                    case 1:
+                        #region
                         int typeAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a student\n2 : Add a faculty\n3 : Add an administrator\n4 : Go back to the previous menu", 1, 4);
                         if (typeAnswer != 4)
                         {
@@ -219,20 +251,85 @@ namespace Dorset_OOP_Project
                         }
                         break;
                     #endregion
-                    case 5:
-                        #region
-                        logout = ClassRoomMenu_Discipline();
-                        #endregion
+                    case 2:
+                        int userID = GenericFunction.ChoosingAUserID(UserList);
+                        if (userID != -1)
+                        {
+                            bool stayEdit = true;
+                            while (stayEdit)
+                            {
+                            int editingChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Change personal Information\n2 : See user information\n3 : Remove user\n4 : Go back to the previous menu", 1, 4);
+                            switch (editingChoice)
+                            {
+                                case 1:
+                                    UserList[GenericFunction.IndexUserID(userID, UserList)].ChangeInformation();
+                                    break;
+                                case 2:
+                                    Console.WriteLine(UserList[GenericFunction.IndexUserID(userID, UserList)].GeneralInformation());
+                                    break;
+                                case 3:
+                                        if (userID == 0)
+                                        {
+                                            Console.WriteLine("This administrator can't be removed");
+                                        }
+                                        else
+                                        {
+                                            if (UserList[GenericFunction.IndexUserID(userID, UserList)] is Student)
+                                            {
+                                                Student studentRemoved = (Student)UserList[GenericFunction.IndexUserID(userID, UserList)];
+                                                if (Classrooms != null && Classrooms.Count != 0)
+                                                {
+                                                    foreach (Classroom classroom in Classrooms)
+                                                    {
+                                                        if (classroom.ClassRoomStudents != null && classroom.ClassRoomStudents.Contains(studentRemoved))
+                                                        {
+                                                            classroom.ClassRoomStudents.Remove(studentRemoved);
+                                                        }
+                                                    }
+                                                }
+                                                UserList.Remove(studentRemoved);
+                                            }
+                                            else if (UserList[GenericFunction.IndexUserID(userID, UserList)] is Faculty)
+                                            {
+                                                Faculty facultyRemoved = (Faculty)UserList[GenericFunction.IndexUserID(userID, UserList)];
+                                                if (Classrooms != null && Classrooms.Count != 0)
+                                                {
+                                                    foreach (Classroom classroom in Classrooms)
+                                                    {
+                                                        if (classroom.ClassRoomFaculties != null && classroom.ClassRoomFaculties.Contains(facultyRemoved))
+                                                        {
+                                                            classroom.ClassRoomFaculties.Remove(facultyRemoved);
+                                                        }
+                                                    }
+                                                }
+                                                UserList.Remove(facultyRemoved);
+                                            }
+                                            else if (UserList[GenericFunction.IndexUserID(userID, UserList)] is Administrator)
+                                            {
+                                                Administrator facultyRemoved = (Administrator)UserList[GenericFunction.IndexUserID(userID, UserList)];
+                                                UserList.Remove(facultyRemoved);
+                                            }
+                                            Console.WriteLine("the user has been removed");
+                                            stayEdit = false;
+                                        }
+                                    break;
+                                case 4:
+                                        stayEdit = false;
+                                    break;
+                                }
+                            }
+                        }
                         break;
-                    case 6:
-                        #region
-                        logout = true;
+                    case 3:
+                        Console.WriteLine(GenericFunction.UsersPublicInformation(UserList));
                         break;
-                        #endregion
+                    case 4:
+                        stay = false;
+                        break;
                 }
             }
         }
-        public bool ClassRoomMenu_Discipline()
+        public bool ClassRoomMenu_Administrator()
         {
             bool logout = false;
             bool stayInTheClassRoomMenu = true;

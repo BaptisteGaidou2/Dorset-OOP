@@ -47,6 +47,10 @@ namespace Dorset_OOP_Project
         {
             return $"First Name : {FirstName} | Last Name : {LastName} | ID : {UserID} | e-mail : {Email} | password : {Password}";
         }
+        public virtual string GeneralInformation()
+        {
+            return PublicApplicationInformation();
+        }
         public void ChangeInformation()
         {
             int switchAttribute = EnterValue.AskingNumber("enter the information you want to change\n1 : email\n2 : password\n3 : last name\n4 : first name\n5 : nothing", 1, 5);

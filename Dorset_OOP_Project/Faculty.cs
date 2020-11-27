@@ -7,7 +7,19 @@ namespace Dorset_OOP_Project
     public class Faculty : User
     {
         public List<Classroom> ClassroomsTeaching { get; set; }
-
+        public override string GeneralInformation()
+        {
+            string information = $"{base.GeneralInformation()}";
+            if (ClassroomsTeaching != null && ClassroomsTeaching.Count != 0)
+            {
+                information += "\nClassroom Teaching :";
+                foreach (Classroom classroom in ClassroomsTeaching)
+                {
+                    information += $"\n{classroom.Name_ID()}";
+                }
+            }
+            return information;
+        }
         public Faculty(string lastName, string firstName) : base(lastName, firstName)
         {
             ClassroomsTeaching = new List<Classroom>();

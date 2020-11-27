@@ -6,6 +6,66 @@ namespace Dorset_OOP_Project
 {
     public static class GenericFunction
     {
+        public static string AttendanceListInformation(List<Attendance> list)
+        {
+            string information = "";
+            if (list != null && list.Count != 0)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    information += $"\n[index : {i}] {list[i].Information()}";
+                }
+            }
+            else
+            {
+                information += "There is no attendance ";
+            }
+            return information;
+        }
+        public static int ChoosingAttendanceNoteList(List<Attendance> list)
+        {
+            int index = -1;
+            if (list != null && list.Count == 0)
+            {
+                bool stayInTheFunction = true;
+                while (stayInTheFunction)
+                {
+                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose the attendance of the note you want to select\n2 : Go to the previous menu", 1, 2);
+                    switch (methodChoiceAnswer)
+                    {
+                        case 1:
+                            Console.WriteLine(AttendanceListInformation(list));
+                            Console.WriteLine("Enter the index of the attendance you want to select");
+                            try
+                            {
+                                index = Convert.ToInt32(Console.ReadLine());
+                            }
+                            catch (FormatException)
+                            {
+                                Console.WriteLine("The input was not an integer");
+                            }
+                            if (index < 0 || index >= list.Count)
+                            {
+                                Console.WriteLine("There isn't this index");
+                                index = -1;
+                            }
+                            else
+                            {
+                                stayInTheFunction = false;
+                            }
+                            break;
+                        case 2:
+                            stayInTheFunction = false;
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("There is no notes");
+            }
+            return index;
+        }
         public static string NoteListInformation(List<Note> list)
         {
             string information = "";

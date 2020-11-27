@@ -224,6 +224,21 @@ namespace Dorset_OOP_Project
             }
             return information;
         }
+        public string Name_ID()
+        {
+            string information = "";
+            information += $"Classroom ID : {ClassRoomID}\nClassroom name : {ClassroomName}\nDiscipline teaching :";
+            if (ClassRoomDiscipline != null)
+            {
+                information += $"{ClassRoomDiscipline.PublicInformation()}";
+            }
+            else
+            {
+                information += " NaN";
+            }
+            return information;
+        }
+    
         public string ClassroomEssentialInformation()
         {
             string information = "";

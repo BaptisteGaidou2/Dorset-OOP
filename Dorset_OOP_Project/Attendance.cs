@@ -4,12 +4,17 @@ namespace Dorset_OOP_Project
     public class Attendance
     {
         public Classroom AbsentClass { get; set; }
-        public TimeSlot AbsentTimetable { get; set; }
+        public TimeSlot AbsentTimeSlot { get; set; }
 
-        public Attendance(Classroom absentClass, TimeSlot absentTimetable)
+        public Attendance(Classroom absentClass, TimeSlot absentTimeSlot)
         {
             AbsentClass = absentClass;
-            AbsentTimetable = absentTimetable;
+            AbsentTimeSlot = absentTimeSlot;
+        }
+        public string Information()
+        {
+            string information= $"{AbsentClass.Name_ID()}\n{AbsentTimeSlot.Information()}";
+            return information;
         }
     }
 }

@@ -16,14 +16,51 @@ namespace Dorset_OOP_Project
                 ClassroomStudying.RemoveAt(GenericFunction.IndexClassroomID(classroomID,ClassroomStudying));
             }
         }
-        public void SeeAllNotes()
+        public string SeeAllNotes()
         {
-            foreach (Discipline discipline in DisciplinesStudying())
+            string information = "";
+            List<Discipline> disciplinesStudying = DisciplinesStudying();
+            if (disciplinesStudying != null && disciplinesStudying.Count != 0)
             {
-                Console.WriteLine(SeeNotesFromADiscipline(discipline));
+                foreach (Discipline discipline in disciplinesStudying)
+                {
+                    information += (SeeNotesFromADiscipline(discipline));
+                }
             }
+            return information;
         }
-        
+        public override string GeneralInformation()
+        {
+            string information = $"{base.GeneralInformation()}";
+            if (ClassroomStudying != null && ClassroomStudying.Count != 0)
+            {
+                information += "\nClassroom Studying :";
+                foreach (Classroom classroom in ClassroomStudying)
+                {
+                    information += $"\n{classroom.Name_ID()}";
+                }
+            }
+            if (NotesReceive != null && NotesReceive.Count != 00)
+            {
+                information += SeeAllNotes();
+            }
+            information += "Class missing";
+            if (Attendances != null && Attendances.Count != 0)
+            {
+                information += GenericFunction.AttendanceListInformation(Attendances);
+            }
+            else
+            {
+                information += "No class missing";
+            }
+            
+            return information;
+        }
+        public void SeeAttenances()
+        {
+            Console.WriteLine("Classed missed :");
+            Console.WriteLine(GenericFunction.AttendanceListInformation(Attendances));
+        }
         public string SeeNotesFromADiscipline(Discipline discipline)
         {
             string information = "";
@@ -72,11 +109,17 @@ namespace Dorset_OOP_Project
         public List<Discipline> DisciplinesStudying()
         {
             List<Discipline> discplinesStudying = new List<Discipline>();
-            foreach(Classroom classroom in ClassroomStudying)
+            if (ClassroomStudying != null && ClassroomStudying.Count != 0)
             {
-                if(!discplinesStudying.Contains(classroom.ClassRoomDiscipline))
+                foreach (Classroom classroom in ClassroomStudying)
                 {
-                    discplinesStudying.Add(classroom.ClassRoomDiscipline);
+                    if (classroom.ClassRoomDiscipline != null)
+                    {
+                        if (!discplinesStudying.Contains(classroom.ClassRoomDiscipline))
+                        {
+                            discplinesStudying.Add(classroom.ClassRoomDiscipline);
+                        }
+                    }
                 }
             }
             return discplinesStudying;
