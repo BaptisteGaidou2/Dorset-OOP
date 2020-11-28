@@ -139,7 +139,7 @@ namespace Dorset_OOP_Project
             while (!logout)
             {
                 Student currentStudent = (Student)UserList[CurrentIndexUser];
-                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : See timetable\n4 : See Notes\n5 : See date Exam\n6 : See discipline studying\n7 : See class missed\n8 : Log out", 1, 8);
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : See timetable\n4 : See Notes\n5 : See date Exam\n6 : See discipline studying\n7 : See class missed\n8 : See classroom enrolled information\n8 : Log out", 1, 9);
                 switch (answer)
                 {
                     case 1:
@@ -168,7 +168,6 @@ namespace Dorset_OOP_Project
                                 }
                             }
                         }
-                        
                         break;
                     case 6:
                         Console.WriteLine(GenericFunction.DisciplinesInformation(currentStudent.DisciplinesStudying()));
@@ -177,6 +176,9 @@ namespace Dorset_OOP_Project
                         currentStudent.SeeAttenances();
                         break;
                     case 8:
+                        Console.WriteLine(GenericFunction.ClassroomsEssentialInformation(currentStudent.ClassroomStudying));
+                        break;
+                    case 9:
                         logout = true;
                         break;
                 }
@@ -223,6 +225,110 @@ namespace Dorset_OOP_Project
                         logout = true;
                         break;
                         #endregion
+                }
+            }
+        }
+        public void ExamMenu_Administrator()
+        {
+            bool stay = true;
+            while (stay)
+            {
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a new Exam\n2 : Edit an Exam\n3 : See all Exams information\n4 : Go back to the previous menu", 1, 4);
+                switch (answer)
+                {
+                    case 1:
+                        #region
+                        if (DisciplineList != null || DisciplineList.Count == 0)
+                        {
+                            int week = EnterValue.AskingNumber("Enter the number of the week between 1 and 10", 1, 10);
+                            int day = EnterValue.AskingNumber("Enter the day you want \n1=Monday\n2=Tuesday\n3=Wednesday\n4=Thursday\n5=Friday\n6=Saturday", 1, 6);
+                            int startingTime = EnterValue.AskingNumber("Enter the starting time between 8 and 19", 8, 19);
+                            int endingTime = EnterValue.AskingNumber($"Enter the ending time between {startingTime + 1} and 20", startingTime + 1, 20);
+                            int disciplineID = -1;
+                            while (disciplineID == -1)
+                            {
+                                Console.WriteLine("You have to choose Discipline(useless to choose go back to the previous menu)");
+                                disciplineID = GenericFunction.ChoosingDisciplineID(DisciplineList);
+                            }
+                            Console.WriteLine("Enter the exam name");
+                            string examName = Console.ReadLine();
+                            Exams.Add(new Exam(DisciplineList[GenericFunction.IndexDisciplineID(disciplineID, DisciplineList)], examName, week, day, startingTime, endingTime));
+                        }
+                        else
+                        {
+                            Console.WriteLine("Create a discipline before");
+                        }
+
+                        break;
+                    #endregion
+                    case 2:
+                        bool stayEditing = true;
+                        while (stayEditing)
+                        {
+                            int indexExam = EnterValue.AskingNumber("Enter what you want to do\n1 : choose an Exam you want to edit\n2 :Go to the previous menu", 1, 2);
+                            if (indexExam != -1)
+                            {
+                                Exam choosenExam = Exams[indexExam];
+                                bool stayThisExam = true;
+                                while (stayThisExam)
+                                {
+                                    int choosenFunction = EnterValue.AskingNumber("Enter what you want to do\n1 See information\n2 : Switch date\n3 : Switch name\n4 : Switch Discipline\n5 : Remove the exam\n6 : Choose an other Exam\n7 : Go back ", 1, 7);
+                                    switch (choosenFunction)
+                                    {
+                                        case 1:
+                                            Console.WriteLine(GenericFunction.ExamListInformation(Exams));
+                                            break;
+                                        case 2:
+                                            choosenExam.Week = EnterValue.AskingNumber("Enter the number of the week between 1 and 10", 1, 10);
+                                            choosenExam.Day= EnterValue.AskingNumber("Enter the day you want \n1=Monday\n2=Tuesday\n3=Wednesday\n4=Thursday\n5=Friday\n6=Saturday", 1, 6);
+                                            choosenExam.StartingHour= EnterValue.AskingNumber("Enter the starting time between 8 and 19", 8, 19);
+                                            choosenExam.EndingHour= EnterValue.AskingNumber($"Enter the ending time between {choosenExam.StartingHour + 1} and 20", choosenExam.StartingHour + 1, 20);
+                                            break;
+                                        case 3:
+                                            Console.WriteLine("Enter the new name");
+                                            choosenExam.ExamName = Console.ReadLine();
+                                            break;
+                                        case 4:
+                                            int disciplineID = GenericFunction.ChoosingDisciplineID(DisciplineList);
+                                            if (disciplineID != -1)
+                                            {
+                                                choosenExam.ExamDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(disciplineID, DisciplineList)];
+                                            }
+                                            break;
+                                        case 5:
+                                            foreach(User user in UserList)
+                                            {
+                                                if(user is Student)
+                                                {
+                                                    Student verificationStudent = (Student)user;
+                                                    verificationStudent.RemoveNotesFromAnExam(choosenExam);
+                                                    Exams.Remove(choosenExam);
+                                                    stayThisExam = false;
+                                                }
+                                            }
+                                            break;
+                                        case 6:
+                                            stayThisExam = false;
+                                            break;
+                                        case 7:
+                                            stayThisExam = false;
+                                            stayEditing = false;
+                                            break;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                stayEditing = false;
+                            }
+                        }
+                        break;
+                    case 3:
+                        Console.WriteLine(GenericFunction.ExamListInformation(Exams));
+                        break;
+                    case 4:
+                        stay = false;
+                        break;
                 }
             }
         }

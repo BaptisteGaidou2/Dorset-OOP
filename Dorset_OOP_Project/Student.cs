@@ -16,6 +16,16 @@ namespace Dorset_OOP_Project
                 ClassroomStudying.RemoveAt(GenericFunction.IndexClassroomID(classroomID,ClassroomStudying));
             }
         }
+        public void RemoveNotesFromAnExam(Exam exam)
+        {
+            foreach(Note note in NotesReceive)
+            {
+                if (note.ExamNote == exam)
+                {
+                    NotesReceive.Remove(note);
+                }
+            }
+        }
         public string SeeAllNotes()
         {
             string information = "";
@@ -40,11 +50,11 @@ namespace Dorset_OOP_Project
                     information += $"\n{classroom.Name_ID()}";
                 }
             }
-            if (NotesReceive != null && NotesReceive.Count != 00)
+            if (NotesReceive != null && NotesReceive.Count != 0)
             {
                 information += SeeAllNotes();
             }
-            information += "Class missing : ";
+            information += "\nClass missing : ";
             if (Attendances != null && Attendances.Count != 0)
             {
                 information += " | "+GenericFunction.AttendanceListInformation(Attendances);

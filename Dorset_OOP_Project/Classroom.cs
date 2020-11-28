@@ -35,8 +35,8 @@ namespace Dorset_OOP_Project
                             weeks.Add(week);
                         }
                         int day = EnterValue.AskingNumber("Enter the day you want \n1=Monday\n2=Tuesday\n3=Wednesday\n4=Thursday\n5=Friday\n6=Saturday", 1,6);
-                        int startingTime = EnterValue.AskingNumber("Enter the starting time of 8 and 19", 8, 19);
-                        //int endingTime = EnterValue.AskingNumber($"Enter the ending time of {startingTime+1} and 20", startingTime+1, 20);
+                        int startingTime = EnterValue.AskingNumber("Enter the starting time between  8 and 19", 8, 19);
+                        //int endingTime = EnterValue.AskingNumber($"Enter the ending time between {startingTime+1} and 20", startingTime+1, 20);
                         int facultyID = -1;
                         if (ClassRoomFaculties != null && ClassRoomFaculties.Count != 0)
                         {
@@ -227,7 +227,7 @@ namespace Dorset_OOP_Project
         public string Name_ID()
         {
             string information = "";
-            information += $"Classroom ID : {ClassRoomID}\nClassroom name : {ClassroomName}\nDiscipline teaching :";
+            information += $"Classroom ID : {ClassRoomID}\nClassroom name : {ClassroomName}\nDiscipline :";
             if (ClassRoomDiscipline != null)
             {
                 information += $"{ClassRoomDiscipline.PublicInformation()}";

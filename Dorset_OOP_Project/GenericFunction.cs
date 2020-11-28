@@ -6,6 +6,8 @@ namespace Dorset_OOP_Project
 {
     public static class GenericFunction
     {
+        //Attendence choice and information
+        #region
         public static string AttendanceListInformation(List<Attendance> list)
         {
             string information = "";
@@ -66,6 +68,9 @@ namespace Dorset_OOP_Project
             }
             return index;
         }
+        #endregion
+        //Note choice and information
+        #region
         public static string NoteListInformation(List<Note> list)
         {
             string information = "";
@@ -126,6 +131,9 @@ namespace Dorset_OOP_Project
             }
             return index;
         }
+        #endregion
+        //Exam choice and information
+        #region
         public static  string ExamListInformation(List<Exam> list)
         {
             string information = "";
@@ -186,7 +194,8 @@ namespace Dorset_OOP_Project
             }
             return index;
         }
-
+        #endregion
+        //Affichage
         public static string AddSpace(string message,int length)
         {
             while (message.Length < length)
@@ -195,6 +204,7 @@ namespace Dorset_OOP_Project
             }
             return message;
         }
+        //Day attributes
         public static string FromIndexToDay(int index)
         {
             string day = "";
@@ -221,6 +231,8 @@ namespace Dorset_OOP_Project
             }
             return day;
         }
+        //Time slot information and choice
+        #region
         public static string TimesSlotsInformation(List<TimeSlot> list)
         {
             string information = "";
@@ -281,7 +293,7 @@ namespace Dorset_OOP_Project
             }
             return index;
         }
-        
+        #endregion
         //Choosing a ID from a list
         #region
         public static int ChoosingAUserID(List<User> list)
