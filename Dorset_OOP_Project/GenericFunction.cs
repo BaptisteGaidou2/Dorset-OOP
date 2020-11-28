@@ -24,7 +24,7 @@ namespace Dorset_OOP_Project
             }
             return information;
         }
-        public static int ChoosingAttendanceNoteList(List<Attendance> list)
+        public static int ChoosingAttendanceList(List<Attendance> list)
         {
             int index = -1;
             if (list != null && list.Count != 0)
@@ -32,7 +32,7 @@ namespace Dorset_OOP_Project
                 bool stayInTheFunction = true;
                 while (stayInTheFunction)
                 {
-                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose the attendance of the note you want to select\n2 : Go to the previous menu", 1, 2);
+                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose the attendance you want to select\n2 : Go to the previous menu", 1, 2);
                     switch (methodChoiceAnswer)
                     {
                         case 1:
@@ -64,7 +64,7 @@ namespace Dorset_OOP_Project
             }
             else
             {
-                Console.WriteLine("There is no notes");
+                Console.WriteLine("There is no atendances");
             }
             return index;
         }

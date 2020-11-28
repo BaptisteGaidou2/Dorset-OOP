@@ -553,18 +553,18 @@ namespace Dorset_OOP_Project
                         int classroomIDanswer = GenericFunction.ChoosingClassroomID(Classrooms);
                         if (classroomIDanswer != -1)
                         {
-                            Classroom choosenClassroom = Classrooms[GenericFunction.IndexClassroomID(classroomIDanswer,Classrooms)];
+                            Classroom choosenClassroom = Classrooms[GenericFunction.IndexClassroomID(classroomIDanswer, Classrooms)];
                             bool stayInTheEditClassroom = true;
                             while (stayInTheEditClassroom)
                             {
-                                int editClassroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a student\n2 : Add a faculty\n3 : Switch the discipline\n4 : Switch the classroom name\n5 : Edit time slots of the classroom\n6 : See the classroom information\n7 : Edit the attendance of a student\n7 : Go back to the previous menu\n8 : Log out", 1, 8);
+                                int editClassroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a student\n2 : Add a faculty\n3 : Switch the discipline\n4 : Switch the classroom name\n5 : Edit time slots of the classroom\n6 : See the classroom information\n7 : Edit the attendance of a student\n8 : Go back to the previous menu\n9 : Log out", 1, 9);
                                 switch (editClassroomAnswer)
                                 {
                                     case 1:
                                         int studentIDAnswer = GenericFunction.ChoosingStudentID(UserList);
                                         if (studentIDAnswer != -1)
                                         {
-                                            Student choosenStudent = (Student)UserList[GenericFunction.IndexUserID(studentIDAnswer,UserList)];
+                                            Student choosenStudent = (Student)UserList[GenericFunction.IndexUserID(studentIDAnswer, UserList)];
                                             bool added = choosenClassroom.AddStudent(choosenStudent);
                                             if (added)
                                             {
@@ -582,7 +582,7 @@ namespace Dorset_OOP_Project
                                         int facultyIDAnswer = GenericFunction.ChoosingAFacultyID(UserList);
                                         if (facultyIDAnswer != -1)
                                         {
-                                            Faculty choosenFaculty = (Faculty)UserList[GenericFunction.IndexUserID(facultyIDAnswer,UserList)];
+                                            Faculty choosenFaculty = (Faculty)UserList[GenericFunction.IndexUserID(facultyIDAnswer, UserList)];
                                             bool added = choosenClassroom.AddFaculty(choosenFaculty);
                                             if (added)
                                             {
@@ -600,7 +600,7 @@ namespace Dorset_OOP_Project
                                         int disciplineIDAnswer = GenericFunction.ChoosingDisciplineID(DisciplineList);
                                         if (disciplineIDAnswer != -1)
                                         {
-                                            choosenClassroom.ClassRoomDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(disciplineIDAnswer,DisciplineList)];
+                                            choosenClassroom.ClassRoomDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(disciplineIDAnswer, DisciplineList)];
                                         }
                                         break;
                                     case 4:
@@ -617,65 +617,113 @@ namespace Dorset_OOP_Project
                                         bool stayEditAttendance = true;
                                         while (stayEditAttendance)
                                         {
-                                            int addAttendence1 = EnterValue.AskingNumber("Enter what you want to do\n1 : Enter the index of the timeslot where the student where absent\n2 : Go back",1,2);
-                                            switch (addAttendence1)
+                                            int functionAttendence = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a missing class to a student\n2 : Remove a missing class to a student\n3 : Go back to the previous menu", 1, 3);
+                                            switch (functionAttendence)
                                             {
                                                 case 1:
-                                                    int indexTimeSlot = GenericFunction.ChoosingIndexTimeSlotList(choosenClassroom.Timetables);
-                                                    if (indexTimeSlot != -1)
+                                                    bool stayAddAttendance2 = true;
+                                                    while (stayAddAttendance2)
                                                     {
-                                                        TimeSlot choosenTimeSlot = choosenClassroom.Timetables[indexTimeSlot];
-                                                        bool stayThisStudent = true;
-                                                        while (stayThisStudent)
+                                                        int addAttendence1 = EnterValue.AskingNumber("Enter what you want to do\n1 : Enter the index of the timeslot where the student where absent\n2 : Go back", 1, 2);
+                                                        switch (addAttendence1)
                                                         {
-                                                            int addAttendence2 = EnterValue.AskingNumber("Enter what you want to do\n1 : Enter the ID of the absent student\n2 : See the time slot information\n3 : Change the time slot\n4 : Go back", 1, 4);
-                                                            switch (addAttendence2)
-                                                            {
-                                                                case 1:
-                                                                    int missing_StudentID = GenericFunction.ChoosingStudentID_FromListStudent(choosenClassroom.ClassRoomStudents);
-                                                                    if (missing_StudentID != -1)
+                                                            case 1:
+                                                                int indexTimeSlot = GenericFunction.ChoosingIndexTimeSlotList(choosenClassroom.Timetables);
+                                                                if (indexTimeSlot != -1)
+                                                                {
+                                                                    TimeSlot choosenTimeSlot = choosenClassroom.Timetables[indexTimeSlot];
+                                                                    bool stayThisStudent = true;
+                                                                    while (stayThisStudent)
                                                                     {
-                                                                        Student missingStudent = choosenClassroom.ClassRoomStudents[GenericFunction.IndexUserID_StudentList(missing_StudentID, choosenClassroom.ClassRoomStudents)];
-                                                                        Attendance missingClass = new Attendance(choosenClassroom, choosenTimeSlot);
-                                                                        missingStudent.Attendances.Add(missingClass);
+                                                                        int addAttendence2 = EnterValue.AskingNumber("Enter what you want to do\n1 : Enter the ID of the absent student\n2 : See the time slot information\n3 : Change the time slot\n4 : Go back", 1, 4);
+                                                                        switch (addAttendence2)
+                                                                        {
+                                                                            case 1:
+                                                                                int missing_StudentID = GenericFunction.ChoosingStudentID_FromListStudent(choosenClassroom.ClassRoomStudents);
+                                                                                if (missing_StudentID != -1)
+                                                                                {
+                                                                                    Student missingStudent = choosenClassroom.ClassRoomStudents[GenericFunction.IndexUserID_StudentList(missing_StudentID, choosenClassroom.ClassRoomStudents)];
+                                                                                    Attendance missingClass = new Attendance(choosenClassroom, choosenTimeSlot);
+                                                                                    missingStudent.Attendances.Add(missingClass);
+                                                                                }
+                                                                                break;
+                                                                            case 2:
+                                                                                Console.WriteLine(choosenTimeSlot.Information());
+                                                                                break;
+                                                                            case 3:
+                                                                                stayThisStudent = false;
+                                                                                break;
+
+                                                                            case 4:
+                                                                                stayThisStudent = false;
+                                                                                stayAddAttendance2 = false;
+                                                                                break;
+                                                                        }
                                                                     }
-                                                                    break;
-                                                                case 2:
-                                                                    choosenTimeSlot.Information();
-                                                                    break;
-                                                                case 3:
-                                                                    stayThisStudent = false;
-                                                                    break;
-
-                                                                case 4:
-                                                                    stayThisStudent = false;
-                                                                    stayEditAttendance = false;
-                                                                    break;
-                                                            }
-
-                                                            int studentIdAnswer = GenericFunction.ChoosingStudentID_FromListStudent(choosenClassroom.ClassRoomStudents);
-                                                            if (studentIdAnswer != -1)
-                                                            {
-
-                                                            }
-                                                            else
-                                                            {
-                                                                stayThisStudent = false;
-                                                            }
+                                                                }
+                                                                else
+                                                                {
+                                                                    stayAddAttendance2 = false;
+                                                                }
+                                                                break;
+                                                            case 2:
+                                                                stayAddAttendance2 = false;
+                                                                break;
                                                         }
-                                                    }
-                                                    else
-                                                    {
-                                                        stayEditAttendance = false;
                                                     }
                                                     break;
                                                 case 2:
+                                                    bool stayRemovedAttendance = true;
+                                                    while (stayRemovedAttendance)
+                                                    {
+                                                        int chooseStudent = EnterValue.AskingNumber("Enter what you want to do\n1 : Enter the ID of the absent student\n2 : Go back", 1, 2);
+                                                        switch (chooseStudent)
+                                                        {
+                                                            case 1:
+                                                                int studentID = GenericFunction.ChoosingStudentID_FromListStudent(choosenClassroom.ClassRoomStudents);
+                                                                if (studentID != -1)
+                                                                {
+                                                                    bool stayToThisStudent = true;
+                                                                    while (stayToThisStudent)
+                                                                    {
+                                                                        Student choosenStudent = choosenClassroom.ClassRoomStudents[GenericFunction.IndexUserID_StudentList(studentID, choosenClassroom.ClassRoomStudents)];
+                                                                        int addAttendence1 = EnterValue.AskingNumber("Enter what you want to do\n1 : Enter the index of the timeslot you want to remove\n2 : See student missing classroom\n3 : Change student\n4 : Go back", 1, 4);
+                                                                        switch (addAttendence1)
+                                                                        {
+                                                                            case 1:
+                                                                                int indexTimeSlot = GenericFunction.ChoosingAttendanceList(choosenStudent.Attendances);
+                                                                                if (indexTimeSlot != -1)
+                                                                                {
+                                                                                    choosenStudent.Attendances.RemoveAt(indexTimeSlot);
+                                                                                }
+                                                                                break;
+                                                                            case 2:
+                                                                                choosenStudent.SeeAttenances();
+                                                                                break;
+                                                                            case 3:
+                                                                                stayToThisStudent = false;
+                                                                                break;
+                                                                            case 4:
+                                                                                stayToThisStudent = false;
+                                                                                stayRemovedAttendance = false;
+                                                                                break;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                    break;
+                                                                case 2:
+                                                                stayRemovedAttendance = false;
+                                                                break;
+                                                        }
+                                                    }
+
+                                                    break;
+                                                case 3:
                                                     stayEditAttendance = false;
                                                     break;
                                             }
-                                           
                                         }
-                                        break;
+                                        break;   
                                     case 8:
                                         stayInTheEditClassroom = false;
                                         break;

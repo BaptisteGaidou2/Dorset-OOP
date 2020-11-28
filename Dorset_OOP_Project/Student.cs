@@ -69,7 +69,14 @@ namespace Dorset_OOP_Project
         public void SeeAttenances()
         {
             Console.WriteLine("Classed missed :");
-            Console.WriteLine(GenericFunction.AttendanceListInformation(Attendances));
+            if (Attendances==null||Attendances.Count == 0)
+            {
+                Console.WriteLine("No class missed");
+            }
+            else
+            {
+                Console.WriteLine(GenericFunction.AttendanceListInformation(Attendances));
+            }
         }
         public string SeeNotesFromADiscipline(Discipline discipline)
         {
