@@ -21,11 +21,12 @@ namespace Dorset_OOP_Project
             UserList = new List<User>();
             DisciplineList = new List<Discipline>();
             Classrooms = new List<Classroom>();
+            Exams = new List<Exam>();
             Administrator firstAdmin = new Administrator("Admin", "First", "fa@app.com", "0", 0);
             UserList.Add(firstAdmin);
             LastUserID = 0;
             LastDisciplineID = -1;
-            LastClassroomID = -1;
+            LastClassroomID = 0;
 
         }
 
@@ -213,7 +214,7 @@ namespace Dorset_OOP_Project
                         break;
                     #endregion
                     case 5:
-                        //EXAM MENU
+                        ExamMenu_Administrator();
                         break;
                     case 6:
                         #region
@@ -265,61 +266,70 @@ namespace Dorset_OOP_Project
                         bool stayEditing = true;
                         while (stayEditing)
                         {
-                            int indexExam = EnterValue.AskingNumber("Enter what you want to do\n1 : choose an Exam you want to edit\n2 :Go to the previous menu", 1, 2);
-                            if (indexExam != -1)
+                            int choiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose an Exam you want to edit\n2 : Go to the previous menu", 1, 2);
+                            switch (choiceAnswer)
                             {
-                                Exam choosenExam = Exams[indexExam];
-                                bool stayThisExam = true;
-                                while (stayThisExam)
-                                {
-                                    int choosenFunction = EnterValue.AskingNumber("Enter what you want to do\n1 See information\n2 : Switch date\n3 : Switch name\n4 : Switch Discipline\n5 : Remove the exam\n6 : Choose an other Exam\n7 : Go back ", 1, 7);
-                                    switch (choosenFunction)
+                                case 1:
+                                    int indexExam = GenericFunction.ChoosingIndexExamList(Exams);
+                                    if (indexExam != -1)
                                     {
-                                        case 1:
-                                            Console.WriteLine(GenericFunction.ExamListInformation(Exams));
-                                            break;
-                                        case 2:
-                                            choosenExam.Week = EnterValue.AskingNumber("Enter the number of the week between 1 and 10", 1, 10);
-                                            choosenExam.Day= EnterValue.AskingNumber("Enter the day you want \n1=Monday\n2=Tuesday\n3=Wednesday\n4=Thursday\n5=Friday\n6=Saturday", 1, 6);
-                                            choosenExam.StartingHour= EnterValue.AskingNumber("Enter the starting time between 8 and 19", 8, 19);
-                                            choosenExam.EndingHour= EnterValue.AskingNumber($"Enter the ending time between {choosenExam.StartingHour + 1} and 20", choosenExam.StartingHour + 1, 20);
-                                            break;
-                                        case 3:
-                                            Console.WriteLine("Enter the new name");
-                                            choosenExam.ExamName = Console.ReadLine();
-                                            break;
-                                        case 4:
-                                            int disciplineID = GenericFunction.ChoosingDisciplineID(DisciplineList);
-                                            if (disciplineID != -1)
+                                        Exam choosenExam = Exams[indexExam];
+                                        bool stayThisExam = true;
+                                        while (stayThisExam)
+                                        {
+                                            int choosenFunction = EnterValue.AskingNumber("Enter what you want to do\n1 : See information\n2 : Switch date\n3 : Switch name\n4 : Switch Discipline\n5 : Remove the exam\n6 : Choose an other Exam\n7 : Go back ", 1, 7);
+                                            switch (choosenFunction)
                                             {
-                                                choosenExam.ExamDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(disciplineID, DisciplineList)];
-                                            }
-                                            break;
-                                        case 5:
-                                            foreach(User user in UserList)
-                                            {
-                                                if(user is Student)
-                                                {
-                                                    Student verificationStudent = (Student)user;
-                                                    verificationStudent.RemoveNotesFromAnExam(choosenExam);
-                                                    Exams.Remove(choosenExam);
+                                                case 1:
+                                                    Console.WriteLine(GenericFunction.ExamListInformation(Exams));
+                                                    break;
+                                                case 2:
+                                                    choosenExam.Week = EnterValue.AskingNumber("Enter the number of the week between 1 and 10", 1, 10);
+                                                    choosenExam.Day = EnterValue.AskingNumber("Enter the day you want \n1=Monday\n2=Tuesday\n3=Wednesday\n4=Thursday\n5=Friday\n6=Saturday", 1, 6);
+                                                    choosenExam.StartingHour = EnterValue.AskingNumber("Enter the starting time between 8 and 19", 8, 19);
+                                                    choosenExam.EndingHour = EnterValue.AskingNumber($"Enter the ending time between {choosenExam.StartingHour + 1} and 20", choosenExam.StartingHour + 1, 20);
+                                                    break;
+                                                case 3:
+                                                    Console.WriteLine("Enter the new name");
+                                                    choosenExam.ExamName = Console.ReadLine();
+                                                    break;
+                                                case 4:
+                                                    int disciplineID = GenericFunction.ChoosingDisciplineID(DisciplineList);
+                                                    if (disciplineID != -1)
+                                                    {
+                                                        choosenExam.ExamDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(disciplineID, DisciplineList)];
+                                                    }
+                                                    break;
+                                                case 5:
+                                                    foreach (User user in UserList)
+                                                    {
+                                                        if (user is Student)
+                                                        {
+                                                            Student verificationStudent = (Student)user;
+                                                            verificationStudent.RemoveNotesFromAnExam(choosenExam);
+                                                            Exams.Remove(choosenExam);
+                                                            stayThisExam = false;
+                                                        }
+                                                    }
+                                                    break;
+                                                case 6:
                                                     stayThisExam = false;
-                                                }
+                                                    break;
+                                                case 7:
+                                                    stayThisExam = false;
+                                                    stayEditing = false;
+                                                    break;
                                             }
-                                            break;
-                                        case 6:
-                                            stayThisExam = false;
-                                            break;
-                                        case 7:
-                                            stayThisExam = false;
-                                            stayEditing = false;
-                                            break;
+                                        }
                                     }
-                                }
-                            }
-                            else
-                            {
-                                stayEditing = false;
+                                    else
+                                    {
+                                        stayEditing = false;
+                                    }
+                                    break;
+                                case 2:
+                                    stayEditing = false;
+                                    break;
                             }
                         }
                         break;
@@ -667,59 +677,25 @@ namespace Dorset_OOP_Project
                             bool stayInChooseFunction = true;
                             while (stayInChooseFunction)
                             {
-                                int enrollAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Enroll student\n2 : See all students information\n3 : Enroll a faculty\n4 : See all faculty information\n5 : Go back to the previous menu\n6 : Log out", 1, 6);
+                                int enrollAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Change the name\n2 : Remove the Discipline\n3 : See discipline information\n4 : Go back to the previous menu\n5 : Log out", 1, 5);
                                 switch (enrollAnswer)
                                 {
                                     case 1:
-                                        #region
-                                        Console.WriteLine("Enter the ID of the student you want to add");
-                                        int userIDAnswer = GenericFunction.ChoosingStudentID(UserList);
-                                        if (userIDAnswer != -1)
-                                        {
-                                            if (choosenDiscipline.EnrollAStudent(UserList[GenericFunction.IndexUserID(userIDAnswer,UserList)]))
-                                            {
-                                                Console.WriteLine($"The student with ID {userIDAnswer} has been added");
-                                            }
-                                            else
-                                            {
-                                                Console.WriteLine($"The user with this ID {userIDAnswer} can't be added");
-                                            }
-                                        }
+                                        Console.WriteLine("Enter the name you want");
+                                        choosenDiscipline.DisciplineName = Console.ReadLine();
                                         break;
-                                    #endregion
                                     case 2:
-                                        #region
-                                        Console.WriteLine(GenericFunction.StudentsInformation(UserList));
+                                        Console.WriteLine("NOTHING HAS BEEN MADE FOR THIS");
                                         break;
-                                    #endregion
                                     case 3:
-                                        #region
-                                        Console.WriteLine("Enter the ID of the faculty you want to add");
-                                        int facultyIDAnswer = GenericFunction.ChoosingAFacultyID(UserList);
-                                        if (facultyIDAnswer != -1)
-                                        {
-                                            if (choosenDiscipline.EnrollAFaculty(UserList[GenericFunction.IndexUserID(facultyIDAnswer,UserList)]))
-                                            {
-                                                Console.WriteLine($"The faculty with ID {facultyIDAnswer} has been added");
-                                            }
-                                            else
-                                            {
-                                                Console.WriteLine($"The user with this ID {facultyIDAnswer} can't be added");
-                                            }
-                                        }
+                                        Console.WriteLine(choosenDiscipline.PublicInformation());
                                         break;
-                                    #endregion
                                     case 4:
-                                        #region
-                                        Console.WriteLine(GenericFunction.FacultiesInformation(UserList));
-                                        break;
-                                    #endregion
-                                    case 5:
                                         #region
                                         stayInChooseFunction = false;
                                         #endregion
                                         break;
-                                    case 6:
+                                    case 5:
                                         #region
                                         stayInChooseFunction = false;
                                         stayInTheDisciplineMenu = false;
