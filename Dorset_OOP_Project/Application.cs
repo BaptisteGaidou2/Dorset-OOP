@@ -140,7 +140,7 @@ namespace Dorset_OOP_Project
             while (!logout)
             {
                 Student currentStudent = (Student)UserList[CurrentIndexUser];
-                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : See timetable\n4 : See Notes\n5 : See date Exam\n6 : See discipline studying\n7 : See class missed\n8 : See classroom enrolled information\n8 : Log out", 1, 9);
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : See timetable\n4 : See Notes\n5 : See date Exam\n6 : See discipline studying\n7 : See class missed\n8 : See classroom enrolled information\n9 : Log out", 1, 9);
                 switch (answer)
                 {
                     case 1:
@@ -190,7 +190,7 @@ namespace Dorset_OOP_Project
             bool logout = false;
             while (!logout)
             {
-                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Go to the discipline menu\n4 : Go to the Classroom Menu\n5 : Go to the Exam menu\n6 : Go to the user menu\n7 : Log out", 1, 7);
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Go to the discipline menu\n4 : Go to the Classroom Menu\n5 : Go to the Exam menu\n6 : Go to the user menu\n7 : Log out", 1,7);
                 switch (answer)
                 {
                     case 1:
@@ -557,7 +557,7 @@ namespace Dorset_OOP_Project
                             bool stayInTheEditClassroom = true;
                             while (stayInTheEditClassroom)
                             {
-                                int editClassroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a student\n2 : Add a faculty\n3 : Switch the discipline\n4 : Switch the classroom name\n5 : Edit time slots of the classroom\n6 : See the classroom information\n7 : Go back to the previous menu\n8 : Log out", 1, 8);
+                                int editClassroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a student\n2 : Add a faculty\n3 : Switch the discipline\n4 : Switch the classroom name\n5 : Edit time slots of the classroom\n6 : See the classroom information\n7 : Edit the attendance of a student\n7 : Go back to the previous menu\n8 : Log out", 1, 8);
                                 switch (editClassroomAnswer)
                                 {
                                     case 1:
@@ -614,9 +614,72 @@ namespace Dorset_OOP_Project
                                         Console.WriteLine(choosenClassroom.ClassRoomInformation());
                                         break;
                                     case 7:
-                                        stayInTheEditClassroom = false;
+                                        bool stayEditAttendance = true;
+                                        while (stayEditAttendance)
+                                        {
+                                            int addAttendence1 = EnterValue.AskingNumber("Enter what you want to do\n1 : Enter the index of the timeslot where the student where absent\n2 : Go back",1,2);
+                                            switch (addAttendence1)
+                                            {
+                                                case 1:
+                                                    int indexTimeSlot = GenericFunction.ChoosingIndexTimeSlotList(choosenClassroom.Timetables);
+                                                    if (indexTimeSlot != -1)
+                                                    {
+                                                        TimeSlot choosenTimeSlot = choosenClassroom.Timetables[indexTimeSlot];
+                                                        bool stayThisStudent = true;
+                                                        while (stayThisStudent)
+                                                        {
+                                                            int addAttendence2 = EnterValue.AskingNumber("Enter what you want to do\n1 : Enter the ID of the absent student\n2 : See the time slot information\n3 : Change the time slot\n4 : Go back", 1, 4);
+                                                            switch (addAttendence2)
+                                                            {
+                                                                case 1:
+                                                                    int missing_StudentID = GenericFunction.ChoosingStudentID_FromListStudent(choosenClassroom.ClassRoomStudents);
+                                                                    if (missing_StudentID != -1)
+                                                                    {
+                                                                        Student missingStudent = choosenClassroom.ClassRoomStudents[GenericFunction.IndexUserID_StudentList(missing_StudentID, choosenClassroom.ClassRoomStudents)];
+                                                                        Attendance missingClass = new Attendance(choosenClassroom, choosenTimeSlot);
+                                                                        missingStudent.Attendances.Add(missingClass);
+                                                                    }
+                                                                    break;
+                                                                case 2:
+                                                                    choosenTimeSlot.Information();
+                                                                    break;
+                                                                case 3:
+                                                                    stayThisStudent = false;
+                                                                    break;
+
+                                                                case 4:
+                                                                    stayThisStudent = false;
+                                                                    stayEditAttendance = false;
+                                                                    break;
+                                                            }
+
+                                                            int studentIdAnswer = GenericFunction.ChoosingStudentID_FromListStudent(choosenClassroom.ClassRoomStudents);
+                                                            if (studentIdAnswer != -1)
+                                                            {
+
+                                                            }
+                                                            else
+                                                            {
+                                                                stayThisStudent = false;
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        stayEditAttendance = false;
+                                                    }
+                                                    break;
+                                                case 2:
+                                                    stayEditAttendance = false;
+                                                    break;
+                                            }
+                                           
+                                        }
                                         break;
                                     case 8:
+                                        stayInTheEditClassroom = false;
+                                        break;
+                                    case 9:
                                         stayInTheEditClassroom = false;
                                         stayInTheClassRoomMenu = false;
                                         logout = true;
