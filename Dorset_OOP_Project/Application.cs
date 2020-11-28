@@ -14,6 +14,7 @@ namespace Dorset_OOP_Project
         public int LastUserID { get; set; }
         public int LastDisciplineID { get; set; }
         public int LastClassroomID { get; set; }
+        public int LastExamID { get; set; }
         public int CurrentIndexUser { get; set; }
 
         public Application()
@@ -25,8 +26,9 @@ namespace Dorset_OOP_Project
             Administrator firstAdmin = new Administrator("Admin", "First", "fa@app.com", "0", 0);
             UserList.Add(firstAdmin);
             LastUserID = 0;
-            LastDisciplineID = -1;
+            LastDisciplineID = -1;//because create a discipline by hand in program.cs ->> need to change after
             LastClassroomID = 0;
+            LastExamID = 0;
 
         }
 
@@ -254,6 +256,7 @@ namespace Dorset_OOP_Project
                             Console.WriteLine("Enter the exam name");
                             string examName = Console.ReadLine();
                             Exams.Add(new Exam(DisciplineList[GenericFunction.IndexDisciplineID(disciplineID, DisciplineList)], examName, week, day, startingTime, endingTime));
+                            Exams[Exams.Count - 1].ExamID=PutANewExamID();
                         }
                         else
                         {
@@ -614,6 +617,7 @@ namespace Dorset_OOP_Project
                                         Console.WriteLine(choosenClassroom.ClassRoomInformation());
                                         break;
                                     case 7:
+                                        #region
                                         bool stayEditAttendance = true;
                                         while (stayEditAttendance)
                                         {
@@ -723,7 +727,8 @@ namespace Dorset_OOP_Project
                                                     break;
                                             }
                                         }
-                                        break;   
+                                        break;
+                                    #endregion
                                     case 8:
                                         stayInTheEditClassroom = false;
                                         break;
@@ -1032,7 +1037,11 @@ namespace Dorset_OOP_Project
             }
         }
         
-
+        public int PutANewExamID()
+        {
+            LastExamID++;
+            return LastExamID;
+        }
         public int PutANewDisciplineID()
         {
             LastDisciplineID++;
