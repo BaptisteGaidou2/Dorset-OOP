@@ -189,6 +189,7 @@ namespace Dorset_OOP_Project
                     }
                 }
             }
+            studentNotesDB.Close();
         }
         public Application()
         {
