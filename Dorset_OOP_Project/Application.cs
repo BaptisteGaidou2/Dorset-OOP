@@ -26,18 +26,32 @@ namespace Dorset_OOP_Project
             StreamWriter userDB = new StreamWriter(path_UserDB);
             foreach(User user in UserList)
             {
+                if(user is Student)
+                {
+                    userDB.WriteLine($"Type;Student");
+                }
+                if (user is Administrator)
+                {
+                    userDB.WriteLine($"Type;Administrator");
+                }
+                if (user is Faculty)
+                {
+                    userDB.WriteLine($"Type;Faculty");
+                }
                 userDB.WriteLine($"ID;{user.UserID}");
                 userDB.WriteLine($"FirstName;{user.FirstName}");
                 userDB.WriteLine($"LastName;{user.LastName}");
                 userDB.WriteLine($"Email;{user.Email}");
                 userDB.WriteLine($"Password;{user.Password}");
             }
+            userDB.Close();
             StreamWriter disciplineDB = new StreamWriter(path_DisciplineDB);
             foreach (Discipline discipline in DisciplineList)
             {
                 disciplineDB.WriteLine($"ID;{discipline.DisciplineID}");
                 disciplineDB.WriteLine($"Name;{discipline.DisciplineName}");
             }
+            disciplineDB.Close();
             StreamWriter examDB = new StreamWriter(path_ExamDB);
             foreach(Exam exam in Exams)
             {
@@ -49,6 +63,7 @@ namespace Dorset_OOP_Project
                 examDB.WriteLine($"StartingHour;{exam.StartingHour}");
                 examDB.WriteLine($"EndingHour;{exam.EndingHour}");
             }
+            examDB.Close();
             StreamWriter classroomDB = new StreamWriter(path_ClassroomDB);
             foreach (Classroom classroom in Classrooms)
             {
@@ -93,6 +108,7 @@ namespace Dorset_OOP_Project
                     }
                 }
             }
+            classroomDB.Close();
 
         }
         public Application()
@@ -129,9 +145,10 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(GenericFunction.UsersPublicInformation(UserList));
                         break;
                     case 3:
-                        FromAppToCSV("path_UserDB",  "path_DisciplineDB", "path_ExamDB", "path_ClassroomDB");
+                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv");
                         break;
                     case 4:
+                        FromAppToCSV("path_UserDB", "path_DisciplineDB", "path_ExamDB", "path_ClassroomDB");
                         closeApp = true;
                         break;
                     case 5:
