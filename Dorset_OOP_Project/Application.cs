@@ -21,12 +21,12 @@ namespace Dorset_OOP_Project
         {
 
         }
-        public void FromAppToCSV(string path_UserDB, string path_DisciplineDB,string path_ExamDB,string path_ClassroomDB)
+        public void FromAppToCSV(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_FacultyClassroom, string path_StudentClassroom, string path_StudentAttendences, string path_StudentNotes)
         {
             StreamWriter userDB = new StreamWriter(path_UserDB);
-            foreach(User user in UserList)
+            foreach (User user in UserList)
             {
-                if(user is Student)
+                if (user is Student)
                 {
                     userDB.WriteLine($"Type;Student");
                 }
@@ -53,7 +53,7 @@ namespace Dorset_OOP_Project
             }
             disciplineDB.Close();
             StreamWriter examDB = new StreamWriter(path_ExamDB);
-            foreach(Exam exam in Exams)
+            foreach (Exam exam in Exams)
             {
                 examDB.WriteLine($"ID;{exam.ExamID}");
                 examDB.WriteLine($"Name;{exam.ExamName}");
@@ -80,7 +80,7 @@ namespace Dorset_OOP_Project
                 string info = "Faculty_ID";
                 if (classroom.ClassRoomFaculties != null && classroom.ClassRoomFaculties.Count != 0)
                 {
-                    foreach(Faculty faculty in classroom.ClassRoomFaculties)
+                    foreach (Faculty faculty in classroom.ClassRoomFaculties)
                     {
                         info += $";{faculty.UserID}";
                     }
@@ -100,16 +100,95 @@ namespace Dorset_OOP_Project
                 {
                     foreach (TimeSlot timeSlot in classroom.Timetables)
                     {
-                        info+=$"{timeSlot.Week};{timeSlot.Day};{timeSlot.StartingTime}";
+                        info += $";{timeSlot.Week};{timeSlot.Day};{timeSlot.StartingTime}";
                         if (timeSlot.Teacher != null)
                         {
-                            info += $"{timeSlot.Teacher.UserID}";
+                            info += $";{timeSlot.Teacher.UserID}";
+                        }
+                    }
+                }
+                classroomDB.WriteLine(info);
+            }
+            classroomDB.Close();
+            StreamWriter facultyClassroomDB = new StreamWriter(path_FacultyClassroom);
+            foreach (User user in UserList)
+            {
+                if (user is Faculty)
+                {
+                    Faculty faculty = (Faculty)user;
+                    if (faculty.ClassroomsTeaching != null && faculty.ClassroomsTeaching.Count != 0)
+                    {
+                        facultyClassroomDB.WriteLine($"ID;{faculty.UserID}");
+                        string information = "Classroom_ID";
+                        foreach (Classroom classroom in faculty.ClassroomsTeaching)
+                        {
+                            information += $";{classroom.ClassRoomID}";
+                        }
+                        facultyClassroomDB.WriteLine(information);
+                    }
+                }
+            }
+            facultyClassroomDB.Close();
+            StreamWriter studentClassroomDB = new StreamWriter(path_StudentClassroom);
+            foreach (User user in UserList)
+            {
+                if (user is Student)
+                {
+                    Student student = (Student)user;
+                    if (student.ClassroomStudying != null && student.ClassroomStudying.Count != 0)
+                    {
+                        studentClassroomDB.WriteLine($"ID;{student.UserID}");
+                        string information = "Classroom_ID";
+                        foreach (Classroom classroom in student.ClassroomStudying)
+                        {
+                            information += $";{classroom.ClassRoomID}";
+                        }
+                        studentClassroomDB.WriteLine(information);
+                    }
+                }
+            }
+            studentClassroomDB.Close();
+            StreamWriter studentAttendencesDB = new StreamWriter(path_StudentAttendences);
+            foreach (User user in UserList)
+            {
+                if (user is Student)
+                {
+                    Student student = (Student)user;
+                    if (student.Attendances != null && student.Attendances.Count != 0)
+                    {
+                        studentAttendencesDB.WriteLine($"ID;{student.UserID}");
+                        foreach (Attendance attendance in student.Attendances)
+                        {
+                            studentAttendencesDB.WriteLine($"Classroom;{attendance.AbsentClass.ClassRoomID}");
+                            studentAttendencesDB.WriteLine($"TimeSlot;{attendance.AbsentTimeSlot.Week};{attendance.AbsentTimeSlot.Day};{attendance.AbsentTimeSlot.StartingTime}");
+                            string information = "Faculty_ID";
+                            if (attendance.AbsentTimeSlot.Teacher != null)
+                            {
+                                information+=$";{attendance.AbsentTimeSlot.Teacher.UserID}";
+                            }
+                            studentAttendencesDB.WriteLine(information);
                         }
                     }
                 }
             }
-            classroomDB.Close();
-
+            studentAttendencesDB.Close();
+            StreamWriter studentNotesDB = new StreamWriter(path_StudentNotes);
+            foreach (User user in UserList)
+            {
+                if (user is Student)
+                {
+                    Student student = (Student)user;
+                    if (student.NotesReceive != null && student.NotesReceive.Count != 0)
+                    {
+                        studentNotesDB.WriteLine($"ID;{student.UserID}");
+                        foreach (Note note in student.NotesReceive)
+                        {
+                            studentNotesDB.WriteLine($"ExamID;{note.ExamNote.ExamID}");
+                            studentNotesDB.WriteLine($"Notes;{note.NoteValue}");
+                        }
+                    }
+                }
+            }
         }
         public Application()
         {
@@ -145,10 +224,10 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(GenericFunction.UsersPublicInformation(UserList));
                         break;
                     case 3:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv");
+                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_FacultyClassroom.csv", "path_StudentClassroom.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv");
                         break;
                     case 4:
-                        FromAppToCSV("path_UserDB", "path_DisciplineDB", "path_ExamDB", "path_ClassroomDB");
+                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_FacultyClassroom.csv", "path_StudentClassroom.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv");
                         closeApp = true;
                         break;
                     case 5:
