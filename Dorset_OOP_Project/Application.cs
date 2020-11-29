@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -16,7 +17,84 @@ namespace Dorset_OOP_Project
         public int LastClassroomID { get; set; }
         public int LastExamID { get; set; }
         public int CurrentIndexUser { get; set; }
+        public Application(string path)
+        {
 
+        }
+        public void FromAppToCSV(string path_UserDB, string path_DisciplineDB,string path_ExamDB,string path_ClassroomDB)
+        {
+            StreamWriter userDB = new StreamWriter(path_UserDB);
+            foreach(User user in UserList)
+            {
+                userDB.WriteLine($"ID;{user.UserID}");
+                userDB.WriteLine($"FirstName;{user.FirstName}");
+                userDB.WriteLine($"LastName;{user.LastName}");
+                userDB.WriteLine($"Email;{user.Email}");
+                userDB.WriteLine($"Password;{user.Password}");
+            }
+            StreamWriter disciplineDB = new StreamWriter(path_DisciplineDB);
+            foreach (Discipline discipline in DisciplineList)
+            {
+                disciplineDB.WriteLine($"ID;{discipline.DisciplineID}");
+                disciplineDB.WriteLine($"Name;{discipline.DisciplineName}");
+            }
+            StreamWriter examDB = new StreamWriter(path_ExamDB);
+            foreach(Exam exam in Exams)
+            {
+                examDB.WriteLine($"ID;{exam.ExamID}");
+                examDB.WriteLine($"Name;{exam.ExamName}");
+                examDB.WriteLine($"Discipline_ID;{exam.ExamDiscipline.DisciplineID}");
+                examDB.WriteLine($"Week;{exam.Week}");
+                examDB.WriteLine($"Day;{exam.Day}");
+                examDB.WriteLine($"StartingHour;{exam.StartingHour}");
+                examDB.WriteLine($"EndingHour;{exam.EndingHour}");
+            }
+            StreamWriter classroomDB = new StreamWriter(path_ClassroomDB);
+            foreach (Classroom classroom in Classrooms)
+            {
+                classroomDB.WriteLine($"ID;{classroom.ClassRoomID}");
+                classroomDB.WriteLine($"Name;{classroom.ClassroomName}");
+                if (classroom.ClassRoomDiscipline != null)
+                {
+                    classroomDB.WriteLine($"Discipline_ID;{classroom.ClassRoomDiscipline.DisciplineID}");
+                }
+                else
+                {
+                    classroomDB.WriteLine($"Discipline_ID");
+                }
+                string info = "Faculty_ID";
+                if (classroom.ClassRoomFaculties != null && classroom.ClassRoomFaculties.Count != 0)
+                {
+                    foreach(Faculty faculty in classroom.ClassRoomFaculties)
+                    {
+                        info += $";{faculty.UserID}";
+                    }
+                }
+                classroomDB.WriteLine(info);
+                info = "Student_ID";
+                if (classroom.ClassRoomStudents != null && classroom.ClassRoomStudents.Count != 0)
+                {
+                    foreach (Student student in classroom.ClassRoomStudents)
+                    {
+                        info += $";{student.UserID}";
+                    }
+                }
+                classroomDB.WriteLine(info);
+                info = "TimeSlot";
+                if (classroom.Timetables != null && classroom.Timetables.Count != 0)
+                {
+                    foreach (TimeSlot timeSlot in classroom.Timetables)
+                    {
+                        info+=$"{timeSlot.Week};{timeSlot.Day};{timeSlot.StartingTime}";
+                        if (timeSlot.Teacher != null)
+                        {
+                            info += $"{timeSlot.Teacher.UserID}";
+                        }
+                    }
+                }
+            }
+
+        }
         public Application()
         {
             UserList = new List<User>();
@@ -51,6 +129,7 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(GenericFunction.UsersPublicInformation(UserList));
                         break;
                     case 3:
+                        FromAppToCSV("path_UserDB",  "path_DisciplineDB", "path_ExamDB", "path_ClassroomDB");
                         break;
                     case 4:
                         closeApp = true;
