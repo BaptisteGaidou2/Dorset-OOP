@@ -13,6 +13,10 @@ namespace Dorset_OOP_Project
             ExamNote = _examNote;
             NoteValue=_noteValue;
         }
+        public Note()
+        {
+
+        }
         public string Information()
         {
             return $"NOTE : {NoteValue} \n{ExamNote.Information()}";

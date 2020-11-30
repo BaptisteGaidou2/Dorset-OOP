@@ -158,7 +158,9 @@ namespace Dorset_OOP_Project
                                 int index = GenericFunction.IndexUserID(ID, UserList);
                                 if (index != -1 && UserList[index] is Faculty)
                                 {
-                                    Classrooms[Classrooms.Count - 1].ClassRoomFaculties.Add((Faculty)UserList[index]);
+                                    Faculty faculty = (Faculty)UserList[index];
+                                    Classrooms[Classrooms.Count - 1].ClassRoomFaculties.Add(faculty);
+                                    faculty.ClassroomsTeaching.Add(Classrooms[Classrooms.Count - 1]);
                                 }
                             }
                         }
@@ -172,7 +174,9 @@ namespace Dorset_OOP_Project
                                 int index = GenericFunction.IndexUserID(ID, UserList);
                                 if (index != -1 &&UserList[index]is Student)
                                 {
-                                    Classrooms[Classrooms.Count - 1].ClassRoomStudents.Add((Student)UserList[index]);
+                                    Student student = (Student)UserList[index];
+                                    Classrooms[Classrooms.Count - 1].ClassRoomStudents.Add(student);
+                                    student.ClassroomStudying.Add(Classrooms[Classrooms.Count - 1]);
                                 }
                             }
                         }
@@ -227,81 +231,103 @@ namespace Dorset_OOP_Project
                 }
             }
             #endregion
-            string[] lines_FacultyClassroom = System.IO.File.ReadAllLines(path_FacultyClassroom);
+            //string[] lines_FacultyClassroom = System.IO.File.ReadAllLines(path_FacultyClassroom);
             #region
-            indexAttribute = 1;
-            int facultyID = 0;
-            for (int indexLigne = 0; indexLigne < lines_FacultyClassroom.Length; indexLigne++)
-            {
-                string[] columns = lines_FacultyClassroom[indexLigne].Split(';');
-                switch (indexAttribute)
-                {
-                    case 1:
-                        facultyID = Convert.ToInt32(columns[1]);
-                        break;
-                    case 2:
-                        int indexF = GenericFunction.IndexUserID(facultyID, UserList);
-                        if (indexF != -1)
-                        {
-                            if(UserList[indexF]is Faculty)
-                            {
-                                int indexClassroom = GenericFunction.IndexClassroomID(Convert.ToInt32(columns[1]), Classrooms);
-                                if (indexClassroom != -1)
-                                {
-                                    Faculty faculty = (Faculty)UserList[indexF];
-                                    faculty.ClassroomsTeaching.Add(Classrooms[indexClassroom]);
-                                }
-                            }
-                        }
-                        break;
-                }
-                indexAttribute++;
-                if (indexAttribute == 3)
-                {
-                    indexAttribute = 1;
-                }
-            }
+            //indexAttribute = 1;
+            //int facultyID = 0;
+            //for (int indexLigne = 0; indexLigne < lines_FacultyClassroom.Length; indexLigne++)
+            //{
+            //    string[] columns = lines_FacultyClassroom[indexLigne].Split(';');
+            //    switch (indexAttribute)
+            //    {
+            //        case 1:
+            //            facultyID = Convert.ToInt32(columns[1]);
+            //            break;
+            //        case 2:
+            //            int indexF = GenericFunction.IndexUserID(facultyID, UserList);
+            //            if (indexF != -1)
+            //            {
+            //                if(UserList[indexF]is Faculty)
+            //                {
+            //                    int indexClassroom = GenericFunction.IndexClassroomID(Convert.ToInt32(columns[1]), Classrooms);
+            //                    if (indexClassroom != -1)
+            //                    {
+            //                        Faculty faculty = (Faculty)UserList[indexF];
+            //                        faculty.ClassroomsTeaching.Add(Classrooms[indexClassroom]);
+            //                    }
+            //                }
+            //            }
+            //            break;
+            //    }
+            //    indexAttribute++;
+            //    if (indexAttribute == 3)
+            //    {
+            //        indexAttribute = 1;
+            //    }
+            //}
             #endregion
-            string[] lines_StudentClassroom = System.IO.File.ReadAllLines(path_StudentClassroom);
+            //string[] lines_StudentClassroom = System.IO.File.ReadAllLines(path_StudentClassroom);
             #region
-            indexAttribute = 1;
-            int studentID = 0;
-            for (int indexLigne = 0; indexLigne < lines_StudentClassroom.Length; indexLigne++)
-            {
-                string[] columns = lines_StudentClassroom[indexLigne].Split(';');
-                switch (indexAttribute)
-                {
-                    case 1:
-                        studentID = Convert.ToInt32(columns[1]);
-                        break;
-                    case 2:
-                        int indexS = GenericFunction.IndexUserID(studentID, UserList);
-                        if (indexS != -1)
-                        {
-                            if (UserList[indexS] is Student)
-                            {
-                                int indexClassroom = GenericFunction.IndexClassroomID(Convert.ToInt32(columns[1]), Classrooms);
-                                if (indexClassroom != -1)
-                                {
-                                    Student student = (Student)UserList[indexS];
-                                    student.ClassroomStudying.Add(Classrooms[indexClassroom]);
-                                }
-                            }
-                        }
-                        break;
-                }
-                indexAttribute++;
-                if (indexAttribute == 3)
-                {
-                    indexAttribute = 1;
-                }
-            }
+            //indexAttribute = 1;
+            //int studentID = 0;
+            //for (int indexLigne = 0; indexLigne < lines_StudentClassroom.Length; indexLigne++)
+            //{
+            //    string[] columns = lines_StudentClassroom[indexLigne].Split(';');
+            //    switch (indexAttribute)
+            //    {
+            //        case 1:
+            //            studentID = Convert.ToInt32(columns[1]);
+            //            break;
+            //        case 2:
+            //            int indexS = GenericFunction.IndexUserID(studentID, UserList);
+            //            if (indexS != -1)
+            //            {
+            //                if (UserList[indexS] is Student)
+            //                {
+            //                    int indexClassroom = GenericFunction.IndexClassroomID(Convert.ToInt32(columns[1]), Classrooms);
+            //                    if (indexClassroom != -1)
+            //                    {
+            //                        Student student = (Student)UserList[indexS];
+            //                        student.ClassroomStudying.Add(Classrooms[indexClassroom]);
+            //                    }
+            //                }
+            //            }
+            //            break;
+            //    }
+            //    indexAttribute++;
+            //    if (indexAttribute == 3)
+            //    {
+            //        indexAttribute = 1;
+            //    }
+            //}
             #endregion
-
-
             //NEED TO MAKE THE FOLLOW
             string[] line_StudentAttendences = System.IO.File.ReadAllLines(path_StudentAttendences);
             #region
+            indexAttribute = 1;
+            //if (user is Student)
+            //{
+            //    Student student = (Student)user;
+            //    if (student.Attendances != null && student.Attendances.Count != 0)
+            //    {
+            //        studentAttendencesDB.WriteLine($"ID;{student.UserID}");
+            //        foreach (Attendance attendance in student.Attendances)
+            //        {
+            //            studentAttendencesDB.WriteLine($"Classroom;{attendance.AbsentClass.ClassRoomID}");
+            //            studentAttendencesDB.WriteLine($"TimeSlot;{attendance.AbsentTimeSlot.Week};{attendance.AbsentTimeSlot.Day};{attendance.AbsentTimeSlot.StartingTime}");
+            //            string information = "Faculty_ID";
+            //            if (attendance.AbsentTimeSlot.Teacher != null)
+            //            {
+            //                information += $";{attendance.AbsentTimeSlot.Teacher.UserID}";
+            //            }
+            //            studentAttendencesDB.WriteLine(information);
+            //        }
+            //    }
+            //}
+            int indexStudent_Attendance = 0;
+            int classroomIndex_Attendance = 0;
+            List<int> timeslotValue = new List<int>();
+            int indexFaculty_Attendance = -1;
             indexAttribute = 1;
             for (int indexLigne = 0; indexLigne < line_StudentAttendences.Length; indexLigne++)
             {
@@ -309,13 +335,54 @@ namespace Dorset_OOP_Project
                 switch (indexAttribute)
                 {
                     case 1:
+                        int studentID = Convert.ToInt32(columns[1]);
+                        indexStudent_Attendance = GenericFunction.IndexUserID(studentID, UserList);
                         break;
                     case 2:
+                        int classroomID = Convert.ToInt32(columns[1]);
+                        classroomIndex_Attendance = GenericFunction.IndexClassroomID(classroomID, Classrooms);
+                        break;
+                    case 3:
+                        timeslotValue = new List<int>();
+                        if (columns.Length == 4)
+                        {
+                            for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
+                            {
+                                timeslotValue.Add(Convert.ToInt32(columns[indexColumn]));
+                            }
+                        }
+                        break;
+                    case 4:
+                        if (columns.Length > 1)
+                        {
+                            int facultyID = Convert.ToInt32(columns[1]);
+                            indexFaculty_Attendance = GenericFunction.IndexUserID(facultyID, UserList);
+                        }
+                        else
+                        {
+                            indexFaculty_Attendance = -1;
+                        }
                         break;
                 }
                 indexAttribute++;
-                if (indexAttribute == 3)
+                if (indexAttribute == 5)
                 {
+                    if (indexStudent_Attendance != 1 && classroomIndex_Attendance != -1 && timeslotValue.Count == 3)
+                    {
+                        if(UserList[indexStudent_Attendance] is Student)
+                        {
+                            Student student = (Student)UserList[indexStudent_Attendance];
+                            student.Attendances.Add(new Attendance());
+                            int indexLastAttendance = student.Attendances.Count - 1;
+                            student.Attendances[indexLastAttendance].AbsentClass = Classrooms[classroomIndex_Attendance];
+                            student.Attendances[indexLastAttendance].AbsentTimeSlot = new TimeSlot(timeslotValue[0], timeslotValue[1], timeslotValue[2]);
+                            if (indexFaculty_Attendance != -1&& UserList[indexFaculty_Attendance] is Faculty)
+                            {
+                                student.Attendances[indexLastAttendance].AbsentTimeSlot.Teacher = (Faculty)UserList[indexFaculty_Attendance];
+
+                            }
+                        }
+                    }
                     indexAttribute = 1;
                 }
             }
@@ -433,6 +500,7 @@ namespace Dorset_OOP_Project
                         info += $";{faculty.UserID}";
                     }
                 }
+                classroomDB.WriteLine(info);
                 info = "Student_ID";
                 if (classroom.ClassRoomStudents != null && classroom.ClassRoomStudents.Count != 0)
                 {
@@ -458,7 +526,6 @@ namespace Dorset_OOP_Project
                         }
                     }
                 }
-                Console.WriteLine(info);
                 classroomDB.WriteLine(info);
             }
             classroomDB.Close();
@@ -514,9 +581,9 @@ namespace Dorset_OOP_Project
                     Student student = (Student)user;
                     if (student.Attendances != null && student.Attendances.Count != 0)
                     {
-                        studentAttendencesDB.WriteLine($"ID;{student.UserID}");
                         foreach (Attendance attendance in student.Attendances)
                         {
+                            studentAttendencesDB.WriteLine($"ID;{student.UserID}"); 
                             studentAttendencesDB.WriteLine($"Classroom;{attendance.AbsentClass.ClassRoomID}");
                             studentAttendencesDB.WriteLine($"TimeSlot;{attendance.AbsentTimeSlot.Week};{attendance.AbsentTimeSlot.Day};{attendance.AbsentTimeSlot.StartingTime}");
                             string information = "Faculty_ID";

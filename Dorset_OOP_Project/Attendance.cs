@@ -29,6 +29,10 @@ namespace Dorset_OOP_Project
             }
             return equal;
         }
+        public Attendance()
+        {
+
+        }
         public Attendance(Classroom absentClass, TimeSlot absentTimeSlot)
         {
             AbsentClass = absentClass;

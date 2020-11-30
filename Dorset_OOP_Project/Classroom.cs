@@ -133,7 +133,6 @@ namespace Dorset_OOP_Project
             ClassRoomStudents = new List<Student>();
             ClassRoomFaculties = new List<Faculty>();
             Timetables = new List<TimeSlot>();
-
         }
         public Classroom(string classRoomName, List<Faculty> classRoomFaculties,List<Student> classRoomStudents,Discipline classRoomDiscipline, List<TimeSlot> timetables)
         {
