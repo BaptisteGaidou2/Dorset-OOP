@@ -117,7 +117,7 @@ namespace Dorset_OOP_Project
         public void ChoosinRemoveFaculty()
         {
             Console.WriteLine("Choose the ID of the student you want to remove");
-            int id = GenericFunction.ChoosingStudentID_FromListStudent(ClassRoomStudents);
+            int id = GenericFunction.ChoosingAFacultyID_FromFacultyList(ClassRoomFaculties);
             if (id != -1)
             {
                 RemoveFaculty(id);
@@ -125,8 +125,8 @@ namespace Dorset_OOP_Project
         }
         public void RemoveFaculty(int userID)
         {
-            ClassRoomStudents[GenericFunction.IndexUserID_StudentList(userID, ClassRoomStudents)].RemoveClassroom_FromAnID(ClassRoomID);
-            ClassRoomStudents.RemoveAt(GenericFunction.IndexUserID_StudentList(userID, ClassRoomStudents));
+            ClassRoomFaculties[GenericFunction.IndexUserID_FacultyList(userID, ClassRoomFaculties)].RemoveClassroom_FromAnID(ClassRoomID);
+            ClassRoomFaculties.RemoveAt(GenericFunction.IndexUserID_FacultyList(userID, ClassRoomFaculties));
         }
         public Classroom()
         {

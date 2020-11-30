@@ -194,6 +194,10 @@ namespace Dorset_OOP_Project
             }
             return index;
         }
+        public static int IndexExamID(int examID, List<Exam> list)
+        {
+            return list.FindIndex(i => i.ExamID == examID);
+        }
         #endregion
         //Affichage
         public static string AddSpace(string message,int length)

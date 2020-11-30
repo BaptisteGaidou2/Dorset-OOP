@@ -301,7 +301,6 @@ namespace Dorset_OOP_Project
             //    }
             //}
             #endregion
-            //NEED TO MAKE THE FOLLOW
             string[] line_StudentAttendences = System.IO.File.ReadAllLines(path_StudentAttendences);
             #region
             indexAttribute = 1;
@@ -370,30 +369,41 @@ namespace Dorset_OOP_Project
             string[] lines_StudentNotes = System.IO.File.ReadAllLines(path_StudentNotes);
             #region
             indexAttribute = 1;
+            int indexStudent_NotesStudent = 0; 
+            int indexExam_NotesStudent = 0;
+            int note = 0;
             for (int indexLigne = 0; indexLigne < lines_StudentNotes.Length; indexLigne++)
             {
                 string[] columns = lines_StudentNotes[indexLigne].Split(';');
                 switch (indexAttribute)
                 {
                     case 1:
+                        indexStudent_NotesStudent = GenericFunction.IndexUserID(Convert.ToInt32(columns[1]), UserList);
                         break;
                     case 2:
+                        indexExam_NotesStudent = GenericFunction.IndexExamID(Convert.ToInt32(columns[1]),Exams);
+                        break;
+                    case 3:
+                        note = Convert.ToInt32(columns[1]);
                         break;
                 }
                 indexAttribute++;
                 if (indexAttribute == 3)
                 {
+                    if(indexExam_NotesStudent!=-1&& indexStudent_NotesStudent != -1)
+                    {
+                        if(UserList[indexStudent_NotesStudent]is Student)
+                        {
+                            Student student = (Student)UserList[indexStudent_NotesStudent];
+                            student.NotesReceive.Add(new Note(Exams[indexExam_NotesStudent], note));
+                        }
+                    }
                     indexAttribute = 1;
                 }
             }
             #endregion
             string[] lines_LastID = System.IO.File.ReadAllLines(path_LastID);
             #region
-            //lastID.WriteLine($"LastUserID;{LastUserID}");
-            //lastID.WriteLine($"LastDisciplineID;{LastDisciplineID}");
-            //lastID.WriteLine($"LastClassroomID;{LastClassroomID}");
-            //lastID.WriteLine($"LastExamID;{LastExamID}");
-            //lastID.Close();
             indexAttribute = 1;
             for (int indexLigne = 0; indexLigne < lines_LastID.Length; indexLigne++)
             {
@@ -600,9 +610,9 @@ namespace Dorset_OOP_Project
                     Student student = (Student)user;
                     if (student.NotesReceive != null && student.NotesReceive.Count != 0)
                     {
-                        studentNotesDB.WriteLine($"ID;{student.UserID}");
                         foreach (Note note in student.NotesReceive)
                         {
+                            studentNotesDB.WriteLine($"Student_ID;{student.UserID}");
                             studentNotesDB.WriteLine($"ExamID;{note.ExamNote.ExamID}");
                             studentNotesDB.WriteLine($"Notes;{note.NoteValue}");
                         }
@@ -1482,7 +1492,7 @@ namespace Dorset_OOP_Project
                                         bool stayStudent = true;
                                         while (stayStudent)
                                         {
-                                            int answerStudent = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose a student\n2 : Choose an other classroom\n3 : Leave this menu", 1, 3);
+                                            int answerStudent = EnterValue.AskingNumber("Enter what you want to do\n1 : Select a student\n2 : Choose an other classroom\n3 : Leave this menu", 1, 3);
                                             switch (answerStudent)
                                             {
                                                 case 1:
@@ -1501,7 +1511,7 @@ namespace Dorset_OOP_Project
                                                         bool stayInThisExam = true;
                                                         while (stayInThisExam)
                                                         {
-                                                            int answerExam = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose an exam\n2 : Choose an other student\n3 : Choose an other classroom\n4 : Leave this menu", 1, 4);
+                                                            int answerExam = EnterValue.AskingNumber("Enter what you want to do\n1 : Select an exam\n2 : Choose an other student\n3 : Choose an other classroom\n4 : Leave this menu", 1, 4);
                                                             switch (answerExam)
                                                             {
                                                                 case 1:
@@ -1512,7 +1522,7 @@ namespace Dorset_OOP_Project
                                                                         bool stayEdit = true;
                                                                         while (stayEdit)
                                                                         {
-                                                                            int editChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a new note\n2 : Change a note\n3 : Choose an other exam\n4 :  Choose an other student\n5 : Choose an other classroom\n6 : Leave this menu", 1, 6);
+                                                                            int editChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a new note\n2 : Change a note\n3 : Choose an other exam\n4 : Choose an other student\n5 : Choose an other classroom\n6 : Leave this menu", 1, 6);
                                                                             switch (editChoice)
                                                                             {
                                                                                 case 1:

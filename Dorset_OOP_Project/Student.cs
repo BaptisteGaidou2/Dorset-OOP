@@ -18,11 +18,12 @@ namespace Dorset_OOP_Project
         }
         public void RemoveNotesFromAnExam(Exam exam)
         {
-            foreach(Note note in NotesReceive)
+            for(int index = 0; index < NotesReceive.Count; index++)
             {
-                if (note.ExamNote == exam)
+                if (NotesReceive[index].ExamNote == exam)
                 {
-                    NotesReceive.Remove(note);
+                    NotesReceive.RemoveAt(index);
+                    index--;
                 }
             }
         }
@@ -34,7 +35,7 @@ namespace Dorset_OOP_Project
             {
                 foreach (Discipline discipline in disciplinesStudying)
                 {
-                    information += (SeeNotesFromADiscipline(discipline));
+                    information += SeeNotesFromADiscipline(discipline);
                 }
             }
             return information;
@@ -44,6 +45,7 @@ namespace Dorset_OOP_Project
             string information = $"{base.GeneralInformation()}";
             if (ClassroomStudying != null && ClassroomStudying.Count != 0)
             {
+                information += "\n------------------------------------------------- \n";
                 information += "\nClassroom Studying :";
                 foreach (Classroom classroom in ClassroomStudying)
                 {
@@ -52,8 +54,10 @@ namespace Dorset_OOP_Project
             }
             if (NotesReceive != null && NotesReceive.Count != 0)
             {
+                information += "\n-------------------------------------------------\n";
                 information += SeeAllNotes();
             }
+            information += "\n-------------------------------------------------\n";
             information += "\nClass missing : ";
             if (Attendances != null && Attendances.Count != 0)
             {
@@ -86,7 +90,7 @@ namespace Dorset_OOP_Project
             {
                 if (studentNotes.ExamNote.ExamDiscipline == discipline)
                 {
-                    information += studentNotes.Information()+"\n\n";
+                    information += studentNotes.Information()+"\n";
                 }
             }
             if (notesInThisDiscipline == 0)
