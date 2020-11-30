@@ -45,7 +45,7 @@ namespace Dorset_OOP_Project
             string information = $"{base.GeneralInformation()}";
             if (ClassroomStudying != null && ClassroomStudying.Count != 0)
             {
-                information += "\n------------------------------------------------- \n";
+                information += "\n\n------------------------------------------------- \n";
                 information += "\nClassroom Studying :";
                 foreach (Classroom classroom in ClassroomStudying)
                 {
@@ -54,10 +54,10 @@ namespace Dorset_OOP_Project
             }
             if (NotesReceive != null && NotesReceive.Count != 0)
             {
-                information += "\n-------------------------------------------------\n";
+                information += "\n\n-------------------------------------------------\n";
                 information += SeeAllNotes();
             }
-            information += "\n-------------------------------------------------\n";
+            information += "\n\n-------------------------------------------------\n";
             information += "\nClass missing : ";
             if (Attendances != null && Attendances.Count != 0)
             {
