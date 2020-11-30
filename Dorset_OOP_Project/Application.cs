@@ -146,12 +146,30 @@ namespace Dorset_OOP_Project
                     case 3:
                         if (columns.Length > 1)
                         {
-                            for(int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
+                            for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
                             {
-
+                                int ID = Convert.ToInt32(columns[indexColumn]);
+                                int index = GenericFunction.IndexUserID(ID, UserList);
+                                if (index != -1 && UserList[index] is Student)
+                                {
+                                    Classrooms[Classrooms.Count - 1].ClassRoomStudents.Add((Student)UserList[index]);
+                                }
                             }
                         }
-                        Classrooms[Classrooms.Count - 1].ClassRoomID = Convert.ToInt32(columns[1]);
+                        break;
+                    case 4:
+                        if (columns.Length > 1)
+                        {
+                            for(int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
+                            {
+                                int ID = Convert.ToInt32(columns[indexColumn]);
+                                int index = GenericFunction.IndexUserID(ID, UserList);
+                                if (index != -1 &&UserList[index]is Student)
+                                {
+                                    Classrooms[Classrooms.Count - 1].ClassRoomStudents.Add((Student)UserList[index]);
+                                }
+                            }
+                        }
                         break;
                     case 4:
                         Exams[Exams.Count - 1].Day = Convert.ToInt32(columns[1]);
@@ -206,7 +224,9 @@ namespace Dorset_OOP_Project
                 disciplineDB.WriteLine($"Name;{discipline.DisciplineName}");
             }
             disciplineDB.Close();
+            #endregion
             StreamWriter examDB = new StreamWriter(path_ExamDB);
+            #region
             foreach (Exam exam in Exams)
             {
                 examDB.WriteLine($"ID;{exam.ExamID}");
@@ -259,7 +279,7 @@ namespace Dorset_OOP_Project
                         info += $";{timeSlot.Week};{timeSlot.Day};{timeSlot.StartingTime}";
                         if (timeSlot.Teacher != null)
                         {
-                            info += $";{timeSlot.Teacher.UserID}";
+                            info += $";FLAG{timeSlot.Teacher.UserID}";
                         }
                     }
                 }
