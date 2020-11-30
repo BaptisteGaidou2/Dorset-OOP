@@ -17,6 +17,10 @@ namespace Dorset_OOP_Project
         //    EndTime = endTime;
         //    Teacher = teacher;
         //}
+        public TimeSlot()
+        {
+
+        }
         public TimeSlot(int week,int day, int startingTime, Faculty teacher)
         {
             Week = week;

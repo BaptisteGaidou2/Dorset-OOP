@@ -145,19 +145,25 @@ namespace Dorset_OOP_Project
                         break;
                     case 3:
                         if (columns.Length > 1)
+                        {      
+                            Classrooms[Classrooms.Count - 1].ClassRoomDiscipline= DisciplineList[GenericFunction.IndexDisciplineID(Convert.ToInt32(columns[1]), DisciplineList)];
+                        }
+                        break;
+                    case 4:
+                        if (columns.Length > 1)
                         {
                             for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
                             {
                                 int ID = Convert.ToInt32(columns[indexColumn]);
                                 int index = GenericFunction.IndexUserID(ID, UserList);
-                                if (index != -1 && UserList[index] is Student)
+                                if (index != -1 && UserList[index] is Faculty)
                                 {
-                                    Classrooms[Classrooms.Count - 1].ClassRoomStudents.Add((Student)UserList[index]);
+                                    Classrooms[Classrooms.Count - 1].ClassRoomFaculties.Add((Faculty)UserList[index]);
                                 }
                             }
                         }
                         break;
-                    case 4:
+                    case 5:
                         if (columns.Length > 1)
                         {
                             for(int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
@@ -171,14 +177,47 @@ namespace Dorset_OOP_Project
                             }
                         }
                         break;
-                    case 4:
-                        Exams[Exams.Count - 1].Day = Convert.ToInt32(columns[1]);
-                        break;
-                    case 5:
-                        Exams[Exams.Count - 1].StartingHour = Convert.ToInt32(columns[1]);
-                        break;
                     case 6:
-                        Exams[Exams.Count - 1].EndingHour = Convert.ToInt32(columns[1]);
+                        if (columns.Length > 1)
+                        {
+                            int indexTimeSlot = 1;
+                            int indexLastTimeTable = 0;
+                            int indexLastClassroom = 0;
+                            for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
+                            {
+                                switch (indexTimeSlot)
+                                {
+                                    case 1:
+                                        Classrooms[Classrooms.Count - 1].Timetables.Add(new TimeSlot());
+                                        indexLastClassroom = Classrooms.Count - 1;
+                                        indexLastTimeTable = Classrooms[indexLastClassroom].Timetables.Count - 1;
+                                        Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Week =Convert.ToInt32(columns[indexColumn]);
+                                        break;
+                                    case 2:
+                                        Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Day = Convert.ToInt32(columns[indexColumn]); 
+                                        break;
+                                    case 3:
+                                        Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].StartingTime = Convert.ToInt32(columns[indexColumn]);
+                                        break;
+                                    case 4:
+                                        if (Convert.ToInt32(columns[indexColumn]) != -1)
+                                        {
+                                            int ID = Convert.ToInt32(columns[indexColumn]);
+                                            int index = GenericFunction.IndexUserID(ID, UserList);
+                                            if (index != -1 && UserList[index] is Faculty)
+                                            {
+                                                Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Teacher = (Faculty) UserList[index];
+                                            }
+                                        }
+                                        break;
+                                }
+                                indexTimeSlot++;
+                                if (indexTimeSlot == 5)
+                                {
+                                    indexTimeSlot = 1;
+                                }
+                            }
+                        }
                         break;
                 }
                 indexAttribute++;
@@ -279,7 +318,11 @@ namespace Dorset_OOP_Project
                         info += $";{timeSlot.Week};{timeSlot.Day};{timeSlot.StartingTime}";
                         if (timeSlot.Teacher != null)
                         {
-                            info += $";FLAG{timeSlot.Teacher.UserID}";
+                            info += $";{timeSlot.Teacher.UserID}";
+                        }
+                        else
+                        {
+                            info += "-1";
                         }
                     }
                 }
