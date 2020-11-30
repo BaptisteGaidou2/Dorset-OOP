@@ -17,13 +17,165 @@ namespace Dorset_OOP_Project
         public int LastClassroomID { get; set; }
         public int LastExamID { get; set; }
         public int CurrentIndexUser { get; set; }
-        public Application(string path)
+        public Application(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_FacultyClassroom, string path_StudentClassroom, string path_StudentAttendences, string path_StudentNotes, string path_LastID)
         {
+            UserList = new List<User>();
+            DisciplineList = new List<Discipline>();
+            Classrooms = new List<Classroom>();
+            Exams = new List<Exam>();
+
+            int indexAttribute = 1;
+            string[] lines_UserDB = System.IO.File.ReadAllLines(path_UserDB);
+            #region
+            for (int indexLigne = 0; indexLigne < lines_UserDB.Length; indexLigne++)
+            {
+
+                string[] columns = lines_UserDB[indexLigne].Split(';');
+                switch (indexAttribute)
+                {
+                    case 1:
+                        switch (columns[1])
+                        {
+                            case "Administrator":
+                                UserList.Add(new Administrator());
+                                break;
+                            case "Student":
+                                UserList.Add(new Student());
+                                break;
+                            case "Faculty":
+                                UserList.Add(new Faculty());
+                                break;
+                        }
+                        break;
+                    case 2:
+                        UserList[UserList.Count - 1].UserID = Convert.ToInt32(columns[1]);
+                        break;
+                    case 3:
+                        UserList[UserList.Count - 1].FirstName = columns[1];
+                        break;
+                    case 4:
+                        UserList[UserList.Count - 1].LastName = columns[1];
+                        break;
+                    case 5:
+                        UserList[UserList.Count - 1].Email = columns[1];
+                        break;
+                    case 6:
+                        UserList[UserList.Count - 1].Password = columns[1];
+                        break;
+                }
+                indexAttribute++;
+                if (indexAttribute == 7)
+                {
+                    indexAttribute = 1;
+                }
+            }
+            #endregion
+            string[] lines_DisciplineDB = System.IO.File.ReadAllLines(path_DisciplineDB);
+            #region
+            indexAttribute = 1;
+            for (int indexLigne = 0; indexLigne < lines_DisciplineDB.Length; indexLigne++)
+            {
+                string[] columns = lines_DisciplineDB[indexLigne].Split(';');
+                switch (indexAttribute)
+                {
+                    case 1:
+                        DisciplineList.Add(new Discipline());
+                        DisciplineList[DisciplineList.Count - 1].DisciplineID = Convert.ToInt32(columns[1]);
+                        break;
+                    case 2:
+                        DisciplineList[DisciplineList.Count - 1].DisciplineName = columns[1];
+                        break;
+                }
+                indexAttribute++;
+                if (indexAttribute == 3)
+                {
+                    indexAttribute = 1;
+                }
+            }
+            #endregion
+            string[] lines_ExamDB = System.IO.File.ReadAllLines(path_ExamDB);
+            #region
+            indexAttribute = 1;
+            for (int indexLigne = 0; indexLigne < lines_ExamDB.Length; indexLigne++)
+            {
+                string[] columns = lines_ExamDB[indexLigne].Split(';');
+                switch (indexAttribute)
+                {
+                    case 1:
+                        Exams.Add(new Exam());
+                        Exams[Exams.Count - 1].ExamID = Convert.ToInt32(columns[1]);
+                        break;
+                    case 2:
+                        Exams[Exams.Count - 1].ExamName = columns[1];
+                        break;
+                    case 3:
+                        Exams[Exams.Count - 1].Week = Convert.ToInt32(columns[1]);
+                        break;
+                    case 4:
+                        Exams[Exams.Count - 1].Day = Convert.ToInt32(columns[1]);
+                        break;
+                    case 5:
+                        Exams[Exams.Count - 1].StartingHour = Convert.ToInt32(columns[1]);
+                        break;
+                    case 6:
+                        Exams[Exams.Count - 1].EndingHour = Convert.ToInt32(columns[1]);
+                        break;
+                }
+                indexAttribute++;
+                if (indexAttribute == 7)
+                {
+                    indexAttribute = 1;
+                }
+            }
+            #endregion
+            string[] lines_ClassroomDB = System.IO.File.ReadAllLines(path_ClassroomDB);
+            #region
+            indexAttribute = 1;
+            for (int indexLigne = 0; indexLigne < lines_ClassroomDB.Length; indexLigne++)
+            {
+                string[] columns = lines_ClassroomDB[indexLigne].Split(';');
+                switch (indexAttribute)
+                {
+                    case 1:
+                        Classrooms.Add(new Classroom());
+                        Classrooms[Classrooms.Count - 1].ClassRoomID = Convert.ToInt32(columns[1]);
+                        break;
+                    case 2:
+                        Classrooms[Classrooms.Count - 1].ClassroomName = columns[1];
+                        break;
+                    case 3:
+                        if (columns.Length > 1)
+                        {
+                            for(int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
+                            {
+
+                            }
+                        }
+                        Classrooms[Classrooms.Count - 1].ClassRoomID = Convert.ToInt32(columns[1]);
+                        break;
+                    case 4:
+                        Exams[Exams.Count - 1].Day = Convert.ToInt32(columns[1]);
+                        break;
+                    case 5:
+                        Exams[Exams.Count - 1].StartingHour = Convert.ToInt32(columns[1]);
+                        break;
+                    case 6:
+                        Exams[Exams.Count - 1].EndingHour = Convert.ToInt32(columns[1]);
+                        break;
+                }
+                indexAttribute++;
+                if (indexAttribute == 7)
+                {
+                    indexAttribute = 1;
+                }
+            }
+            #endregion
 
         }
-        public void FromAppToCSV(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_FacultyClassroom, string path_StudentClassroom, string path_StudentAttendences, string path_StudentNotes)
+        public void FromAppToCSV(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_FacultyClassroom, string path_StudentClassroom, string path_StudentAttendences, string path_StudentNotes,string path_LastID)
         {
             StreamWriter userDB = new StreamWriter(path_UserDB);
+            #region
             foreach (User user in UserList)
             {
                 if (user is Student)
@@ -45,7 +197,9 @@ namespace Dorset_OOP_Project
                 userDB.WriteLine($"Password;{user.Password}");
             }
             userDB.Close();
+            #endregion
             StreamWriter disciplineDB = new StreamWriter(path_DisciplineDB);
+            #region
             foreach (Discipline discipline in DisciplineList)
             {
                 disciplineDB.WriteLine($"ID;{discipline.DisciplineID}");
@@ -64,7 +218,9 @@ namespace Dorset_OOP_Project
                 examDB.WriteLine($"EndingHour;{exam.EndingHour}");
             }
             examDB.Close();
+            #endregion
             StreamWriter classroomDB = new StreamWriter(path_ClassroomDB);
+            #region
             foreach (Classroom classroom in Classrooms)
             {
                 classroomDB.WriteLine($"ID;{classroom.ClassRoomID}");
@@ -110,7 +266,9 @@ namespace Dorset_OOP_Project
                 classroomDB.WriteLine(info);
             }
             classroomDB.Close();
+            #endregion
             StreamWriter facultyClassroomDB = new StreamWriter(path_FacultyClassroom);
+            #region
             foreach (User user in UserList)
             {
                 if (user is Faculty)
@@ -129,7 +287,9 @@ namespace Dorset_OOP_Project
                 }
             }
             facultyClassroomDB.Close();
+            #endregion
             StreamWriter studentClassroomDB = new StreamWriter(path_StudentClassroom);
+            #region
             foreach (User user in UserList)
             {
                 if (user is Student)
@@ -148,7 +308,9 @@ namespace Dorset_OOP_Project
                 }
             }
             studentClassroomDB.Close();
+            #endregion
             StreamWriter studentAttendencesDB = new StreamWriter(path_StudentAttendences);
+            #region
             foreach (User user in UserList)
             {
                 if (user is Student)
@@ -172,7 +334,9 @@ namespace Dorset_OOP_Project
                 }
             }
             studentAttendencesDB.Close();
+            #endregion
             StreamWriter studentNotesDB = new StreamWriter(path_StudentNotes);
+            #region
             foreach (User user in UserList)
             {
                 if (user is Student)
@@ -190,6 +354,15 @@ namespace Dorset_OOP_Project
                 }
             }
             studentNotesDB.Close();
+            #endregion
+            StreamWriter lastID = new StreamWriter(path_LastID);
+            #region
+            lastID.WriteLine($"LastUserID;{LastUserID}");
+            lastID.WriteLine($"LastDisciplineID;{LastDisciplineID}");
+            lastID.WriteLine($"LastClassroomID;{LastClassroomID}");
+            lastID.WriteLine($"LastExamID;{LastExamID}");
+            lastID.Close();
+            #endregion
         }
         public Application()
         {
@@ -202,7 +375,7 @@ namespace Dorset_OOP_Project
             LastUserID = 0;
             LastDisciplineID = -1;//because create a discipline by hand in program.cs ->> need to change after
             LastClassroomID = 0;
-            LastExamID = 0;
+            LastExamID = -1;
 
         }
 
@@ -225,10 +398,10 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(GenericFunction.UsersPublicInformation(UserList));
                         break;
                     case 3:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_FacultyClassroom.csv", "path_StudentClassroom.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv");
+                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_FacultyClassroom.csv", "path_StudentClassroom.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv");
                         break;
                     case 4:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_FacultyClassroom.csv", "path_StudentClassroom.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv");
+                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_FacultyClassroom.csv", "path_StudentClassroom.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv");
                         closeApp = true;
                         break;
                     case 5:

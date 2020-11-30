@@ -20,6 +20,10 @@ namespace Dorset_OOP_Project
             }
             return information;
         }
+        public Faculty():base()
+        {
+            ClassroomsTeaching = new List<Classroom>();
+        }
         public Faculty(string lastName, string firstName) : base(lastName, firstName)
         {
             ClassroomsTeaching = new List<Classroom>();

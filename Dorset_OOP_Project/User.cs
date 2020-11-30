@@ -12,7 +12,10 @@ namespace Dorset_OOP_Project
         public string Password { get; set; }
         public int UserID { get; set; }
 
+        public User()
+        {
 
+        }
         public User(string lastName, string firstName)
         {
             LastName = lastName;

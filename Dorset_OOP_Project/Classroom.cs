@@ -128,6 +128,14 @@ namespace Dorset_OOP_Project
             ClassRoomStudents[GenericFunction.IndexUserID_StudentList(userID, ClassRoomStudents)].RemoveClassroom_FromAnID(ClassRoomID);
             ClassRoomStudents.RemoveAt(GenericFunction.IndexUserID_StudentList(userID, ClassRoomStudents));
         }
+        public Classroom()
+        {
+            ClassroomName = classRoomName;
+            ClassRoomFaculties = classRoomFaculties;
+            ClassRoomStudents = classRoomStudents;
+            ClassRoomDiscipline = classRoomDiscipline;
+            Timetables = timetables;
+        }
         public Classroom(string classRoomName, List<Faculty> classRoomFaculties,List<Student> classRoomStudents,Discipline classRoomDiscipline, List<TimeSlot> timetables)
         {
             ClassroomName = classRoomName;

@@ -7,7 +7,7 @@ namespace Dorset_OOP_Project
     {
         static void Main(string[] args)
         {
-            //1stcommit
+            //Application test = new Application("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_FacultyClassroom.csv", "path_StudentClassroom.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv");
             //Student : OOP Group 14 Paul Froidefond 23192, Yoan Gabison 23208, Baptiste Gaidou 22845, Clarysse GIELEN 23394, Eliott TOURTOULOU 23409
             Application schoolApplication = new Application();
             Discipline info = new Discipline("info");

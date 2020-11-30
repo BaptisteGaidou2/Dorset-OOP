@@ -27,6 +27,10 @@ namespace Dorset_OOP_Project
         //    StartTime = _startTime;
         //    EndTime = _endTime;
         //}
+        public Exam()
+        {
+
+        }
         public Exam(Discipline _examDiscipline, string _examName, int _week, int _day, int _startTime, int _endTime)
         {
             ExamDiscipline = _examDiscipline;

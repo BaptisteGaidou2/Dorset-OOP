@@ -6,6 +6,10 @@ namespace Dorset_OOP_Project
 {
     public class Administrator : User
     {
+        public Administrator() : base()
+        {
+
+        }
         public Administrator(string lastName, string firstName) : base(lastName, firstName)
         {
         }

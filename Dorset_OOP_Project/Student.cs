@@ -95,6 +95,12 @@ namespace Dorset_OOP_Project
             }
             return information;
         }
+        public Student() : base()
+        {
+            Attendances = new List<Attendance>();
+            ClassroomStudying = new List<Classroom>();
+            NotesReceive = new List<Note>();
+        }
         public Student(string lastName, string firstName) : base(lastName, firstName)
         {
             Attendances = new List<Attendance>();
@@ -112,6 +118,7 @@ namespace Dorset_OOP_Project
         {
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
+            NotesReceive = new List<Note>();
         }
         public bool AddClassroom(Classroom classroom)
         {

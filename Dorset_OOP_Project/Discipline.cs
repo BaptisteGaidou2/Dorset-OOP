@@ -13,7 +13,11 @@ namespace Dorset_OOP_Project
         {
             DisciplineName = disciplineName;
         }
-  
+        public Discipline()
+        {
+
+        }
+
         public string PublicInformation()
         {
             return $"name : {DisciplineName} | ID : {DisciplineID}";
