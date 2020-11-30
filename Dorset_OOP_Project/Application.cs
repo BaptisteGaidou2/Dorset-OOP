@@ -109,20 +109,23 @@ namespace Dorset_OOP_Project
                         Exams[Exams.Count - 1].ExamName = columns[1];
                         break;
                     case 3:
-                        Exams[Exams.Count - 1].Week = Convert.ToInt32(columns[1]);
+                        Exams[Exams.Count - 1].ExamDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(Convert.ToInt32(columns[1]),DisciplineList)];
                         break;
                     case 4:
-                        Exams[Exams.Count - 1].Day = Convert.ToInt32(columns[1]);
+                        Exams[Exams.Count - 1].Week = Convert.ToInt32(columns[1]);
                         break;
                     case 5:
-                        Exams[Exams.Count - 1].StartingHour = Convert.ToInt32(columns[1]);
+                        Exams[Exams.Count - 1].Day = Convert.ToInt32(columns[1]);
                         break;
                     case 6:
+                        Exams[Exams.Count - 1].StartingHour = Convert.ToInt32(columns[1]);
+                        break;
+                    case 7:
                         Exams[Exams.Count - 1].EndingHour = Convert.ToInt32(columns[1]);
                         break;
                 }
                 indexAttribute++;
-                if (indexAttribute == 7)
+                if (indexAttribute == 8)
                 {
                     indexAttribute = 1;
                 }
@@ -371,7 +374,7 @@ namespace Dorset_OOP_Project
             indexAttribute = 1;
             int indexStudent_NotesStudent = 0; 
             int indexExam_NotesStudent = 0;
-            int note = 0;
+            double note = 0;
             for (int indexLigne = 0; indexLigne < lines_StudentNotes.Length; indexLigne++)
             {
                 string[] columns = lines_StudentNotes[indexLigne].Split(';');
@@ -384,11 +387,11 @@ namespace Dorset_OOP_Project
                         indexExam_NotesStudent = GenericFunction.IndexExamID(Convert.ToInt32(columns[1]),Exams);
                         break;
                     case 3:
-                        note = Convert.ToInt32(columns[1]);
+                        note = Convert.ToDouble(columns[1]);
                         break;
                 }
                 indexAttribute++;
-                if (indexAttribute == 3)
+                if (indexAttribute == 4)
                 {
                     if(indexExam_NotesStudent!=-1&& indexStudent_NotesStudent != -1)
                     {
