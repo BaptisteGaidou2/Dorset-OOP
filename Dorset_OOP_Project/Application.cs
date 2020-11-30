@@ -305,30 +305,10 @@ namespace Dorset_OOP_Project
             string[] line_StudentAttendences = System.IO.File.ReadAllLines(path_StudentAttendences);
             #region
             indexAttribute = 1;
-            //if (user is Student)
-            //{
-            //    Student student = (Student)user;
-            //    if (student.Attendances != null && student.Attendances.Count != 0)
-            //    {
-            //        studentAttendencesDB.WriteLine($"ID;{student.UserID}");
-            //        foreach (Attendance attendance in student.Attendances)
-            //        {
-            //            studentAttendencesDB.WriteLine($"Classroom;{attendance.AbsentClass.ClassRoomID}");
-            //            studentAttendencesDB.WriteLine($"TimeSlot;{attendance.AbsentTimeSlot.Week};{attendance.AbsentTimeSlot.Day};{attendance.AbsentTimeSlot.StartingTime}");
-            //            string information = "Faculty_ID";
-            //            if (attendance.AbsentTimeSlot.Teacher != null)
-            //            {
-            //                information += $";{attendance.AbsentTimeSlot.Teacher.UserID}";
-            //            }
-            //            studentAttendencesDB.WriteLine(information);
-            //        }
-            //    }
-            //}
             int indexStudent_Attendance = 0;
             int classroomIndex_Attendance = 0;
             List<int> timeslotValue = new List<int>();
             int indexFaculty_Attendance = -1;
-            indexAttribute = 1;
             for (int indexLigne = 0; indexLigne < line_StudentAttendences.Length; indexLigne++)
             {
                 string[] columns = line_StudentAttendences[indexLigne].Split(';');
@@ -409,6 +389,11 @@ namespace Dorset_OOP_Project
             #endregion
             string[] lines_LastID = System.IO.File.ReadAllLines(path_LastID);
             #region
+            //lastID.WriteLine($"LastUserID;{LastUserID}");
+            //lastID.WriteLine($"LastDisciplineID;{LastDisciplineID}");
+            //lastID.WriteLine($"LastClassroomID;{LastClassroomID}");
+            //lastID.WriteLine($"LastExamID;{LastExamID}");
+            //lastID.Close();
             indexAttribute = 1;
             for (int indexLigne = 0; indexLigne < lines_LastID.Length; indexLigne++)
             {
@@ -416,8 +401,16 @@ namespace Dorset_OOP_Project
                 switch (indexAttribute)
                 {
                     case 1:
+                        LastUserID = Convert.ToInt32(columns[1]);
                         break;
                     case 2:
+                        LastDisciplineID = Convert.ToInt32(columns[1]);
+                        break;
+                    case 3:
+                        LastClassroomID = Convert.ToInt32(columns[1]);
+                        break;
+                    case 4:
+                        LastExamID = Convert.ToInt32(columns[1]);
                         break;
                 }
                 indexAttribute++;
@@ -560,7 +553,7 @@ namespace Dorset_OOP_Project
                     Student student = (Student)user;
                     if (student.ClassroomStudying != null && student.ClassroomStudying.Count != 0)
                     {
-                        studentClassroomDB.WriteLine($"ID;{student.UserID}");
+                        studentClassroomDB.WriteLine($"User_ID;{student.UserID}");
                         string information = "Classroom_ID";
                         foreach (Classroom classroom in student.ClassroomStudying)
                         {
