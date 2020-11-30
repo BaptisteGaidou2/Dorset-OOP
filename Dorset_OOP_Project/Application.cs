@@ -227,6 +227,59 @@ namespace Dorset_OOP_Project
                 }
             }
             #endregion
+            string[] lines_FacultyClassroom = System.IO.File.ReadAllLines(path_FacultyClassroom);
+            //foreach (User user in UserList)
+            //{
+            //    if (user is Faculty)
+            //    {
+            //        Faculty faculty = (Faculty)user;
+            //        if (faculty.ClassroomsTeaching != null && faculty.ClassroomsTeaching.Count != 0)
+            //        {
+            //            facultyClassroomDB.WriteLine($"ID;{faculty.UserID}");
+            //            string information = "Classroom_ID";
+            //            foreach (Classroom classroom in faculty.ClassroomsTeaching)
+            //            {
+            //                information += $";{classroom.ClassRoomID}";
+            //            }
+            //            facultyClassroomDB.WriteLine(information);
+            //        }
+            //    }
+            //}
+            //facultyClassroomDB.Close();
+            #region
+            indexAttribute = 1;
+            int facultyID = 0;
+            for (int indexLigne = 0; indexLigne < lines_FacultyClassroom.Length; indexLigne++)
+            {
+                string[] columns = lines_FacultyClassroom[indexLigne].Split(';');
+                switch (indexAttribute)
+                {
+                    case 1:
+                        facultyID = Convert.ToInt32(columns[1]);
+                        break;
+                    case 2:
+                        int indexF = GenericFunction.IndexUserID(facultyID, UserList);
+                        if (indexF != -1)
+                        {
+                            if(UserList[indexF]is Faculty)
+                            {
+                                int indexClassroom = GenericFunction.IndexClassroomID(Convert.ToInt32(columns[1]), Classrooms);
+                                if (indexClassroom != -1)
+                                {
+                                    Faculty faculty = (Faculty)UserList[indexF];
+                                    faculty.ClassroomsTeaching.Add(Classrooms[indexClassroom]);
+                                }
+                            }
+                        }
+                        break;
+                }
+                indexAttribute++;
+                if (indexAttribute == 3)
+                {
+                    indexAttribute = 1;
+                }
+            }
+            #endregion
 
         }
         public void FromAppToCSV(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_FacultyClassroom, string path_StudentClassroom, string path_StudentAttendences, string path_StudentNotes,string path_LastID)
