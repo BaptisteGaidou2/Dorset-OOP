@@ -228,24 +228,6 @@ namespace Dorset_OOP_Project
             }
             #endregion
             string[] lines_FacultyClassroom = System.IO.File.ReadAllLines(path_FacultyClassroom);
-            //foreach (User user in UserList)
-            //{
-            //    if (user is Faculty)
-            //    {
-            //        Faculty faculty = (Faculty)user;
-            //        if (faculty.ClassroomsTeaching != null && faculty.ClassroomsTeaching.Count != 0)
-            //        {
-            //            facultyClassroomDB.WriteLine($"ID;{faculty.UserID}");
-            //            string information = "Classroom_ID";
-            //            foreach (Classroom classroom in faculty.ClassroomsTeaching)
-            //            {
-            //                information += $";{classroom.ClassRoomID}";
-            //            }
-            //            facultyClassroomDB.WriteLine(information);
-            //        }
-            //    }
-            //}
-            //facultyClassroomDB.Close();
             #region
             indexAttribute = 1;
             int facultyID = 0;
@@ -271,6 +253,104 @@ namespace Dorset_OOP_Project
                                 }
                             }
                         }
+                        break;
+                }
+                indexAttribute++;
+                if (indexAttribute == 3)
+                {
+                    indexAttribute = 1;
+                }
+            }
+            #endregion
+            string[] lines_StudentClassroom = System.IO.File.ReadAllLines(path_StudentClassroom);
+            #region
+            indexAttribute = 1;
+            int studentID = 0;
+            for (int indexLigne = 0; indexLigne < lines_StudentClassroom.Length; indexLigne++)
+            {
+                string[] columns = lines_StudentClassroom[indexLigne].Split(';');
+                switch (indexAttribute)
+                {
+                    case 1:
+                        studentID = Convert.ToInt32(columns[1]);
+                        break;
+                    case 2:
+                        int indexS = GenericFunction.IndexUserID(studentID, UserList);
+                        if (indexS != -1)
+                        {
+                            if (UserList[indexS] is Student)
+                            {
+                                int indexClassroom = GenericFunction.IndexClassroomID(Convert.ToInt32(columns[1]), Classrooms);
+                                if (indexClassroom != -1)
+                                {
+                                    Student student = (Student)UserList[indexS];
+                                    student.ClassroomStudying.Add(Classrooms[indexClassroom]);
+                                }
+                            }
+                        }
+                        break;
+                }
+                indexAttribute++;
+                if (indexAttribute == 3)
+                {
+                    indexAttribute = 1;
+                }
+            }
+            #endregion
+
+
+            //NEED TO MAKE THE FOLLOW
+            string[] line_StudentAttendences = System.IO.File.ReadAllLines(path_StudentAttendences);
+            #region
+            indexAttribute = 1;
+            for (int indexLigne = 0; indexLigne < line_StudentAttendences.Length; indexLigne++)
+            {
+                string[] columns = line_StudentAttendences[indexLigne].Split(';');
+                switch (indexAttribute)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                }
+                indexAttribute++;
+                if (indexAttribute == 3)
+                {
+                    indexAttribute = 1;
+                }
+            }
+            #endregion
+            string[] lines_StudentNotes = System.IO.File.ReadAllLines(path_StudentNotes);
+            #region
+            indexAttribute = 1;
+            for (int indexLigne = 0; indexLigne < lines_StudentNotes.Length; indexLigne++)
+            {
+                string[] columns = lines_StudentNotes[indexLigne].Split(';');
+                switch (indexAttribute)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                }
+                indexAttribute++;
+                if (indexAttribute == 3)
+                {
+                    indexAttribute = 1;
+                }
+            }
+            #endregion
+            string[] lines_LastID = System.IO.File.ReadAllLines(path_LastID);
+            #region
+            indexAttribute = 1;
+            for (int indexLigne = 0; indexLigne < lines_LastID.Length; indexLigne++)
+            {
+                string[] columns = lines_LastID[indexLigne].Split(';');
+                switch (indexAttribute)
+                {
+                    case 1:
+                        break;
+                    case 2:
                         break;
                 }
                 indexAttribute++;
@@ -353,7 +433,6 @@ namespace Dorset_OOP_Project
                         info += $";{faculty.UserID}";
                     }
                 }
-                classroomDB.WriteLine(info);
                 info = "Student_ID";
                 if (classroom.ClassRoomStudents != null && classroom.ClassRoomStudents.Count != 0)
                 {
@@ -375,10 +454,11 @@ namespace Dorset_OOP_Project
                         }
                         else
                         {
-                            info += "-1";
+                            info += ";-1";
                         }
                     }
                 }
+                Console.WriteLine(info);
                 classroomDB.WriteLine(info);
             }
             classroomDB.Close();
