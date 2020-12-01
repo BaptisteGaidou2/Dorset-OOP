@@ -6,6 +6,7 @@ namespace Dorset_OOP_Project
     public class Invoice
     {
         public int InvoiceId { get; set; }
+        public int StudentId { get; set; }
         public float Amount { get; set; }
         public List<Payment> Payments { get; set; }
 
@@ -21,10 +22,24 @@ namespace Dorset_OOP_Project
             Payments = new List<Payment>();
         }
 
+        public Invoice(float amount, int invoiceId)
+        {
+            Amount = amount;
+            Payments = new List<Payment>();
+            InvoiceId = invoiceId;
+        }
+
         public Invoice(float amount, List<Payment> payments)
         {
             Amount = amount;
             Payments = payments;
+        }
+
+        public Invoice(float amount, int invoiceId, int studentId)
+        {
+            Amount = amount;
+            InvoiceId = invoiceId;
+            StudentId = studentId;
         }
 
         public float OutstandingBalance()
@@ -37,9 +52,15 @@ namespace Dorset_OOP_Project
             return total;
         }
 
-        public void AddPayment(Payment payment)
+        public bool AddPayment(Payment payment)
         {
+            if (OutstandingBalance() < 0 || OutstandingBalance() - payment.Amount < 0)
+            {
+                return false;
+            }
             Payments.Add(payment);
+            payment.InvoiceId = InvoiceId;
+            return true;
         }
 
         public void PrintPayments()
@@ -48,6 +69,12 @@ namespace Dorset_OOP_Project
             {
                 Console.WriteLine($"Payment : {payment.PaymentId} / Amount : {payment.Amount} / Method : {payment.Method}");
             }
+        }
+
+        public void Print()
+        {
+            Console.WriteLine($"Invoice : {InvoiceId} / Amount : {Amount} / Outstanding : {OutstandingBalance()}");
+            PrintPayments();
         }
     }
 }
