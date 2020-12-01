@@ -17,7 +17,7 @@ namespace Dorset_OOP_Project
         public int LastClassroomID { get; set; }
         public int LastExamID { get; set; }
         public int CurrentIndexUser { get; set; }
-        public Application(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_FacultyClassroom, string path_StudentClassroom, string path_StudentAttendences, string path_StudentNotes, string path_LastID)
+        public Application(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes, string path_LastID)
         {
             UserList = new List<User>();
             DisciplineList = new List<Discipline>();
@@ -234,76 +234,6 @@ namespace Dorset_OOP_Project
                 }
             }
             #endregion
-            //string[] lines_FacultyClassroom = System.IO.File.ReadAllLines(path_FacultyClassroom);
-            #region
-            //indexAttribute = 1;
-            //int facultyID = 0;
-            //for (int indexLigne = 0; indexLigne < lines_FacultyClassroom.Length; indexLigne++)
-            //{
-            //    string[] columns = lines_FacultyClassroom[indexLigne].Split(';');
-            //    switch (indexAttribute)
-            //    {
-            //        case 1:
-            //            facultyID = Convert.ToInt32(columns[1]);
-            //            break;
-            //        case 2:
-            //            int indexF = GenericFunction.IndexUserID(facultyID, UserList);
-            //            if (indexF != -1)
-            //            {
-            //                if(UserList[indexF]is Faculty)
-            //                {
-            //                    int indexClassroom = GenericFunction.IndexClassroomID(Convert.ToInt32(columns[1]), Classrooms);
-            //                    if (indexClassroom != -1)
-            //                    {
-            //                        Faculty faculty = (Faculty)UserList[indexF];
-            //                        faculty.ClassroomsTeaching.Add(Classrooms[indexClassroom]);
-            //                    }
-            //                }
-            //            }
-            //            break;
-            //    }
-            //    indexAttribute++;
-            //    if (indexAttribute == 3)
-            //    {
-            //        indexAttribute = 1;
-            //    }
-            //}
-            #endregion
-            //string[] lines_StudentClassroom = System.IO.File.ReadAllLines(path_StudentClassroom);
-            #region
-            //indexAttribute = 1;
-            //int studentID = 0;
-            //for (int indexLigne = 0; indexLigne < lines_StudentClassroom.Length; indexLigne++)
-            //{
-            //    string[] columns = lines_StudentClassroom[indexLigne].Split(';');
-            //    switch (indexAttribute)
-            //    {
-            //        case 1:
-            //            studentID = Convert.ToInt32(columns[1]);
-            //            break;
-            //        case 2:
-            //            int indexS = GenericFunction.IndexUserID(studentID, UserList);
-            //            if (indexS != -1)
-            //            {
-            //                if (UserList[indexS] is Student)
-            //                {
-            //                    int indexClassroom = GenericFunction.IndexClassroomID(Convert.ToInt32(columns[1]), Classrooms);
-            //                    if (indexClassroom != -1)
-            //                    {
-            //                        Student student = (Student)UserList[indexS];
-            //                        student.ClassroomStudying.Add(Classrooms[indexClassroom]);
-            //                    }
-            //                }
-            //            }
-            //            break;
-            //    }
-            //    indexAttribute++;
-            //    if (indexAttribute == 3)
-            //    {
-            //        indexAttribute = 1;
-            //    }
-            //}
-            #endregion
             string[] line_StudentAttendences = System.IO.File.ReadAllLines(path_StudentAttendences);
             #region
             indexAttribute = 1;
@@ -435,7 +365,7 @@ namespace Dorset_OOP_Project
             #endregion
 
         }
-        public void FromAppToCSV(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_FacultyClassroom, string path_StudentClassroom, string path_StudentAttendences, string path_StudentNotes,string path_LastID)
+        public void FromAppToCSV(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes,string path_LastID)
         {
             StreamWriter userDB = new StreamWriter(path_UserDB);
             #region
@@ -536,48 +466,6 @@ namespace Dorset_OOP_Project
             }
             classroomDB.Close();
             #endregion
-            StreamWriter facultyClassroomDB = new StreamWriter(path_FacultyClassroom);
-            #region
-            foreach (User user in UserList)
-            {
-                if (user is Faculty)
-                {
-                    Faculty faculty = (Faculty)user;
-                    if (faculty.ClassroomsTeaching != null && faculty.ClassroomsTeaching.Count != 0)
-                    {
-                        facultyClassroomDB.WriteLine($"ID;{faculty.UserID}");
-                        string information = "Classroom_ID";
-                        foreach (Classroom classroom in faculty.ClassroomsTeaching)
-                        {
-                            information += $";{classroom.ClassRoomID}";
-                        }
-                        facultyClassroomDB.WriteLine(information);
-                    }
-                }
-            }
-            facultyClassroomDB.Close();
-            #endregion
-            StreamWriter studentClassroomDB = new StreamWriter(path_StudentClassroom);
-            #region
-            foreach (User user in UserList)
-            {
-                if (user is Student)
-                {
-                    Student student = (Student)user;
-                    if (student.ClassroomStudying != null && student.ClassroomStudying.Count != 0)
-                    {
-                        studentClassroomDB.WriteLine($"User_ID;{student.UserID}");
-                        string information = "Classroom_ID";
-                        foreach (Classroom classroom in student.ClassroomStudying)
-                        {
-                            information += $";{classroom.ClassRoomID}";
-                        }
-                        studentClassroomDB.WriteLine(information);
-                    }
-                }
-            }
-            studentClassroomDB.Close();
-            #endregion
             StreamWriter studentAttendencesDB = new StreamWriter(path_StudentAttendences);
             #region
             foreach (User user in UserList)
@@ -667,10 +555,10 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(GenericFunction.UsersPublicInformation(UserList));
                         break;
                     case 3:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_FacultyClassroom.csv", "path_StudentClassroom.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv");
+                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv");
                         break;
                     case 4:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_FacultyClassroom.csv", "path_StudentClassroom.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv");
+                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv",  "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv");
                         closeApp = true;
                         break;
                     case 5:

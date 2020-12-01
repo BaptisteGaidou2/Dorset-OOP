@@ -9,8 +9,6 @@ namespace Dorset_OOP_Project
         public int ExamID { get; set; }
         public Discipline ExamDiscipline { get; set; } 
         public string ExamName { get; set; }
-        //public DateTime StartTime { get; set; }
-       // public DateTime EndTime { get; set; }
         public int Week { get; set; }
         public int Day { get; set; }
         public int StartingHour { get; set; }
@@ -20,13 +18,6 @@ namespace Dorset_OOP_Project
             string information = $"Exam name : {ExamName} | Discipline : {ExamDiscipline.DisciplineName} | ID : {ExamDiscipline.DisciplineID}\nExam Date Week : {Week} Day : {GenericFunction.FromIndexToDay(Day)} StartingHour : {StartingHour}H  EndingHour {EndingHour}H";
             return information;
         }
-        //public Exam(Discipline _examDiscipline,string _examName,DateTime _startTime, DateTime _endTime)
-        //{
-        //    ExamDiscipline = _examDiscipline;
-        //    ExamName = _examName;
-        //    StartTime = _startTime;
-        //    EndTime = _endTime;
-        //}
         public Exam()
         {
 

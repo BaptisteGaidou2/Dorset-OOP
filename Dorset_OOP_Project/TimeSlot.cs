@@ -6,17 +6,8 @@ namespace Dorset_OOP_Project
         public int Week { get; set; }
         public int Day { get; set; }
         public int StartingTime { get; set; }
-     //   public int EndingTime { get; set; }
-     //   public DateTime StartTime { get; set; }
-   //     public DateTime EndTime { get; set; }
         public Faculty Teacher { get; set; }
 
-        //public TimeSlot(DateTime startTime, DateTime endTime, Faculty teacher)
-        //{
-        //    StartTime = startTime;
-        //    EndTime = endTime;
-        //    Teacher = teacher;
-        //}
         public TimeSlot()
         {
 
