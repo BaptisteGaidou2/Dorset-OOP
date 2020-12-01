@@ -9,6 +9,8 @@ namespace Dorset_OOP_Project
         public List<Classroom> ClassroomStudying { get; set; }
         public List<Attendance> Attendances { get; set; }
         public List<Note> NotesReceive { get; set; }
+        public List<Invoice> Invoices { get; set; }
+
         public void RemoveClassroom_FromAnID(int classroomID)
         {
             if (GenericFunction.ContainClassroomID(classroomID, ClassroomStudying))
@@ -104,18 +106,21 @@ namespace Dorset_OOP_Project
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
             NotesReceive = new List<Note>();
+            Invoices = new List<Invoice> { new Invoice() };
         }
         public Student(string lastName, string firstName) : base(lastName, firstName)
         {
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
             NotesReceive = new List<Note>();
+            Invoices = new List<Invoice> { new Invoice() };
         }
         public Student(string lastName, string firstName, string email, string password) : base(lastName, firstName, email, password)
         {
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
             NotesReceive = new List<Note>();
+            Invoices = new List<Invoice> { new Invoice() };
         }
 
         public Student(string lastName, string firstName, string email, string password, int userID) : base(lastName, firstName, email, password, userID)
@@ -123,6 +128,7 @@ namespace Dorset_OOP_Project
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
             NotesReceive = new List<Note>();
+            Invoices = new List<Invoice>{new Invoice() };
         }
         public bool AddClassroom(Classroom classroom)
         {
@@ -298,20 +304,24 @@ namespace Dorset_OOP_Project
             while (stay)
             {
                 int askingValue = EnterValue.AskingNumber("Enter what you want to do\n1 : see timetable for specific week\n2 : go to the previous menu", 1, 2);
-                    switch (askingValue)
-                    {
-                        case 1:
-                            int week = EnterValue.AskingNumber("enter the week you want to see", 1, 10);
-                            Console.WriteLine(TimeTableToString(week));
-                                
-                           
-                            break;
-                        case 2:
-                            stay = false;
-                            break;
-                    }
+                switch (askingValue)
+                {
+                    case 1:
+                        int week = EnterValue.AskingNumber("enter the week you want to see", 1, 10);
+                        Console.WriteLine(TimeTableToString(week));
+                        break;
+                    case 2:
+                        stay = false;
+                        break;
                 }
             }
+        }
+
+        public void AddInvoice(Invoice invoice)
+        {
+            Invoices.Add(invoice);
+        }
+
         public override string PublicApplicationInformation()
         {
             return $"{base.PublicApplicationInformation()} | type : student";

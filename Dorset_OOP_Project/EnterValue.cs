@@ -24,7 +24,7 @@ namespace Dorset_OOP_Project
                 }
                 if (!validAnswer)
                 {
-                    Console.WriteLine("You typmesqe an invalid answer");
+                    Console.WriteLine("You type an invalid answer");
                 }
             }
             return answer;
