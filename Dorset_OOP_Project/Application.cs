@@ -113,7 +113,7 @@ namespace Dorset_OOP_Project
                         Exams[Exams.Count - 1].ExamName = columns[1];
                         break;
                     case 3:
-                        Exams[Exams.Count - 1].ExamDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(Convert.ToInt32(columns[1]),DisciplineList)];
+                        Exams[Exams.Count - 1].ExamDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(Convert.ToInt32(columns[1]), DisciplineList)];
                         break;
                     case 4:
                         Exams[Exams.Count - 1].Week = Convert.ToInt32(columns[1]);
@@ -152,8 +152,8 @@ namespace Dorset_OOP_Project
                         break;
                     case 3:
                         if (columns.Length > 1)
-                        {      
-                            Classrooms[Classrooms.Count - 1].ClassRoomDiscipline= DisciplineList[GenericFunction.IndexDisciplineID(Convert.ToInt32(columns[1]), DisciplineList)];
+                        {
+                            Classrooms[Classrooms.Count - 1].ClassRoomDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(Convert.ToInt32(columns[1]), DisciplineList)];
                         }
                         break;
                     case 4:
@@ -175,11 +175,11 @@ namespace Dorset_OOP_Project
                     case 5:
                         if (columns.Length > 1)
                         {
-                            for(int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
+                            for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
                             {
                                 int ID = Convert.ToInt32(columns[indexColumn]);
                                 int index = GenericFunction.IndexUserID(ID, UserList);
-                                if (index != -1 &&UserList[index]is Student)
+                                if (index != -1 && UserList[index] is Student)
                                 {
                                     Student student = (Student)UserList[index];
                                     Classrooms[Classrooms.Count - 1].ClassRoomStudents.Add(student);
@@ -202,10 +202,10 @@ namespace Dorset_OOP_Project
                                         Classrooms[Classrooms.Count - 1].Timetables.Add(new TimeSlot());
                                         indexLastClassroom = Classrooms.Count - 1;
                                         indexLastTimeTable = Classrooms[indexLastClassroom].Timetables.Count - 1;
-                                        Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Week =Convert.ToInt32(columns[indexColumn]);
+                                        Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Week = Convert.ToInt32(columns[indexColumn]);
                                         break;
                                     case 2:
-                                        Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Day = Convert.ToInt32(columns[indexColumn]); 
+                                        Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Day = Convert.ToInt32(columns[indexColumn]);
                                         break;
                                     case 3:
                                         Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].StartingTime = Convert.ToInt32(columns[indexColumn]);
@@ -217,7 +217,7 @@ namespace Dorset_OOP_Project
                                             int index = GenericFunction.IndexUserID(ID, UserList);
                                             if (index != -1 && UserList[index] is Faculty)
                                             {
-                                                Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Teacher = (Faculty) UserList[index];
+                                                Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Teacher = (Faculty)UserList[index];
                                             }
                                         }
                                         break;
@@ -285,14 +285,14 @@ namespace Dorset_OOP_Project
                 {
                     if (indexStudent_Attendance != 1 && classroomIndex_Attendance != -1 && timeslotValue.Count == 3)
                     {
-                        if(UserList[indexStudent_Attendance] is Student)
+                        if (UserList[indexStudent_Attendance] is Student)
                         {
                             Student student = (Student)UserList[indexStudent_Attendance];
                             student.Attendances.Add(new Attendance());
                             int indexLastAttendance = student.Attendances.Count - 1;
                             student.Attendances[indexLastAttendance].AbsentClass = Classrooms[classroomIndex_Attendance];
                             student.Attendances[indexLastAttendance].AbsentTimeSlot = new TimeSlot(timeslotValue[0], timeslotValue[1], timeslotValue[2]);
-                            if (indexFaculty_Attendance != -1&& UserList[indexFaculty_Attendance] is Faculty)
+                            if (indexFaculty_Attendance != -1 && UserList[indexFaculty_Attendance] is Faculty)
                             {
                                 student.Attendances[indexLastAttendance].AbsentTimeSlot.Teacher = (Faculty)UserList[indexFaculty_Attendance];
 
@@ -306,7 +306,7 @@ namespace Dorset_OOP_Project
             string[] lines_StudentNotes = System.IO.File.ReadAllLines(path_StudentNotes);
             #region
             indexAttribute = 1;
-            int indexStudent_NotesStudent = 0; 
+            int indexStudent_NotesStudent = 0;
             int indexExam_NotesStudent = 0;
             double note = 0;
             for (int indexLigne = 0; indexLigne < lines_StudentNotes.Length; indexLigne++)
@@ -318,7 +318,7 @@ namespace Dorset_OOP_Project
                         indexStudent_NotesStudent = GenericFunction.IndexUserID(Convert.ToInt32(columns[1]), UserList);
                         break;
                     case 2:
-                        indexExam_NotesStudent = GenericFunction.IndexExamID(Convert.ToInt32(columns[1]),Exams);
+                        indexExam_NotesStudent = GenericFunction.IndexExamID(Convert.ToInt32(columns[1]), Exams);
                         break;
                     case 3:
                         note = Convert.ToDouble(columns[1]);
@@ -327,9 +327,9 @@ namespace Dorset_OOP_Project
                 indexAttribute++;
                 if (indexAttribute == 4)
                 {
-                    if(indexExam_NotesStudent!=-1&& indexStudent_NotesStudent != -1)
+                    if (indexExam_NotesStudent != -1 && indexStudent_NotesStudent != -1)
                     {
-                        if(UserList[indexStudent_NotesStudent]is Student)
+                        if (UserList[indexStudent_NotesStudent] is Student)
                         {
                             Student student = (Student)UserList[indexStudent_NotesStudent];
                             student.NotesReceive.Add(new Note(Exams[indexExam_NotesStudent], note));
@@ -382,23 +382,18 @@ namespace Dorset_OOP_Project
                 {
                     case 1:
                         paymentId = Convert.ToInt32(columns[1]);
-                        Console.WriteLine($"Payment ID : {paymentId}");
                         break;
                     case 2:
                         amount = Convert.ToInt32(columns[1]);
-                        Console.WriteLine($"Amount : {amount}");
                         break;
                     case 3:
                         date = Convert.ToDateTime(columns[1]);
-                        Console.WriteLine($"Date : {date}");
                         break;
                     case 4:
                         method = columns[1];
-                        Console.WriteLine($"Method : {method}");
                         break;
                     case 5:
                         invoiceId = Convert.ToInt32(columns[1]);
-                        Console.WriteLine($"Invoice ID : {invoiceId}");
                         break;
                 }
                 indexAttribute++;
@@ -440,14 +435,13 @@ namespace Dorset_OOP_Project
 
             foreach (Payment payment in Payments)
             {
-                    Invoice invoice = Invoices.Where(i => i.InvoiceId == payment.InvoiceId).First();
-                    invoice.AddPayment(payment);
-                
+                Invoice invoice = Invoices.Where(i => i.InvoiceId == payment.InvoiceId).First();
+                invoice.AddPayment(payment);
             }
             #endregion
 
         }
-        public void FromAppToCSV(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes,string path_LastID, string path_StudentInvoices ,string path_StudentPayments)
+        public void FromAppToCSV(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes, string path_LastID, string path_StudentInvoices, string path_StudentPayments)
         {
             StreamWriter userDB = new StreamWriter(path_UserDB);
             #region
@@ -559,13 +553,13 @@ namespace Dorset_OOP_Project
                     {
                         foreach (Attendance attendance in student.Attendances)
                         {
-                            studentAttendencesDB.WriteLine($"ID;{student.UserID}"); 
+                            studentAttendencesDB.WriteLine($"ID;{student.UserID}");
                             studentAttendencesDB.WriteLine($"Classroom;{attendance.AbsentClass.ClassRoomID}");
                             studentAttendencesDB.WriteLine($"TimeSlot;{attendance.AbsentTimeSlot.Week};{attendance.AbsentTimeSlot.Day};{attendance.AbsentTimeSlot.StartingTime}");
                             string information = "Faculty_ID";
                             if (attendance.AbsentTimeSlot.Teacher != null)
                             {
-                                information+=$";{attendance.AbsentTimeSlot.Teacher.UserID}";
+                                information += $";{attendance.AbsentTimeSlot.Teacher.UserID}";
                             }
                             studentAttendencesDB.WriteLine(information);
                         }
@@ -696,7 +690,7 @@ namespace Dorset_OOP_Project
             {
                 int userIDAnswer = EnterValue.AskingNumber("Enter your userID", 0, UserList[UserList.Count - 1].UserID);
 
-                if (GenericFunction.ContainUserID(userIDAnswer,UserList))
+                if (GenericFunction.ContainUserID(userIDAnswer, UserList))
                 {
                     bool tryingTypePassword = true;
                     while (tryingTypePassword)
@@ -706,13 +700,13 @@ namespace Dorset_OOP_Project
                         {
                             Console.WriteLine("Enter your password");
                             string answerPassword = Console.ReadLine();
-                            if (answerPassword == UserList[GenericFunction.IndexUserID(userIDAnswer,UserList)].Password)
+                            if (answerPassword == UserList[GenericFunction.IndexUserID(userIDAnswer, UserList)].Password)
                             {
                                 Console.WriteLine("Sucessfully logging");
                                 tryingTypePassword = false;
                                 endingLoginFuction = true;
                                 succesfullLogin = true;
-                                CurrentIndexUser = GenericFunction.IndexUserID(userIDAnswer,UserList);
+                                CurrentIndexUser = GenericFunction.IndexUserID(userIDAnswer, UserList);
                             }
                             else
                             {
@@ -779,7 +773,7 @@ namespace Dorset_OOP_Project
                         break;
                     case 3:
                         currentStudent.TimeTableMenu();
-                            break;
+                        break;
                     case 4:
                         Console.WriteLine(currentStudent.SeeAllNotes());
                         break;
@@ -788,7 +782,7 @@ namespace Dorset_OOP_Project
                         {
                             foreach (Exam exam in Exams)
                             {
-                                if (currentStudent.DisciplinesStudying()!=null && exam.ExamDiscipline != null)
+                                if (currentStudent.DisciplinesStudying() != null && exam.ExamDiscipline != null)
                                 {
                                     if (currentStudent.DisciplinesStudying().Contains(exam.ExamDiscipline))
                                     {
@@ -818,7 +812,7 @@ namespace Dorset_OOP_Project
             bool logout = false;
             while (!logout)
             {
-                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Go to the discipline menu\n4 : Go to the Classroom Menu\n5 : Go to the Exam menu\n6 : Go to the user menu\n7 : Log out", 1,7);
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Go to the discipline menu\n4 : Go to the Classroom Menu\n5 : Go to the Exam menu\n6 : Go to the user menu\n7 : Log out", 1, 7);
                 switch (answer)
                 {
                     case 1:
@@ -882,7 +876,7 @@ namespace Dorset_OOP_Project
                             Console.WriteLine("Enter the exam name");
                             string examName = Console.ReadLine();
                             Exams.Add(new Exam(DisciplineList[GenericFunction.IndexDisciplineID(disciplineID, DisciplineList)], examName, week, day, startingTime, endingTime));
-                            Exams[Exams.Count - 1].ExamID=PutANewExamID();
+                            Exams[Exams.Count - 1].ExamID = PutANewExamID();
                         }
                         else
                         {
@@ -1003,16 +997,16 @@ namespace Dorset_OOP_Project
                             bool stayEdit = true;
                             while (stayEdit)
                             {
-                            int editingChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Change personal Information\n2 : See user information\n3 : Remove user\n4 : Go back to the previous menu", 1, 4);
-                            switch (editingChoice)
-                            {
-                                case 1:
-                                    UserList[GenericFunction.IndexUserID(userID, UserList)].ChangeInformation();
-                                    break;
-                                case 2:
-                                    Console.WriteLine(UserList[GenericFunction.IndexUserID(userID, UserList)].GeneralInformation());
-                                    break;
-                                case 3:
+                                int editingChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Change personal Information\n2 : See user information\n3 : Remove user\n4 : Go back to the previous menu", 1, 4);
+                                switch (editingChoice)
+                                {
+                                    case 1:
+                                        UserList[GenericFunction.IndexUserID(userID, UserList)].ChangeInformation();
+                                        break;
+                                    case 2:
+                                        Console.WriteLine(UserList[GenericFunction.IndexUserID(userID, UserList)].GeneralInformation());
+                                        break;
+                                    case 3:
                                         if (userID == 0)
                                         {
                                             Console.WriteLine("This administrator can't be removed");
@@ -1057,10 +1051,10 @@ namespace Dorset_OOP_Project
                                             Console.WriteLine("the user has been removed");
                                             stayEdit = false;
                                         }
-                                    break;
-                                case 4:
+                                        break;
+                                    case 4:
                                         stayEdit = false;
-                                    break;
+                                        break;
                                 }
                             }
                         }
@@ -1098,9 +1092,9 @@ namespace Dorset_OOP_Project
                                     int facultyIDAnswer = GenericFunction.ChoosingAFacultyID(UserList);
                                     if (facultyIDAnswer != -1)
                                     {
-                                        if (!facultiesAnswer.Contains(UserList[GenericFunction.IndexUserID(facultyIDAnswer,UserList)]))
+                                        if (!facultiesAnswer.Contains(UserList[GenericFunction.IndexUserID(facultyIDAnswer, UserList)]))
                                         {
-                                            facultiesAnswer.Add((Faculty)UserList[GenericFunction.IndexUserID(facultyIDAnswer,UserList)]);
+                                            facultiesAnswer.Add((Faculty)UserList[GenericFunction.IndexUserID(facultyIDAnswer, UserList)]);
                                             Console.WriteLine($"{facultiesAnswer[facultiesAnswer.Count - 1].PublicApplicationInformation()} has been added");
                                         }
                                         else
@@ -1125,9 +1119,9 @@ namespace Dorset_OOP_Project
                                     int studentIDAnswer = GenericFunction.ChoosingStudentID(UserList);
                                     if (studentIDAnswer != -1)
                                     {
-                                        if (!studentsAnswer.Contains(UserList[GenericFunction.IndexUserID(studentIDAnswer,UserList)]))
+                                        if (!studentsAnswer.Contains(UserList[GenericFunction.IndexUserID(studentIDAnswer, UserList)]))
                                         {
-                                            studentsAnswer.Add((Student)UserList[GenericFunction.IndexUserID(studentIDAnswer,UserList)]);
+                                            studentsAnswer.Add((Student)UserList[GenericFunction.IndexUserID(studentIDAnswer, UserList)]);
                                             Console.WriteLine($"{studentsAnswer[studentsAnswer.Count - 1].PublicApplicationInformation()} has been added");
                                         }
                                         else
@@ -1151,7 +1145,7 @@ namespace Dorset_OOP_Project
                                     int disciplineIDAnswer = GenericFunction.ChoosingDisciplineID(DisciplineList);
                                     if (disciplineIDAnswer != -1)
                                     {
-                                        Discipline disciplineAnswer = DisciplineList[GenericFunction.IndexDisciplineID(disciplineIDAnswer,DisciplineList)];
+                                        Discipline disciplineAnswer = DisciplineList[GenericFunction.IndexDisciplineID(disciplineIDAnswer, DisciplineList)];
                                         Classrooms.Add(new Classroom(classroomNameAnswer, facultiesAnswer, studentsAnswer, disciplineAnswer));
                                         Classrooms[Classrooms.Count - 1].ClassRoomID = PutANewClassroomID();
                                         Console.WriteLine($"The classroom has been succesfully created\n{Classrooms[Classrooms.Count - 1].ClassRoomInformation()}");
@@ -1340,8 +1334,8 @@ namespace Dorset_OOP_Project
                                                                         }
                                                                     }
                                                                 }
-                                                                    break;
-                                                                case 2:
+                                                                break;
+                                                            case 2:
                                                                 stayRemovedAttendance = false;
                                                                 break;
                                                         }
@@ -1415,7 +1409,7 @@ namespace Dorset_OOP_Project
                         int disciplineIDAnswer = GenericFunction.ChoosingDisciplineID(DisciplineList);
                         if (disciplineIDAnswer != -1)
                         {
-                            Discipline choosenDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(disciplineIDAnswer,DisciplineList)];
+                            Discipline choosenDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(disciplineIDAnswer, DisciplineList)];
                             bool stayInChooseFunction = true;
                             while (stayInChooseFunction)
                             {
@@ -1574,7 +1568,7 @@ namespace Dorset_OOP_Project
                                                                                         }
                                                                                         if (newNoteValue >= 0 && newNoteValue <= 20)
                                                                                         {
-                                                                                            choosenStudent.NotesReceive[indexNote].NoteValue=newNoteValue;
+                                                                                            choosenStudent.NotesReceive[indexNote].NoteValue = newNoteValue;
                                                                                             Console.WriteLine("The note has been changed");
                                                                                         }
                                                                                         else
@@ -1602,9 +1596,9 @@ namespace Dorset_OOP_Project
                                                                                     addingNotes = false;
                                                                                     break;
                                                                             }
-                                                                            
+
                                                                         }
-                                                                        
+
                                                                     }
                                                                     else
                                                                     {
@@ -1641,7 +1635,7 @@ namespace Dorset_OOP_Project
                                                     break;
 
                                             }
-                                            
+
                                         }
                                     }
                                     else
@@ -1662,7 +1656,7 @@ namespace Dorset_OOP_Project
                 }
             }
         }
-        
+
         public int PutANewExamID()
         {
             LastExamID++;
