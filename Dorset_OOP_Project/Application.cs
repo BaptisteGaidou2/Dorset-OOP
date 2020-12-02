@@ -382,18 +382,23 @@ namespace Dorset_OOP_Project
                 {
                     case 1:
                         paymentId = Convert.ToInt32(columns[1]);
+                        Console.WriteLine($"Payment ID : {paymentId}");
                         break;
                     case 2:
                         amount = Convert.ToInt32(columns[1]);
+                        Console.WriteLine($"Amount : {amount}");
                         break;
                     case 3:
                         date = Convert.ToDateTime(columns[1]);
+                        Console.WriteLine($"Date : {date}");
                         break;
                     case 4:
                         method = columns[1];
+                        Console.WriteLine($"Method : {method}");
                         break;
                     case 5:
                         invoiceId = Convert.ToInt32(columns[1]);
+                        Console.WriteLine($"Invoice ID : {invoiceId}");
                         break;
                 }
                 indexAttribute++;
@@ -427,21 +432,16 @@ namespace Dorset_OOP_Project
                 indexAttribute++;
                 if (indexAttribute == 4)
                 {
-                    Invoices.Add(new Invoice(amount, invoiceId, studentId));
+                    Invoice invoice = new Invoice(amount, invoiceId, studentId);
+                    Invoices.Add(invoice);
                     indexAttribute = 1;
                 }
             }
 
             foreach (Payment payment in Payments)
             {
-                try
-                {
                     Invoice invoice = Invoices.Where(i => i.InvoiceId == payment.InvoiceId).First();
                     invoice.AddPayment(payment);
-                }
-                catch(Exception e) {
-                    Console.WriteLine(e);
-                }
                 
             }
             #endregion

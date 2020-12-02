@@ -40,6 +40,7 @@ namespace Dorset_OOP_Project
             Amount = amount;
             InvoiceId = invoiceId;
             StudentId = studentId;
+            Payments = new List<Payment>();
         }
 
         public float OutstandingBalance()
