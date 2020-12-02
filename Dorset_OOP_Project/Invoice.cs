@@ -10,7 +10,7 @@ namespace Dorset_OOP_Project
         public float Amount { get; set; }
         public List<Payment> Payments { get; set; }
 
-        public Invoice ()
+        public Invoice()
         {
             Amount = 8000;
             Payments = new List<Payment>();
@@ -46,7 +46,7 @@ namespace Dorset_OOP_Project
         public float OutstandingBalance()
         {
             float total = Amount;
-            foreach(Payment payment in Payments)
+            foreach (Payment payment in Payments)
             {
                 total -= payment.Amount;
             }
@@ -64,18 +64,19 @@ namespace Dorset_OOP_Project
             return true;
         }
 
-        public void PrintPayments()
+        public string PaymentsInformation()
         {
-            foreach(Payment payment in Payments)
+            string information = "";
+            foreach (Payment payment in Payments)
             {
-                Console.WriteLine($"Payment : {payment.PaymentId} / Amount : {payment.Amount} / Method : {payment.Method}");
+                information += $"Payment : {payment.PaymentId} / Amount : {payment.Amount} / Method : {payment.Method} \n";
             }
+            return information;
         }
 
-        public void Print()
+        public override string ToString()
         {
-            Console.WriteLine($"Invoice : {InvoiceId} / Amount : {Amount} / Outstanding : {OutstandingBalance()}");
-            PrintPayments();
+            return $"Invoice : {InvoiceId} / Amount : {Amount} / Outstanding : {OutstandingBalance()} \n{PaymentsInformation()}";
         }
     }
 }

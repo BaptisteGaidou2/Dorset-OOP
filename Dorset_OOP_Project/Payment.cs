@@ -31,5 +31,10 @@ namespace Dorset_OOP_Project
             InvoiceId = invoiceId;
             PaymentId = paymentId;
         }
+
+        public override string ToString()
+        {
+            return $"Payment : {PaymentId} / Linked To Invoice : {InvoiceId} / Amount : {Amount} / Date : {Date} / Method : {Method}";
+        } 
     }
 }
