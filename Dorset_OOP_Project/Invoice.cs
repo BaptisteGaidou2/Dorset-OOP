@@ -5,8 +5,8 @@ namespace Dorset_OOP_Project
 {
     public class Invoice
     {
-        public int InvoiceId { get; set; }
-        public int StudentId { get; set; }
+        //public int InvoiceId { get; set; }
+        //public int StudentId { get; set; }
         public double Amount { get; set; }
         public List<Payment> Payments { get; set; }
 
@@ -21,20 +21,20 @@ namespace Dorset_OOP_Project
             Amount = amount;
             Payments = new List<Payment>();
         }
-
+        /*
         public Invoice(double amount, int invoiceId)
         {
             Amount = amount;
             Payments = new List<Payment>();
             InvoiceId = invoiceId;
         }
-
+        */
         public Invoice(double amount, List<Payment> payments)
         {
             Amount = amount;
             Payments = payments;
         }
-
+        /*
         public Invoice(double amount, int invoiceId, int studentId)
         {
             Amount = amount;
@@ -42,7 +42,7 @@ namespace Dorset_OOP_Project
             StudentId = studentId;
             Payments = new List<Payment>();
         }
-
+        */
         public double OutstandingBalance()
         {
             double total = Amount;
@@ -60,7 +60,7 @@ namespace Dorset_OOP_Project
                 return false;
             }
             Payments.Add(payment);
-            payment.InvoiceId = InvoiceId;
+            //payment.InvoiceId = InvoiceId;
             return true;
         }
 
@@ -69,14 +69,24 @@ namespace Dorset_OOP_Project
             string information = "";
             foreach (Payment payment in Payments)
             {
-                information += $"Payment : {payment.PaymentId} / Amount : {payment.Amount} / Method : {payment.Method} \n";
+                information += $"Amount : {payment.Amount} / Method : {payment.Method} \n";//Payment : {payment.PaymentId} / 
             }
             return information;
         }
-
+        public bool FinishedPayed()
+        {
+            if (OutstandingBalance() == 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public override string ToString()
         {
-            return $"Invoice : {InvoiceId} / Amount : {Amount} / Outstanding : {OutstandingBalance()} \n{PaymentsInformation()}";
+            return $"Amount : {Amount} / Outstanding : {OutstandingBalance()} / Finished Payed : {FinishedPayed()} \n{PaymentsInformation()}";//Invoice : {InvoiceId} / 
         }
     }
 }

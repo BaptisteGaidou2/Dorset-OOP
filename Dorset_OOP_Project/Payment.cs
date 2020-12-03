@@ -3,8 +3,8 @@ namespace Dorset_OOP_Project
 {
     public class Payment
     {
-        public int PaymentId { get; set; }
-        public int InvoiceId { get; set; }
+        //public int PaymentId { get; set; }
+        //public int InvoiceId { get; set; }
         public double Amount { get; set; }
         public DateTime Date { get; set; }
         public string Method { get; set; }
@@ -22,7 +22,7 @@ namespace Dorset_OOP_Project
             Date = date;
             Method = method;
         }
-
+        /*
         public Payment(double amount, DateTime date, string method, int invoiceId, int paymentId)
         {
             Amount = amount;
@@ -31,10 +31,10 @@ namespace Dorset_OOP_Project
             InvoiceId = invoiceId;
             PaymentId = paymentId;
         }
-
+        */
         public override string ToString()
         {
-            return $"Payment : {PaymentId} / Linked To Invoice : {InvoiceId} / Amount : {Amount} / Date : {Date} / Method : {Method}";
+            return $"Amount : {Amount} / Date : {Date} / Method : {Method}";//Payment : {PaymentId} / Linked To Invoice : {InvoiceId} / 
         } 
     }
 }

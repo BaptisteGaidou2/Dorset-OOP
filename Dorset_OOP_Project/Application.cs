@@ -17,16 +17,12 @@ namespace Dorset_OOP_Project
         public int LastClassroomID { get; set; }
         public int LastExamID { get; set; }
         public int CurrentIndexUser { get; set; }
-        public List<Invoice> Invoices { get; set; }
-        public List<Payment> Payments { get; set; }
-        public Application(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes, string path_LastID, string path_StudentInvoices, string path_StudentPayments)
+        public Application(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes, string path_LastID, string path_StudentInvoices)
         {
             UserList = new List<User>();
             DisciplineList = new List<Discipline>();
             Classrooms = new List<Classroom>();
             Exams = new List<Exam>();
-            Invoices = new List<Invoice>();
-            Payments = new List<Payment>();
 
             int indexAttribute = 1;
             string[] lines_UserDB = System.IO.File.ReadAllLines(path_UserDB);
@@ -532,18 +528,11 @@ namespace Dorset_OOP_Project
                     indexAttribute = 1;
                 }
             }
-
-            foreach (Payment payment in Payments)
-            {
-                Invoice invoice = Invoices.Where(i => i.InvoiceId == payment.InvoiceId).First();
-                invoice.AddPayment(payment);
-
-            }
             #endregion
 
 
         }
-        public void FromAppToCSV(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes,string path_LastID, string path_StudentInvoices ,string path_StudentPayments)
+        public void FromAppToCSV(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes,string path_LastID, string path_StudentInvoices)
         {
             StreamWriter userDB = new StreamWriter(path_UserDB);
             #region
@@ -795,10 +784,10 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(GenericFunction.UsersPublicInformation(UserList));
                         break;
                     case 3:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices.csv", "path_StudentPayments");
+                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices.csv");
                         break;
                     case 4:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices.csv", "path_StudentPayments");
+                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices.csv");
                         closeApp = true;
                         break;
                     case 5:

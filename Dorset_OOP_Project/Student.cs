@@ -224,33 +224,6 @@ namespace Dorset_OOP_Project
             }
             return timetable;
         }
-        public List<List<List<string>>> TimeTableList2()
-        {
-            List<List<List<string>>> timetable = new List<List<List<string>>>();
-            for (int weekIndex = 0; weekIndex <= 9; weekIndex++)
-            {
-                List<List<string>> initialiseWeek_index = new List<List<string>>();
-                for (int indexDay = 0; indexDay < 7; indexDay++)
-                {
-                    List<string> initialiseDay_index = new List<string>();
-                    for (int indexHours = 0; indexHours <= 11; indexHours++)//hours 8 ->index = 0 hours 19 ->index =11
-                    {
-                        initialiseDay_index.Add("");
-                    }
-                    initialiseWeek_index.Add(initialiseDay_index);
-                }
-                timetable.Add(initialiseWeek_index);
-            }
-            foreach (Classroom classroom in ClassroomStudying)
-            {
-                string disciplineName = classroom.ClassRoomDiscipline.DisciplineName;
-                foreach (TimeSlot timeslot in classroom.Timetables)
-                {
-                    timetable[timeslot.Week][timeslot.Day - 1][timeslot.StartingTime - 8] += $"{disciplineName}\n{timeslot.InformationForTimetable()}";
-                }
-            }
-            return timetable;
-        }
         public string TimeTableToString(int week)
         {
             int space = 12;
