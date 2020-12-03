@@ -12,7 +12,7 @@ namespace Dorset_OOP_Project
         {
 
         }
-        public TimeSlot(int week,int day, int startingTime, Faculty teacher)
+        public TimeSlot(int week, int day, int startingTime, Faculty teacher)
         {
             Week = week;
             Day = day;
@@ -34,7 +34,7 @@ namespace Dorset_OOP_Project
             }
             return information;
         }
-        public string Information ()
+        public string Information()
         {
             string information = $"Week : {Week} |Day : {GenericFunction.FromIndexToDay(Day)} | Start : {StartingTime}H";
             if (Teacher != null)

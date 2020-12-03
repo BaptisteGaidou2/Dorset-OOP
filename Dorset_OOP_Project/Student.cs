@@ -15,12 +15,12 @@ namespace Dorset_OOP_Project
         {
             if (GenericFunction.ContainClassroomID(classroomID, ClassroomStudying))
             {
-                ClassroomStudying.RemoveAt(GenericFunction.IndexClassroomID(classroomID,ClassroomStudying));
+                ClassroomStudying.RemoveAt(GenericFunction.IndexClassroomID(classroomID, ClassroomStudying));
             }
         }
         public void RemoveNotesFromAnExam(Exam exam)
         {
-            for(int index = 0; index < NotesReceive.Count; index++)
+            for (int index = 0; index < NotesReceive.Count; index++)
             {
                 if (NotesReceive[index].ExamNote == exam)
                 {
@@ -63,19 +63,19 @@ namespace Dorset_OOP_Project
             information += "\nClass missing : ";
             if (Attendances != null && Attendances.Count != 0)
             {
-                information += " | "+GenericFunction.AttendanceListInformation(Attendances);
+                information += " | " + GenericFunction.AttendanceListInformation(Attendances);
             }
             else
             {
                 information += "No class missing";
             }
-            
+
             return information;
         }
         public void SeeAttenances()
         {
             Console.WriteLine("Classed missed :");
-            if (Attendances==null||Attendances.Count == 0)
+            if (Attendances == null || Attendances.Count == 0)
             {
                 Console.WriteLine("No class missed");
             }
@@ -92,12 +92,12 @@ namespace Dorset_OOP_Project
             {
                 if (studentNotes.ExamNote.ExamDiscipline == discipline)
                 {
-                    information += studentNotes.Information()+"\n";
+                    information += studentNotes.Information() + "\n";
                 }
             }
             if (notesInThisDiscipline == 0)
             {
-                information+="No notes in this discipline";
+                information += "No notes in this discipline";
             }
             return information;
         }
@@ -128,12 +128,12 @@ namespace Dorset_OOP_Project
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
             NotesReceive = new List<Note>();
-            Invoices = new List<Invoice>{new Invoice() };
+            Invoices = new List<Invoice> { new Invoice() };
         }
         public bool AddClassroom(Classroom classroom)
         {
             bool added = false;
-            if (ClassroomStudying==null||ClassroomStudying.Count==0||!ClassroomStudying.Contains(classroom))
+            if (ClassroomStudying == null || ClassroomStudying.Count == 0 || !ClassroomStudying.Contains(classroom))
             {
                 ClassroomStudying.Add(classroom);
                 added = true;
@@ -161,15 +161,15 @@ namespace Dorset_OOP_Project
         public string SeeDisciplineStudying()
         {
             string info = "";
-            foreach(Discipline discipline in DisciplinesStudying())
+            foreach (Discipline discipline in DisciplinesStudying())
             {
-                info+=(discipline.PublicInformation());
+                info += (discipline.PublicInformation());
             }
             return info;
         }
         public List<List<List<TimeTableAffichage>>> TimeTableList()
         {
-             List<List<List<TimeTableAffichage>>> timetable = new List<List<List<TimeTableAffichage>>>();
+            List<List<List<TimeTableAffichage>>> timetable = new List<List<List<TimeTableAffichage>>>();
             for (int weekIndex = 0; weekIndex <= 9; weekIndex++)
             {
                 List<List<TimeTableAffichage>> initialiseWeek_index = new List<List<TimeTableAffichage>>();
@@ -229,9 +229,9 @@ namespace Dorset_OOP_Project
             foreach (Classroom classroom in ClassroomStudying)
             {
                 string disciplineName = classroom.ClassRoomDiscipline.DisciplineName;
-                foreach(TimeSlot timeslot in classroom.Timetables)
+                foreach (TimeSlot timeslot in classroom.Timetables)
                 {
-                    timetable[timeslot.Week][timeslot.Day-1][timeslot.StartingTime-8] += $"{disciplineName}\n{timeslot.InformationForTimetable()}";
+                    timetable[timeslot.Week][timeslot.Day - 1][timeslot.StartingTime - 8] += $"{disciplineName}\n{timeslot.InformationForTimetable()}";
                 }
             }
             return timetable;
@@ -248,7 +248,7 @@ namespace Dorset_OOP_Project
             affichage += "\n";
             for (int indexHours = 0; indexHours <= 11; indexHours++)//hours 8 ->index = 0 hours 19 ->index =11
             {
-                for(int indexSeparation_Day=0;indexSeparation_Day<7;indexSeparation_Day++)
+                for (int indexSeparation_Day = 0; indexSeparation_Day < 7; indexSeparation_Day++)
                 {
                     for (int indexSeparation = 1; indexSeparation <= space; indexSeparation++)
                     {
@@ -261,7 +261,7 @@ namespace Dorset_OOP_Project
                     switch (indexLineInformation)
                     {
                         case 0:
-                            affichage+=GenericFunction.AddSpace("", space);
+                            affichage += GenericFunction.AddSpace("", space);
                             break;
                         case 1:
                             affichage += GenericFunction.AddSpace($"   {indexHours + 8}H-{indexHours + 9}H", space);
@@ -297,7 +297,7 @@ namespace Dorset_OOP_Project
             }
             return affichage;
         }
-        
+
         public void TimeTableMenu()
         {
             bool stay = true;

@@ -40,7 +40,7 @@ namespace Dorset_OOP_Project
                 {
                     number = Convert.ToInt32(Console.ReadLine());
                 }
-                catch(FormatException)
+                catch (FormatException)
                 {
                     Console.WriteLine("The input was not an integer");
                 }

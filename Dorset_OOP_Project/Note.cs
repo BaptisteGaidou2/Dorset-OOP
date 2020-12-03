@@ -8,10 +8,10 @@ namespace Dorset_OOP_Project
     {
         public Exam ExamNote { get; set; }
         public double NoteValue { get; set; }
-        public Note(Exam _examNote,double _noteValue)
+        public Note(Exam _examNote, double _noteValue)
         {
             ExamNote = _examNote;
-            NoteValue=_noteValue;
+            NoteValue = _noteValue;
         }
         public Note()
         {

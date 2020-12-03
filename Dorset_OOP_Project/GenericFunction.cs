@@ -220,7 +220,7 @@ namespace Dorset_OOP_Project
         #endregion
         //Exam choice and information
         #region
-        public static  string ExamListInformation(List<Exam> list)
+        public static string ExamListInformation(List<Exam> list)
         {
             string information = "";
             if (list != null && list.Count != 0)
@@ -286,7 +286,7 @@ namespace Dorset_OOP_Project
         }
         #endregion
         //Affichage
-        public static string AddSpace(string message,int length)
+        public static string AddSpace(string message, int length)
         {
             while (message.Length < length)
             {
@@ -436,7 +436,7 @@ namespace Dorset_OOP_Project
 
             int iDchoosen = -1;
             if (list != null && list.Count != 0)
-            { 
+            {
                 bool stayInTheFunction = true;
                 while (stayInTheFunction)
                 {
@@ -1020,16 +1020,16 @@ namespace Dorset_OOP_Project
             }
             return information;
         }
-        
-        
+
+
         #endregion
         //Find the index with an ID
         #region
-        public static int IndexClassroomID(int classroomID,List<Classroom> classrooms)
+        public static int IndexClassroomID(int classroomID, List<Classroom> classrooms)
         {
             return classrooms.FindIndex(i => i.ClassRoomID == classroomID);
         }
-        public static int IndexUserID(int userID,List<User> list)
+        public static int IndexUserID(int userID, List<User> list)
         {
             return list.FindIndex(i => i.UserID == userID);
         }
@@ -1048,7 +1048,7 @@ namespace Dorset_OOP_Project
         #endregion
         //Contain an ID
         #region
-        public static bool ContainUserID(int userID,List<User> list)
+        public static bool ContainUserID(int userID, List<User> list)
         {
             bool contain = false;
             int index = 0;
@@ -1092,7 +1092,7 @@ namespace Dorset_OOP_Project
             return contain;
         }
 
-        public static bool ContainDisciplineID(int disciplineID,List<Discipline> list)
+        public static bool ContainDisciplineID(int disciplineID, List<Discipline> list)
         {
             bool contain = false;
             int index = 0;
@@ -1107,7 +1107,7 @@ namespace Dorset_OOP_Project
             return contain;
         }
 
-        public static bool ContainClassroomID(int classroomID,List<Classroom> list)
+        public static bool ContainClassroomID(int classroomID, List<Classroom> list)
         {
             bool contain = false;
             int index = 0;

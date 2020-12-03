@@ -20,7 +20,7 @@ namespace Dorset_OOP_Project
             }
             return information;
         }
-        public Faculty():base()
+        public Faculty() : base()
         {
             ClassroomsTeaching = new List<Classroom>();
         }
@@ -142,7 +142,7 @@ namespace Dorset_OOP_Project
                         stay = false;
                         break;
                 }
-                
+
 
             }
         }
@@ -157,7 +157,7 @@ namespace Dorset_OOP_Project
         public bool AddClassroom(Classroom classroom)
         {
             bool added = false;
-            if (ClassroomsTeaching==null||ClassroomsTeaching.Count==0||!ClassroomsTeaching.Contains(classroom))
+            if (ClassroomsTeaching == null || ClassroomsTeaching.Count == 0 || !ClassroomsTeaching.Contains(classroom))
             {
                 ClassroomsTeaching.Add(classroom);
                 added = true;

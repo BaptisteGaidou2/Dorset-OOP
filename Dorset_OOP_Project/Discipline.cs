@@ -22,6 +22,6 @@ namespace Dorset_OOP_Project
         {
             return $"name : {DisciplineName} | ID : {DisciplineID}";
         }
-        
+
     }
 }
