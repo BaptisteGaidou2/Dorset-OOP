@@ -1137,7 +1137,7 @@ namespace Dorset_OOP_Project
                                     Console.WriteLine(UserList[GenericFunction.IndexUserID(userID, UserList)].GeneralInformation());
                                     break;
                                 case 3:
-                                        if (userID == 0)
+                                        if (userID == 0||userID==CurrentIndexUser)
                                         {
                                             Console.WriteLine("This administrator can't be removed");
                                         }
