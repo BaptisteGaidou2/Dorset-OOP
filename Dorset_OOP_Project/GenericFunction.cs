@@ -8,44 +8,21 @@ namespace Dorset_OOP_Project
     {
         //Invoice choice and information
         #region
-        public static void InvoiceListInformation(List<Invoice> list)
+        public static string InvoiceListInformation(List<Invoice> list)
         {
+            string information = "";
             if (list != null && list.Count != 0)
             {
                 for (int i = 0; i < list.Count; i++)
                 {
-                    Console.Write($"\n[index : {i}]");
-                    list[i].Print();
+                    information+=$"\n[index : {i} {list[i].ToString()}";
                 }
             }
             else
             {
-                Console.WriteLine("There is no Invoice ");
+                information+="There is no Invoice ";
             }
-        }
-        public static void InvoicePaymentListInformation(List<Invoice> list)
-        {
-            if (list != null && list.Count != 0)
-            {
-                for (int indexInvoice = 0; indexInvoice < list.Count; indexInvoice++)
-                {
-                    Console.Write($"\n[index : {indexInvoice}]");
-                    list[indexInvoice].Print();
-                    if (list[indexInvoice].Payments != null||list[indexInvoice].Payments.Count!=0)
-                    {
-                        Console.WriteLine("Payment :");
-                        list[indexInvoice].PrintPayments();
-                    }
-                    else
-                    {
-                        Console.WriteLine("No payment has been made");
-                    }
-                }
-            }
-            else
-            {
-                Console.Write("There is no Invoice ");
-            }
+            return information;
         }
         public static int ChoosingInvoiceList(List<Invoice> list)
         {
@@ -59,7 +36,7 @@ namespace Dorset_OOP_Project
                     switch (methodChoiceAnswer)
                     {
                         case 1:
-                            InvoiceListInformation(list);
+                            Console.WriteLine(InvoiceListInformation(list));
                             Console.WriteLine("Enter the index of the invoice you want to select");
                             try
                             {

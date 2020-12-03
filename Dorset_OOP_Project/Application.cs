@@ -370,7 +370,7 @@ namespace Dorset_OOP_Project
             string[] lines_Payments = System.IO.File.ReadAllLines(path_StudentPayments);
             #region
             indexAttribute = 1;
-            int amount = 0;
+            double amount = 0;
             int invoiceId = 0;
             int paymentId = 0;
             string method = "";
@@ -385,7 +385,7 @@ namespace Dorset_OOP_Project
                         Console.WriteLine($"Payment ID : {paymentId}");
                         break;
                     case 2:
-                        amount = Convert.ToInt32(columns[1]);
+                        amount = Convert.ToDouble(columns[1]);
                         Console.WriteLine($"Amount : {amount}");
                         break;
                     case 3:
@@ -808,7 +808,7 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(GenericFunction.ClassroomsEssentialInformation(currentStudent.ClassroomStudying));
                         break;
                     case 9:
-                        //INVOICE MENU
+                        currentStudent.InvoiceMenu();
                         break;
                     case 10:
                         logout = true;
@@ -1070,7 +1070,7 @@ namespace Dorset_OOP_Project
                                             while (stayInInvoice)
                                             {
                                                 int invoiceChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Add an Invoice\n2 : Remove an Invoice\n3 : See all student Invoice\n4 : Go back to the previous menu", 1, 4);
-                                                switch (editingChoice)
+                                                switch (invoiceChoice)
                                                 {
                                                     case 1:
                                                         bool stayAddInvoice = true;
@@ -1081,7 +1081,7 @@ namespace Dorset_OOP_Project
                                                             {
                                                                 case 1:
                                                                     Console.WriteLine("What is the amount of the invoice");
-                                                                    int amount = -1;
+                                                                    float amount = -1;
                                                                     try
                                                                     {
                                                                         amount = Convert.ToInt32(Console.ReadLine());
@@ -1128,7 +1128,7 @@ namespace Dorset_OOP_Project
                                                         }
                                                         break;
                                                     case 3:
-                                                        GenericFunction.InvoicePaymentListInformation(student.Invoices);
+                                                        Console.WriteLine(GenericFunction.InvoiceListInformation(student.Invoices));
                                                         break;
                                                     case 4:
                                                         stayInInvoice = false;

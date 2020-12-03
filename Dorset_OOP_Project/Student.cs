@@ -69,7 +69,18 @@ namespace Dorset_OOP_Project
             {
                 information += "No class missing";
             }
+            information += "\n\n-------------------------------------------------\n";
+            information += "\nInvoices : ";
+            if (Invoices != null && Invoices.Count != 0)
+            {
 
+                information+=GenericFunction.InvoiceListInformation(Invoices);
+            }
+            else
+            {
+                information += "There is no invoice";
+            }
+            information += "\n-------------------------------------------------\n";
             return information;
         }
         public void SeeAttenances()
@@ -318,10 +329,77 @@ namespace Dorset_OOP_Project
         }
         public void InvoiceMenu()
         {
-            int askingValue = EnterValue.AskingNumber("Enter what you want to do\n1 : See \n2 : go to the previous menu", 1, 2);
+            int askingValue = EnterValue.AskingNumber("Enter what you want to do\n1 : Pay an invoice\n2 See All invoices informations \n3 : go to the previous menu", 1, 2);
             switch (askingValue)
             {
-
+                case 1:
+                    bool stayPayInvoice = true;
+                    while (stayPayInvoice)
+                    {
+                        int indexInvoice = GenericFunction.ChoosingInvoiceList(Invoices);
+                        if (indexInvoice != -1)
+                        {
+                            bool stayThisInvoice = true;
+                            while (stayThisInvoice)
+                            {
+                                int askingInvoiceValue = EnterValue.AskingNumber("Enter what you want to do\n1 : Pay the invoice\n2 : See the invoice informations\n3 : Choose an other invoice\n4 : go to the previous menu", 1, 4);
+                                switch (askingInvoiceValue)
+                                {
+                                    case 1:
+                                        Console.WriteLine($"Enter the amount of the payment , the outsantding is at {Invoices[indexInvoice].OutstandingBalance()}");
+                                        double amount = -1;
+                                        string method = "";
+                                        try
+                                        {
+                                            amount = Convert.ToDouble(Console.ReadLine());
+                                        }
+                                        catch (FormatException)
+                                        {
+                                            Console.WriteLine("The input was not an double");
+                                        }
+                                        if (amount > 0)
+                                        {
+                                            Console.WriteLine("Which method do you used?");
+                                            method = Console.ReadLine();
+                                            bool added=Invoices[indexInvoice].AddPayment(new Payment(amount, method));
+                                            if (added)
+                                            {
+                                                Console.WriteLine("The payment has been made");
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("The payment can't be make, the amount is over the outsanding or is allready payed");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("The amount need to be positive");
+                                        }
+                                        break;
+                                    case 2:
+                                        Console.WriteLine(Invoices[indexInvoice].ToString());
+                                        break;
+                                    case 3:
+                                        stayThisInvoice = false;
+                                        break;
+                                    case 4:
+                                        stayThisInvoice = false;
+                                        stayPayInvoice = false;
+                                        break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            stayPayInvoice = false;
+                        }
+                    }
+                    break;
+                case 2:
+                    GenericFunction.InvoiceListInformation(Invoices);
+                    break;
+                case 3:
+                    break;
             }
         }
             public void AddInvoice(Invoice invoice)

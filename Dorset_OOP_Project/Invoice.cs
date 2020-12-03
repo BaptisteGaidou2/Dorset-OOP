@@ -7,7 +7,7 @@ namespace Dorset_OOP_Project
     {
         public int InvoiceId { get; set; }
         public int StudentId { get; set; }
-        public float Amount { get; set; }
+        public double Amount { get; set; }
         public List<Payment> Payments { get; set; }
 
         public Invoice()
@@ -16,26 +16,26 @@ namespace Dorset_OOP_Project
             Payments = new List<Payment>();
         }
 
-        public Invoice(float amount)
+        public Invoice(double amount)
         {
             Amount = amount;
             Payments = new List<Payment>();
         }
 
-        public Invoice(float amount, int invoiceId)
+        public Invoice(double amount, int invoiceId)
         {
             Amount = amount;
             Payments = new List<Payment>();
             InvoiceId = invoiceId;
         }
 
-        public Invoice(float amount, List<Payment> payments)
+        public Invoice(double amount, List<Payment> payments)
         {
             Amount = amount;
             Payments = payments;
         }
 
-        public Invoice(float amount, int invoiceId, int studentId)
+        public Invoice(double amount, int invoiceId, int studentId)
         {
             Amount = amount;
             InvoiceId = invoiceId;
@@ -43,9 +43,9 @@ namespace Dorset_OOP_Project
             Payments = new List<Payment>();
         }
 
-        public float OutstandingBalance()
+        public double OutstandingBalance()
         {
-            float total = Amount;
+            double total = Amount;
             foreach (Payment payment in Payments)
             {
                 total -= payment.Amount;
