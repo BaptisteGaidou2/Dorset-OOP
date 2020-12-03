@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+
 
 namespace Dorset_OOP_Project
 {
@@ -9,7 +11,7 @@ namespace Dorset_OOP_Project
         {
 
             //Student : OOP Group 14 Paul Froidefond 23192, Yoan Gabison 23208, Baptiste Gaidou 22845, Clarysse GIELEN 23394, Eliott TOURTOULOU 23409,Navarre Quentin 23218
-            Application schoolApplication = new Application("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv");
+            Application schoolApplication = new Application("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices.csv");
             schoolApplication.StartingMenu();
             //Application saveSimpleDatabase = new Application();
             //Discipline info = new Discipline("info");

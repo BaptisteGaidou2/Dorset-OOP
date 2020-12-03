@@ -3,24 +3,38 @@ namespace Dorset_OOP_Project
 {
     public class Payment
     {
-        public float Amount { get; set; }
-        public Student Student { get; set; }
-        public Invoice Invoice { get; set; }
+        //public int PaymentId { get; set; }
+        //public int InvoiceId { get; set; }
+        public double Amount { get; set; }
         public DateTime Date { get; set; }
         public string Method { get; set; }
 
-        public Payment(float amount, Student student, Invoice invoice, DateTime date, string method)
+        public Payment(double amount, string method)
         {
             Amount = amount;
-            Student = student;
-            Invoice = invoice;
-            Date = date;
+            Date = DateTime.Now;
             Method = method;
         }
 
-        public void Add()
+        public Payment(double amount, DateTime date, string method)
         {
-            Invoice.Payments.Add(this);
+            Amount = amount;
+            Date = date;
+            Method = method;
         }
+        /*
+        public Payment(double amount, DateTime date, string method, int invoiceId, int paymentId)
+        {
+            Amount = amount;
+            Date = date;
+            Method = method;
+            InvoiceId = invoiceId;
+            PaymentId = paymentId;
+        }
+        */
+        public override string ToString()
+        {
+            return $"Amount : {Amount} / Date : {Date} / Method : {Method}";//Payment : {PaymentId} / Linked To Invoice : {InvoiceId} / 
+        } 
     }
 }

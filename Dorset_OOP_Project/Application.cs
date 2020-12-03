@@ -17,7 +17,7 @@ namespace Dorset_OOP_Project
         public int LastClassroomID { get; set; }
         public int LastExamID { get; set; }
         public int CurrentIndexUser { get; set; }
-        public Application(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes, string path_LastID)
+        public Application(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes, string path_LastID, string path_StudentInvoices)
         {
             UserList = new List<User>();
             DisciplineList = new List<Discipline>();
@@ -363,9 +363,176 @@ namespace Dorset_OOP_Project
                 }
             }
             #endregion
+            /*
+            string[] lines_Payments = System.IO.File.ReadAllLines(path_StudentPayments);
+            #region
+            indexAttribute = 1;
+            double amount = 0;
+            int invoiceId = 0;
+            int paymentId = 0;
+            string method = "";
+            DateTime date = new DateTime();
+            for (int indexLigne = 0; indexLigne < lines_Payments.Length; indexLigne++)
+            {
+                string[] columns = lines_Payments[indexLigne].Split(';');
+                switch (indexAttribute)
+                {
+                    case 1:
+                        paymentId = Convert.ToInt32(columns[1]);
+                        Console.WriteLine($"Payment ID : {paymentId}");
+                        break;
+                    case 2:
+                        amount = Convert.ToDouble(columns[1]);
+                        Console.WriteLine($"Amount : {amount}");
+                        break;
+                    case 3:
+                        date = Convert.ToDateTime(columns[1]);
+                        Console.WriteLine($"Date : {date}");
+                        break;
+                    case 4:
+                        method = columns[1];
+                        Console.WriteLine($"Method : {method}");
+                        break;
+                    case 5:
+                        invoiceId = Convert.ToInt32(columns[1]);
+                        Console.WriteLine($"Invoice ID : {invoiceId}");
+                        break;
+                }
+                indexAttribute++;
+                if (indexAttribute == 6)
+                {
+                    Payments.Add(new Payment(amount, date, method, invoiceId, paymentId));
+                    indexAttribute = 1;
+                }
+            }
+            #endregion
+
+            string[] lines_Invoices = System.IO.File.ReadAllLines(path_StudentInvoices);
+            #region
+            indexAttribute = 1;
+            int studentId = 0;
+            for (int indexLigne = 0; indexLigne < lines_Invoices.Length; indexLigne++)
+            {
+                string[] columns = lines_Invoices[indexLigne].Split(';');
+                switch (indexAttribute)
+                {
+                    case 1:
+                        invoiceId = Convert.ToInt32(columns[1]);
+                        break;
+                    case 2:
+                        amount = Convert.ToInt32(columns[1]);
+                        break;
+                    case 3:
+                        studentId = Convert.ToInt32(columns[1]);
+                        break;
+                }
+                indexAttribute++;
+                if (indexAttribute == 4)
+                {
+                    Invoice invoice = new Invoice(amount, invoiceId, studentId);
+                    Invoices.Add(invoice);
+                    indexAttribute = 1;
+                }
+            }
+
+            foreach (Payment payment in Payments)
+            {
+                    Invoice invoice = Invoices.Where(i => i.InvoiceId == payment.InvoiceId).First();
+                    invoice.AddPayment(payment);
+                
+            }
+            #endregion
+            */
+            /*
+            StreamWriter Invoices = new StreamWriter(path_StudentInvoices);
+            #region
+            foreach (User user in UserList)
+            {
+                if (user is Student)
+                {
+                    Student student = (Student)user;
+                    foreach (Invoice invoice in student.Invoices)
+                    {
+                        Invoices.WriteLine($"Student ID;{invoice.InvoiceId}");
+                        Invoices.WriteLine($"Amount;{invoice.Amount}");
+                        foreach (Payment payment in invoice.Payments)
+                        {
+                            Invoices.Write($"{payment.Amount};{payment.Date},{payment.Method}");
+                        }
+                    }
+                }
+            }
+            Invoices.Close();
+            */
+            string[] lines_Invoices = System.IO.File.ReadAllLines(path_StudentInvoices);
+            #region
+            indexAttribute = 1;
+            int indexStudent_Invoices = 0;
+            double amount = 0;
+            double amountPayment = 0;
+            DateTime date = new DateTime();
+            int indexAttributePayment = 1;
+            string method = "";
+
+            for (int indexLigne = 0; indexLigne < lines_Invoices.Length; indexLigne++)
+            {
+                string[] columns = lines_Invoices[indexLigne].Split(';');
+                switch (indexAttribute)
+                {
+                    case 1:
+                        if (columns.Length >= 2)
+                        {
+                            indexStudent_Invoices = GenericFunction.IndexUserID(Convert.ToInt32(columns[1]), UserList);
+                        }
+                        break;
+                    case 2:
+                        amount = Convert.ToDouble(columns[1]);
+                        if (indexStudent_Invoices != -1 && amount > 0)
+                        {
+                            Student student = (Student)UserList[indexStudent_Invoices];
+                            student.Invoices.Add(new Invoice(amount));
+
+                        }
+                        break;
+                    case 3:
+                        for(int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
+                        {
+                            switch (indexAttributePayment)
+                            {
+                                case 1:
+                                    amountPayment = Convert.ToDouble(columns[indexColumn]);
+                                    break;
+                                case 2:
+                                    date = Convert.ToDateTime(columns[indexColumn]);
+                                    break;
+                                case 3:
+                                    method = columns[indexColumn];
+                                    break;
+                            }
+                            indexAttributePayment++;
+                            if (indexAttributePayment == 4)
+                            {
+                                if (indexStudent_Invoices != -1 && amount > 0)
+                                {
+                                    Student student = (Student)UserList[indexStudent_Invoices];
+                                    student.Invoices[student.Invoices.Count - 1].AddPayment(new Payment(amountPayment, date, method));
+                                }
+                                indexAttribute = 1;
+                            }
+                        }
+                        break;
+                }
+                indexAttribute++;
+                if (indexAttribute == 4)
+                {
+                    indexAttribute = 1;
+                }
+            }
+            #endregion
+
 
         }
-        public void FromAppToCSV(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes,string path_LastID)
+        public void FromAppToCSV(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes,string path_LastID, string path_StudentInvoices)
         {
             StreamWriter userDB = new StreamWriter(path_UserDB);
             #region
@@ -520,6 +687,68 @@ namespace Dorset_OOP_Project
             lastID.WriteLine($"LastExamID;{LastExamID}");
             lastID.Close();
             #endregion
+            /*
+            StreamWriter Payments = new StreamWriter(path_StudentPayments);
+            #region
+            foreach (User user in UserList)
+            {
+                if (user is Student)
+                {
+                    Student student = (Student)user;
+                    foreach (Invoice invoice in student.Invoices)
+                    {
+                        foreach (Payment payment in invoice.Payments)
+                        {
+                            Payments.WriteLine($"ID;{payment.PaymentId}");
+                            Payments.WriteLine($"Amount;{payment.Amount}");
+                            Payments.WriteLine($"Date;{payment.Date}");
+                            Payments.WriteLine($"Method;{payment.Method}");
+                            Payments.WriteLine($"InvoiceID;{payment.InvoiceId}");
+                        }
+                    }
+                }
+            }
+            Payments.Close();
+            #endregion
+            StreamWriter Invoices = new StreamWriter(path_StudentInvoices);
+            #region
+            foreach (User user in UserList)
+            {
+                if (user is Student)
+                {
+                    Student student = (Student)user;
+                    foreach (Invoice invoice in student.Invoices)
+                    {
+                        Payments.WriteLine($"ID;{invoice.InvoiceId}");
+                        Payments.WriteLine($"Amount;{invoice.Amount}");
+                    }
+                }
+            }
+            Invoices.Close();
+            #endregion
+            */
+            StreamWriter Invoices = new StreamWriter(path_StudentInvoices);
+            #region
+            foreach (User user in UserList)
+            {
+                if (user is Student)
+                {
+                    Student student = (Student)user;
+                    foreach (Invoice invoice in student.Invoices)
+                    {
+                        Invoices.WriteLine($"Student ID;{student.UserID}");
+                        Invoices.WriteLine($"Amount;{invoice.Amount}");
+                        string information = "PAYMENTS";
+                        foreach(Payment payment in invoice.Payments)
+                        {
+                            information+=$";{payment.Amount};{payment.Date};{payment.Method}";
+                        }
+                        Invoices.WriteLine(information);
+                    }
+                }
+            }
+            Invoices.Close();
+            #endregion
         }
         public Application()
         {
@@ -555,10 +784,10 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(GenericFunction.UsersPublicInformation(UserList));
                         break;
                     case 3:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv");
+                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices.csv");
                         break;
                     case 4:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv",  "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv");
+                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices.csv");
                         closeApp = true;
                         break;
                     case 5:
@@ -648,7 +877,7 @@ namespace Dorset_OOP_Project
             while (!logout)
             {
                 Student currentStudent = (Student)UserList[CurrentIndexUser];
-                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : See timetable\n4 : See Notes\n5 : See date Exam\n6 : See discipline studying\n7 : See class missed\n8 : See classroom enrolled information\n9 : Log out", 1, 9);
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : See timetable\n4 : See Notes\n5 : See date Exam\n6 : See discipline studying\n7 : See class missed\n8 : See classroom enrolled information\n9 : Manage the Invoices\n10 : Log out", 1, 10);
                 switch (answer)
                 {
                     case 1:
@@ -688,6 +917,9 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(GenericFunction.ClassroomsEssentialInformation(currentStudent.ClassroomStudying));
                         break;
                     case 9:
+                        currentStudent.InvoiceMenu();
+                        break;
+                    case 10:
                         logout = true;
                         break;
                 }
@@ -880,10 +1112,11 @@ namespace Dorset_OOP_Project
                         int userID = GenericFunction.ChoosingAUserID(UserList);
                         if (userID != -1)
                         {
+
                             bool stayEdit = true;
                             while (stayEdit)
                             {
-                            int editingChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Change personal Information\n2 : See user information\n3 : Remove user\n4 : Go back to the previous menu", 1, 4);
+                            int editingChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Change personal Information\n2 : See user information\n3 : Remove user\n4 : Edit invoices\n5 : Go back to the previous menu", 1, 5);
                             switch (editingChoice)
                             {
                                 case 1:
@@ -893,7 +1126,7 @@ namespace Dorset_OOP_Project
                                     Console.WriteLine(UserList[GenericFunction.IndexUserID(userID, UserList)].GeneralInformation());
                                     break;
                                 case 3:
-                                        if (userID == 0)
+                                        if (userID == 0||userID==CurrentIndexUser)
                                         {
                                             Console.WriteLine("This administrator can't be removed");
                                         }
@@ -938,7 +1171,88 @@ namespace Dorset_OOP_Project
                                             stayEdit = false;
                                         }
                                     break;
-                                case 4:
+                                    case 4:
+                                        if(UserList[GenericFunction.IndexUserID(userID, UserList)]is Student)
+                                        {
+                                            Student student = (Student)UserList[GenericFunction.IndexUserID(userID, UserList)];
+                                            bool stayInInvoice = true;
+                                            while (stayInInvoice)
+                                            {
+                                                int invoiceChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Add an Invoice\n2 : Remove an Invoice\n3 : See all student Invoice\n4 : Go back to the previous menu", 1, 4);
+                                                switch (invoiceChoice)
+                                                {
+                                                    case 1:
+                                                        bool stayAddInvoice = true;
+                                                        while (stayAddInvoice)
+                                                        {
+                                                            int invoiceAddChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose the amount\n2 : Go back to the previous menu", 1, 2);
+                                                            switch (invoiceAddChoice)
+                                                            {
+                                                                case 1:
+                                                                    Console.WriteLine("What is the amount of the invoice");
+                                                                    float amount = -1;
+                                                                    try
+                                                                    {
+                                                                        amount = Convert.ToInt32(Console.ReadLine());
+                                                                    }
+                                                                    catch (FormatException)
+                                                                    {
+                                                                        Console.WriteLine("The input was not an integer");
+                                                                    }
+                                                                    if (amount > 0)
+                                                                    {
+                                                                        student.Invoices.Add(new Invoice(amount));
+                                                                        stayAddInvoice = false;
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        Console.WriteLine("The amount need to be positive");
+                                                                    }
+                                                                    break;
+                                                                case 2:
+                                                                    stayAddInvoice = false;
+                                                                    break;
+                                                            }
+                                                        }
+                                                        break;
+                                                    case 2:
+                                                        bool stayRemoveInvoice = true;
+                                                        while (stayRemoveInvoice)
+                                                        {
+                                                            int invoiceAddChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose the Invoice to remove\n2 : Go back to the previous menu", 1, 2);
+                                                            switch (invoiceAddChoice)
+                                                            {
+                                                                case 1:
+                                                                    int indexToRemove = GenericFunction.ChoosingInvoiceList(student.Invoices);
+                                                                    if (indexToRemove != -1)
+                                                                    {
+                                                                        student.Invoices.RemoveAt(indexToRemove);
+                                                                        Console.WriteLine("The invoices has been removed");
+                                                                    }
+                                                                    break;
+                                                                case 2:
+                                                                    stayRemoveInvoice = false;
+                                                                    break;
+                                                            }
+                                                        }
+                                                        break;
+                                                    case 3:
+                                                        Console.WriteLine(GenericFunction.InvoiceListInformation(student.Invoices));
+                                                        break;
+                                                    case 4:
+                                                        stayInInvoice = false;
+                                                        break;
+                                                }
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("This user isn't a student he doesn't have Invoices");
+                                        }
+                                        
+                                        break;
+                                    case 5:
                                         stayEdit = false;
                                     break;
                                 }

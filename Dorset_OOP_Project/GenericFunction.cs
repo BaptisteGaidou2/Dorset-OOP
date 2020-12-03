@@ -6,6 +6,69 @@ namespace Dorset_OOP_Project
 {
     public static class GenericFunction
     {
+        //Invoice choice and information
+        #region
+        public static string InvoiceListInformation(List<Invoice> list)
+        {
+            string information = "";
+            if (list != null && list.Count != 0)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    information+=$"\n[index : {i}] {list[i].ToString()}";
+                }
+            }
+            else
+            {
+                information+="There is no Invoice ";
+            }
+            return information;
+        }
+        public static int ChoosingInvoiceList(List<Invoice> list)
+        {
+            int index = -1;
+            if (list != null && list.Count != 0)
+            {
+                bool stayInTheFunction = true;
+                while (stayInTheFunction)
+                {
+                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose the invoice you want to select\n2 : Go to the previous menu", 1, 2);
+                    switch (methodChoiceAnswer)
+                    {
+                        case 1:
+                            Console.WriteLine(InvoiceListInformation(list));
+                            Console.WriteLine("Enter the index of the invoice you want to select");
+                            try
+                            {
+                                index = Convert.ToInt32(Console.ReadLine());
+                            }
+                            catch (FormatException)
+                            {
+                                Console.WriteLine("The input was not an integer");
+                            }
+                            if (index < 0 || index >= list.Count)
+                            {
+                                Console.WriteLine("There isn't this index");
+                                index = -1;
+                            }
+                            else
+                            {
+                                stayInTheFunction = false;
+                            }
+                            break;
+                        case 2:
+                            stayInTheFunction = false;
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("There is no invoices");
+            }
+            return index;
+        }
+        #endregion
         //Attendence choice and information
         #region
         public static string AttendanceListInformation(List<Attendance> list)
@@ -134,7 +197,7 @@ namespace Dorset_OOP_Project
         #endregion
         //Exam choice and information
         #region
-        public static  string ExamListInformation(List<Exam> list)
+        public static string ExamListInformation(List<Exam> list)
         {
             string information = "";
             if (list != null && list.Count != 0)
@@ -200,7 +263,7 @@ namespace Dorset_OOP_Project
         }
         #endregion
         //Affichage
-        public static string AddSpace(string message,int length)
+        public static string AddSpace(string message, int length)
         {
             while (message.Length < length)
             {
@@ -350,7 +413,7 @@ namespace Dorset_OOP_Project
 
             int iDchoosen = -1;
             if (list != null && list.Count != 0)
-            { 
+            {
                 bool stayInTheFunction = true;
                 while (stayInTheFunction)
                 {
@@ -934,16 +997,16 @@ namespace Dorset_OOP_Project
             }
             return information;
         }
-        
-        
+
+
         #endregion
         //Find the index with an ID
         #region
-        public static int IndexClassroomID(int classroomID,List<Classroom> classrooms)
+        public static int IndexClassroomID(int classroomID, List<Classroom> classrooms)
         {
             return classrooms.FindIndex(i => i.ClassRoomID == classroomID);
         }
-        public static int IndexUserID(int userID,List<User> list)
+        public static int IndexUserID(int userID, List<User> list)
         {
             return list.FindIndex(i => i.UserID == userID);
         }
@@ -962,7 +1025,7 @@ namespace Dorset_OOP_Project
         #endregion
         //Contain an ID
         #region
-        public static bool ContainUserID(int userID,List<User> list)
+        public static bool ContainUserID(int userID, List<User> list)
         {
             bool contain = false;
             int index = 0;
@@ -1006,7 +1069,7 @@ namespace Dorset_OOP_Project
             return contain;
         }
 
-        public static bool ContainDisciplineID(int disciplineID,List<Discipline> list)
+        public static bool ContainDisciplineID(int disciplineID, List<Discipline> list)
         {
             bool contain = false;
             int index = 0;
@@ -1021,7 +1084,7 @@ namespace Dorset_OOP_Project
             return contain;
         }
 
-        public static bool ContainClassroomID(int classroomID,List<Classroom> list)
+        public static bool ContainClassroomID(int classroomID, List<Classroom> list)
         {
             bool contain = false;
             int index = 0;

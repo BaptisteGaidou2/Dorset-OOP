@@ -9,16 +9,18 @@ namespace Dorset_OOP_Project
         public List<Classroom> ClassroomStudying { get; set; }
         public List<Attendance> Attendances { get; set; }
         public List<Note> NotesReceive { get; set; }
+        public List<Invoice> Invoices { get; set; }
+
         public void RemoveClassroom_FromAnID(int classroomID)
         {
             if (GenericFunction.ContainClassroomID(classroomID, ClassroomStudying))
             {
-                ClassroomStudying.RemoveAt(GenericFunction.IndexClassroomID(classroomID,ClassroomStudying));
+                ClassroomStudying.RemoveAt(GenericFunction.IndexClassroomID(classroomID, ClassroomStudying));
             }
         }
         public void RemoveNotesFromAnExam(Exam exam)
         {
-            for(int index = 0; index < NotesReceive.Count; index++)
+            for (int index = 0; index < NotesReceive.Count; index++)
             {
                 if (NotesReceive[index].ExamNote == exam)
                 {
@@ -61,19 +63,30 @@ namespace Dorset_OOP_Project
             information += "\nClass missing : ";
             if (Attendances != null && Attendances.Count != 0)
             {
-                information += " | "+GenericFunction.AttendanceListInformation(Attendances);
+                information += " | " + GenericFunction.AttendanceListInformation(Attendances);
             }
             else
             {
                 information += "No class missing";
             }
-            
+            information += "\n\n-------------------------------------------------\n";
+            information += "\nInvoices : ";
+            if (Invoices != null && Invoices.Count != 0)
+            {
+
+                information+=GenericFunction.InvoiceListInformation(Invoices);
+            }
+            else
+            {
+                information += "There is no invoice";
+            }
+            information += "\n-------------------------------------------------\n";
             return information;
         }
         public void SeeAttenances()
         {
             Console.WriteLine("Classed missed :");
-            if (Attendances==null||Attendances.Count == 0)
+            if (Attendances == null || Attendances.Count == 0)
             {
                 Console.WriteLine("No class missed");
             }
@@ -90,12 +103,12 @@ namespace Dorset_OOP_Project
             {
                 if (studentNotes.ExamNote.ExamDiscipline == discipline)
                 {
-                    information += studentNotes.Information()+"\n";
+                    information += studentNotes.Information() + "\n";
                 }
             }
             if (notesInThisDiscipline == 0)
             {
-                information+="No notes in this discipline";
+                information += "No notes in this discipline";
             }
             return information;
         }
@@ -104,18 +117,24 @@ namespace Dorset_OOP_Project
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
             NotesReceive = new List<Note>();
+            // Invoices = new List<Invoice> { new Invoice() };
+            Invoices = new List<Invoice>();
         }
         public Student(string lastName, string firstName) : base(lastName, firstName)
         {
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
             NotesReceive = new List<Note>();
+            //Invoices = new List<Invoice> { new Invoice() };
+            Invoices = new List<Invoice>();
         }
         public Student(string lastName, string firstName, string email, string password) : base(lastName, firstName, email, password)
         {
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
             NotesReceive = new List<Note>();
+            //Invoices = new List<Invoice> { new Invoice() };
+            Invoices = new List<Invoice>();
         }
 
         public Student(string lastName, string firstName, string email, string password, int userID) : base(lastName, firstName, email, password, userID)
@@ -123,11 +142,13 @@ namespace Dorset_OOP_Project
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
             NotesReceive = new List<Note>();
+            //Invoices = new List<Invoice> { new Invoice() };
+            Invoices = new List<Invoice>();
         }
         public bool AddClassroom(Classroom classroom)
         {
             bool added = false;
-            if (ClassroomStudying==null||ClassroomStudying.Count==0||!ClassroomStudying.Contains(classroom))
+            if (ClassroomStudying == null || ClassroomStudying.Count == 0 || !ClassroomStudying.Contains(classroom))
             {
                 ClassroomStudying.Add(classroom);
                 added = true;
@@ -155,15 +176,15 @@ namespace Dorset_OOP_Project
         public string SeeDisciplineStudying()
         {
             string info = "";
-            foreach(Discipline discipline in DisciplinesStudying())
+            foreach (Discipline discipline in DisciplinesStudying())
             {
-                info+=(discipline.PublicInformation());
+                info += (discipline.PublicInformation());
             }
             return info;
         }
         public List<List<List<TimeTableAffichage>>> TimeTableList()
         {
-             List<List<List<TimeTableAffichage>>> timetable = new List<List<List<TimeTableAffichage>>>();
+            List<List<List<TimeTableAffichage>>> timetable = new List<List<List<TimeTableAffichage>>>();
             for (int weekIndex = 0; weekIndex <= 9; weekIndex++)
             {
                 List<List<TimeTableAffichage>> initialiseWeek_index = new List<List<TimeTableAffichage>>();
@@ -203,33 +224,6 @@ namespace Dorset_OOP_Project
             }
             return timetable;
         }
-        public List<List<List<string>>> TimeTableList2()
-        {
-            List<List<List<string>>> timetable = new List<List<List<string>>>();
-            for (int weekIndex = 0; weekIndex <= 9; weekIndex++)
-            {
-                List<List<string>> initialiseWeek_index = new List<List<string>>();
-                for (int indexDay = 0; indexDay < 7; indexDay++)
-                {
-                    List<string> initialiseDay_index = new List<string>();
-                    for (int indexHours = 0; indexHours <= 11; indexHours++)//hours 8 ->index = 0 hours 19 ->index =11
-                    {
-                        initialiseDay_index.Add("");
-                    }
-                    initialiseWeek_index.Add(initialiseDay_index);
-                }
-                timetable.Add(initialiseWeek_index);
-            }
-            foreach (Classroom classroom in ClassroomStudying)
-            {
-                string disciplineName = classroom.ClassRoomDiscipline.DisciplineName;
-                foreach(TimeSlot timeslot in classroom.Timetables)
-                {
-                    timetable[timeslot.Week][timeslot.Day-1][timeslot.StartingTime-8] += $"{disciplineName}\n{timeslot.InformationForTimetable()}";
-                }
-            }
-            return timetable;
-        }
         public string TimeTableToString(int week)
         {
             int space = 12;
@@ -242,7 +236,7 @@ namespace Dorset_OOP_Project
             affichage += "\n";
             for (int indexHours = 0; indexHours <= 11; indexHours++)//hours 8 ->index = 0 hours 19 ->index =11
             {
-                for(int indexSeparation_Day=0;indexSeparation_Day<7;indexSeparation_Day++)
+                for (int indexSeparation_Day = 0; indexSeparation_Day < 7; indexSeparation_Day++)
                 {
                     for (int indexSeparation = 1; indexSeparation <= space; indexSeparation++)
                     {
@@ -255,7 +249,7 @@ namespace Dorset_OOP_Project
                     switch (indexLineInformation)
                     {
                         case 0:
-                            affichage+=GenericFunction.AddSpace("", space);
+                            affichage += GenericFunction.AddSpace("", space);
                             break;
                         case 1:
                             affichage += GenericFunction.AddSpace($"   {indexHours + 8}H-{indexHours + 9}H", space);
@@ -291,27 +285,105 @@ namespace Dorset_OOP_Project
             }
             return affichage;
         }
-        
+
         public void TimeTableMenu()
         {
             bool stay = true;
             while (stay)
             {
                 int askingValue = EnterValue.AskingNumber("Enter what you want to do\n1 : see timetable for specific week\n2 : go to the previous menu", 1, 2);
-                    switch (askingValue)
-                    {
-                        case 1:
-                            int week = EnterValue.AskingNumber("enter the week you want to see", 1, 10);
-                            Console.WriteLine(TimeTableToString(week));
-                                
-                           
-                            break;
-                        case 2:
-                            stay = false;
-                            break;
-                    }
+                switch (askingValue)
+                {
+                    case 1:
+                        int week = EnterValue.AskingNumber("enter the week you want to see", 1, 10);
+                        Console.WriteLine(TimeTableToString(week));
+                        break;
+                    case 2:
+                        stay = false;
+                        break;
                 }
             }
+        }
+        public void InvoiceMenu()
+        {
+            int askingValue = EnterValue.AskingNumber("Enter what you want to do\n1 : Pay an invoice\n2 : See All invoices informations \n3 : go to the previous menu", 1, 2);
+            switch (askingValue)
+            {
+                case 1:
+                    bool stayPayInvoice = true;
+                    while (stayPayInvoice)
+                    {
+                        int indexInvoice = GenericFunction.ChoosingInvoiceList(Invoices);
+                        if (indexInvoice != -1)
+                        {
+                            bool stayThisInvoice = true;
+                            while (stayThisInvoice)
+                            {
+                                int askingInvoiceValue = EnterValue.AskingNumber("Enter what you want to do\n1 : Pay the invoice\n2 : See the invoice informations\n3 : Choose an other invoice\n4 : go to the previous menu", 1, 4);
+                                switch (askingInvoiceValue)
+                                {
+                                    case 1:
+                                        Console.WriteLine($"Enter the amount of the payment , the outsantding is at {Invoices[indexInvoice].OutstandingBalance()}");
+                                        double amount = -1;
+                                        string method = "";
+                                        try
+                                        {
+                                            amount = Convert.ToDouble(Console.ReadLine());
+                                        }
+                                        catch (FormatException)
+                                        {
+                                            Console.WriteLine("The input was not an double");
+                                        }
+                                        if (amount > 0)
+                                        {
+                                            Console.WriteLine("Which method do you used?");
+                                            method = Console.ReadLine();
+                                            bool added=Invoices[indexInvoice].AddPayment(new Payment(amount, method));
+                                            if (added)
+                                            {
+                                                Console.WriteLine("The payment has been made");
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("The payment can't be make, the amount is over the outsanding or is allready payed");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("The amount need to be positive");
+                                        }
+                                        break;
+                                    case 2:
+                                        Console.WriteLine(Invoices[indexInvoice].ToString());
+                                        break;
+                                    case 3:
+                                        stayThisInvoice = false;
+                                        break;
+                                    case 4:
+                                        stayThisInvoice = false;
+                                        stayPayInvoice = false;
+                                        break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            stayPayInvoice = false;
+                        }
+                    }
+                    break;
+                case 2:
+                    Console.WriteLine(GenericFunction.InvoiceListInformation(Invoices));
+                    break;
+                case 3:
+                    break;
+            }
+        }
+            public void AddInvoice(Invoice invoice)
+            {
+                Invoices.Add(invoice);
+            } 
+
         public override string PublicApplicationInformation()
         {
             return $"{base.PublicApplicationInformation()} | type : student";
