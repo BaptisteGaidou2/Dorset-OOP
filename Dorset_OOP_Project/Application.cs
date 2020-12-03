@@ -367,6 +367,7 @@ namespace Dorset_OOP_Project
                 }
             }
             #endregion
+            /*
             string[] lines_Payments = System.IO.File.ReadAllLines(path_StudentPayments);
             #region
             indexAttribute = 1;
@@ -445,6 +446,93 @@ namespace Dorset_OOP_Project
                 
             }
             #endregion
+            */
+            /*
+            StreamWriter Invoices = new StreamWriter(path_StudentInvoices);
+            #region
+            foreach (User user in UserList)
+            {
+                if (user is Student)
+                {
+                    Student student = (Student)user;
+                    foreach (Invoice invoice in student.Invoices)
+                    {
+                        Invoices.WriteLine($"Student ID;{invoice.InvoiceId}");
+                        Invoices.WriteLine($"Amount;{invoice.Amount}");
+                        foreach (Payment payment in invoice.Payments)
+                        {
+                            Invoices.Write($"{payment.Amount};{payment.Date},{payment.Method}");
+                        }
+                    }
+                }
+            }
+            Invoices.Close();
+            */
+            string[] lines_Invoices = System.IO.File.ReadAllLines(path_StudentInvoices);
+            #region
+            indexAttribute = 1;
+            int indexStudent_Invoices = 0;
+            double amount = 0;
+            double amountPayment = 0;
+            DateTime date = new DateTime();
+            string method = "";
+
+            for (int indexLigne = 0; indexLigne < lines_Invoices.Length; indexLigne++)
+            {
+                string[] columns = lines_Invoices[indexLigne].Split(';');
+                switch (indexAttribute)
+                {
+                    case 1:
+                        indexStudent_Invoices = GenericFunction.IndexUserID(Convert.ToInt32(columns[1]), UserList);
+                        break;
+                    case 2:
+                        amount = Convert.ToDouble(columns[1]);
+                        if (indexStudent_Invoices != -1 && amount > 0)
+                        {
+                            Student student = (Student)UserList[indexStudent_Invoices];
+                            student.Invoices.Add(new Invoice(amount));
+
+                        }
+                        break;
+                    case 3:
+                        int indexAttributePayment = 1;
+                        for(int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
+                        {
+                            switch (indexAttributePayment)
+                            {
+                                case 1:
+                                    amountPayment = Convert.ToDouble(columns[indexColumn]);
+                                    break;
+                                case 2:
+                                    date = Convert.ToDateTime(columns[indexColumn]);
+                                    break;
+                                case 3:
+                                    method = columns[indexColumn];
+                                    break;
+                            }
+                            indexAttribute++;
+                            if (indexAttributePayment == 4)
+                            {
+                                if (indexStudent_Invoices != -1 && amount > 0)
+                                {
+                                    Student student = (Student)UserList[indexStudent_Invoices];
+                                    student.Invoices[student.Invoices.Count - 1].AddPayment(new Payment(amountPayment, date, method));
+                                }
+                                    indexAttribute = 1;
+                            }
+                        }
+                        break;
+                }
+            }
+
+            foreach (Payment payment in Payments)
+            {
+                Invoice invoice = Invoices.Where(i => i.InvoiceId == payment.InvoiceId).First();
+                invoice.AddPayment(payment);
+
+            }
+            #endregion
+
 
         }
         public void FromAppToCSV(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes,string path_LastID, string path_StudentInvoices ,string path_StudentPayments)
@@ -602,6 +690,7 @@ namespace Dorset_OOP_Project
             lastID.WriteLine($"LastExamID;{LastExamID}");
             lastID.Close();
             #endregion
+            /*
             StreamWriter Payments = new StreamWriter(path_StudentPayments);
             #region
             foreach (User user in UserList)
@@ -635,6 +724,27 @@ namespace Dorset_OOP_Project
                     {
                         Payments.WriteLine($"ID;{invoice.InvoiceId}");
                         Payments.WriteLine($"Amount;{invoice.Amount}");
+                    }
+                }
+            }
+            Invoices.Close();
+            #endregion
+            */
+            StreamWriter Invoices = new StreamWriter(path_StudentInvoices);
+            #region
+            foreach (User user in UserList)
+            {
+                if (user is Student)
+                {
+                    Student student = (Student)user;
+                    foreach (Invoice invoice in student.Invoices)
+                    {
+                        Invoices.WriteLine($"Student ID;{invoice.InvoiceId}");
+                        Invoices.WriteLine($"Amount;{invoice.Amount}");
+                        foreach(Payment payment in invoice.Payments)
+                        {
+                            Invoices.Write($"{payment.Amount};{payment.Date},{payment.Method}");
+                        }
                     }
                 }
             }

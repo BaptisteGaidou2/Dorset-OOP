@@ -329,7 +329,7 @@ namespace Dorset_OOP_Project
         }
         public void InvoiceMenu()
         {
-            int askingValue = EnterValue.AskingNumber("Enter what you want to do\n1 : Pay an invoice\n2 See All invoices informations \n3 : go to the previous menu", 1, 2);
+            int askingValue = EnterValue.AskingNumber("Enter what you want to do\n1 : Pay an invoice\n2 : See All invoices informations \n3 : go to the previous menu", 1, 2);
             switch (askingValue)
             {
                 case 1:
@@ -396,7 +396,7 @@ namespace Dorset_OOP_Project
                     }
                     break;
                 case 2:
-                    GenericFunction.InvoiceListInformation(Invoices);
+                    Console.WriteLine(GenericFunction.InvoiceListInformation(Invoices));
                     break;
                 case 3:
                     break;
