@@ -475,6 +475,7 @@ namespace Dorset_OOP_Project
             double amount = 0;
             double amountPayment = 0;
             DateTime date = new DateTime();
+            int indexAttributePayment = 1;
             string method = "";
 
             for (int indexLigne = 0; indexLigne < lines_Invoices.Length; indexLigne++)
@@ -483,7 +484,10 @@ namespace Dorset_OOP_Project
                 switch (indexAttribute)
                 {
                     case 1:
-                        indexStudent_Invoices = GenericFunction.IndexUserID(Convert.ToInt32(columns[1]), UserList);
+                        if (columns.Length >= 2)
+                        {
+                            indexStudent_Invoices = GenericFunction.IndexUserID(Convert.ToInt32(columns[1]), UserList);
+                        }
                         break;
                     case 2:
                         amount = Convert.ToDouble(columns[1]);
@@ -495,7 +499,6 @@ namespace Dorset_OOP_Project
                         }
                         break;
                     case 3:
-                        int indexAttributePayment = 1;
                         for(int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
                         {
                             switch (indexAttributePayment)
@@ -510,7 +513,7 @@ namespace Dorset_OOP_Project
                                     method = columns[indexColumn];
                                     break;
                             }
-                            indexAttribute++;
+                            indexAttributePayment++;
                             if (indexAttributePayment == 4)
                             {
                                 if (indexStudent_Invoices != -1 && amount > 0)
@@ -518,10 +521,15 @@ namespace Dorset_OOP_Project
                                     Student student = (Student)UserList[indexStudent_Invoices];
                                     student.Invoices[student.Invoices.Count - 1].AddPayment(new Payment(amountPayment, date, method));
                                 }
-                                    indexAttribute = 1;
+                                indexAttribute = 1;
                             }
                         }
                         break;
+                }
+                indexAttribute++;
+                if (indexAttribute == 4)
+                {
+                    indexAttribute = 1;
                 }
             }
 
@@ -739,12 +747,14 @@ namespace Dorset_OOP_Project
                     Student student = (Student)user;
                     foreach (Invoice invoice in student.Invoices)
                     {
-                        Invoices.WriteLine($"Student ID;{invoice.InvoiceId}");
+                        Invoices.WriteLine($"Student ID;{student.UserID}");
                         Invoices.WriteLine($"Amount;{invoice.Amount}");
+                        string information = "PAYMENTS";
                         foreach(Payment payment in invoice.Payments)
                         {
-                            Invoices.Write($"{payment.Amount};{payment.Date},{payment.Method}");
+                            information+=$";{payment.Amount};{payment.Date};{payment.Method}";
                         }
+                        Invoices.WriteLine(information);
                     }
                 }
             }
@@ -785,10 +795,10 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(GenericFunction.UsersPublicInformation(UserList));
                         break;
                     case 3:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices", "path_StudentPayments");
+                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices.csv", "path_StudentPayments");
                         break;
                     case 4:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices", "path_StudentPayments");
+                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices.csv", "path_StudentPayments");
                         closeApp = true;
                         break;
                     case 5:

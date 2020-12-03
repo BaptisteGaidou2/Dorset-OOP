@@ -12,7 +12,7 @@ namespace Dorset_OOP_Project
 
         public Invoice()
         {
-            Amount = 8000;
+            //Amount = 8000;
             Payments = new List<Payment>();
         }
 

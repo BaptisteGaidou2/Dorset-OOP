@@ -117,21 +117,24 @@ namespace Dorset_OOP_Project
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
             NotesReceive = new List<Note>();
-            Invoices = new List<Invoice> { new Invoice() };
+            // Invoices = new List<Invoice> { new Invoice() };
+            Invoices = new List<Invoice>();
         }
         public Student(string lastName, string firstName) : base(lastName, firstName)
         {
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
             NotesReceive = new List<Note>();
-            Invoices = new List<Invoice> { new Invoice() };
+            //Invoices = new List<Invoice> { new Invoice() };
+            Invoices = new List<Invoice>();
         }
         public Student(string lastName, string firstName, string email, string password) : base(lastName, firstName, email, password)
         {
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
             NotesReceive = new List<Note>();
-            Invoices = new List<Invoice> { new Invoice() };
+            //Invoices = new List<Invoice> { new Invoice() };
+            Invoices = new List<Invoice>();
         }
 
         public Student(string lastName, string firstName, string email, string password, int userID) : base(lastName, firstName, email, password, userID)
@@ -139,7 +142,8 @@ namespace Dorset_OOP_Project
             Attendances = new List<Attendance>();
             ClassroomStudying = new List<Classroom>();
             NotesReceive = new List<Note>();
-            Invoices = new List<Invoice> { new Invoice() };
+            //Invoices = new List<Invoice> { new Invoice() };
+            Invoices = new List<Invoice>();
         }
         public bool AddClassroom(Classroom classroom)
         {

@@ -15,7 +15,7 @@ namespace Dorset_OOP_Project
             {
                 for (int i = 0; i < list.Count; i++)
                 {
-                    information+=$"\n[index : {i} {list[i].ToString()}";
+                    information+=$"\n[index : {i}] {list[i].ToString()}";
                 }
             }
             else
