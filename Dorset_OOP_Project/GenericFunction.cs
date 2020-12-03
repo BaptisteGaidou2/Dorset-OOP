@@ -6,6 +6,92 @@ namespace Dorset_OOP_Project
 {
     public static class GenericFunction
     {
+        //Invoice choice and information
+        #region
+        public static void InvoiceListInformation(List<Invoice> list)
+        {
+            if (list != null && list.Count != 0)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    Console.Write($"\n[index : {i}]");
+                    list[i].Print();
+                }
+            }
+            else
+            {
+                Console.WriteLine("There is no Invoice ");
+            }
+        }
+        public static void InvoicePaymentListInformation(List<Invoice> list)
+        {
+            if (list != null && list.Count != 0)
+            {
+                for (int indexInvoice = 0; indexInvoice < list.Count; indexInvoice++)
+                {
+                    Console.Write($"\n[index : {indexInvoice}]");
+                    list[indexInvoice].Print();
+                    if (list[indexInvoice].Payments != null||list[indexInvoice].Payments.Count!=0)
+                    {
+                        Console.WriteLine("Payment :");
+                        list[indexInvoice].PrintPayments();
+                    }
+                    else
+                    {
+                        Console.WriteLine("No payment has been made");
+                    }
+                }
+            }
+            else
+            {
+                Console.Write("There is no Invoice ");
+            }
+        }
+        public static int ChoosingInvoiceList(List<Invoice> list)
+        {
+            int index = -1;
+            if (list != null && list.Count != 0)
+            {
+                bool stayInTheFunction = true;
+                while (stayInTheFunction)
+                {
+                    int methodChoiceAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose the invoice you want to select\n2 : Go to the previous menu", 1, 2);
+                    switch (methodChoiceAnswer)
+                    {
+                        case 1:
+                            InvoiceListInformation(list);
+                            Console.WriteLine("Enter the index of the invoice you want to select");
+                            try
+                            {
+                                index = Convert.ToInt32(Console.ReadLine());
+                            }
+                            catch (FormatException)
+                            {
+                                Console.WriteLine("The input was not an integer");
+                            }
+                            if (index < 0 || index >= list.Count)
+                            {
+                                Console.WriteLine("There isn't this index");
+                                index = -1;
+                            }
+                            else
+                            {
+                                stayInTheFunction = false;
+                            }
+                            break;
+                        case 2:
+                            stayInTheFunction = false;
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("There is no invoices");
+            }
+            return index;
+        }
+        #endregion
         //Attendence choice and information
         #region
         public static string AttendanceListInformation(List<Attendance> list)

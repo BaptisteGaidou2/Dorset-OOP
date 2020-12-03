@@ -316,11 +316,18 @@ namespace Dorset_OOP_Project
                 }
             }
         }
-
-        public void AddInvoice(Invoice invoice)
+        public void InvoiceMenu()
         {
-            Invoices.Add(invoice);
+            int askingValue = EnterValue.AskingNumber("Enter what you want to do\n1 : See \n2 : go to the previous menu", 1, 2);
+            switch (askingValue)
+            {
+
+            }
         }
+            public void AddInvoice(Invoice invoice)
+            {
+                Invoices.Add(invoice);
+            } 
 
         public override string PublicApplicationInformation()
         {

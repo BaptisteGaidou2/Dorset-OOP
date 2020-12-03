@@ -768,7 +768,7 @@ namespace Dorset_OOP_Project
             while (!logout)
             {
                 Student currentStudent = (Student)UserList[CurrentIndexUser];
-                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : See timetable\n4 : See Notes\n5 : See date Exam\n6 : See discipline studying\n7 : See class missed\n8 : See classroom enrolled information\n9 : Log out", 1, 9);
+                int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : See timetable\n4 : See Notes\n5 : See date Exam\n6 : See discipline studying\n7 : See class missed\n8 : See classroom enrolled information\n9 : Manage the Invoices\n10 : Log out", 1, 10);
                 switch (answer)
                 {
                     case 1:
@@ -808,6 +808,9 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(GenericFunction.ClassroomsEssentialInformation(currentStudent.ClassroomStudying));
                         break;
                     case 9:
+                        //INVOICE MENU
+                        break;
+                    case 10:
                         logout = true;
                         break;
                 }
@@ -1000,10 +1003,11 @@ namespace Dorset_OOP_Project
                         int userID = GenericFunction.ChoosingAUserID(UserList);
                         if (userID != -1)
                         {
+
                             bool stayEdit = true;
                             while (stayEdit)
                             {
-                            int editingChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Change personal Information\n2 : See user information\n3 : Remove user\n4 : Go back to the previous menu", 1, 4);
+                            int editingChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Change personal Information\n2 : See user information\n3 : Remove user\n4 : Edit invoices\n5 : Go back to the previous menu", 1, 5);
                             switch (editingChoice)
                             {
                                 case 1:
@@ -1058,7 +1062,88 @@ namespace Dorset_OOP_Project
                                             stayEdit = false;
                                         }
                                     break;
-                                case 4:
+                                    case 4:
+                                        if(UserList[GenericFunction.IndexUserID(userID, UserList)]is Student)
+                                        {
+                                            Student student = (Student)UserList[GenericFunction.IndexUserID(userID, UserList)];
+                                            bool stayInInvoice = true;
+                                            while (stayInInvoice)
+                                            {
+                                                int invoiceChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Add an Invoice\n2 : Remove an Invoice\n3 : See all student Invoice\n4 : Go back to the previous menu", 1, 4);
+                                                switch (editingChoice)
+                                                {
+                                                    case 1:
+                                                        bool stayAddInvoice = true;
+                                                        while (stayAddInvoice)
+                                                        {
+                                                            int invoiceAddChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose the amount\n2 : Go back to the previous menu", 1, 2);
+                                                            switch (invoiceAddChoice)
+                                                            {
+                                                                case 1:
+                                                                    Console.WriteLine("What is the amount of the invoice");
+                                                                    int amount = -1;
+                                                                    try
+                                                                    {
+                                                                        amount = Convert.ToInt32(Console.ReadLine());
+                                                                    }
+                                                                    catch (FormatException)
+                                                                    {
+                                                                        Console.WriteLine("The input was not an integer");
+                                                                    }
+                                                                    if (amount > 0)
+                                                                    {
+                                                                        student.Invoices.Add(new Invoice(amount));
+                                                                        stayAddInvoice = false;
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        Console.WriteLine("The amount need to be positive");
+                                                                    }
+                                                                    break;
+                                                                case 2:
+                                                                    stayAddInvoice = false;
+                                                                    break;
+                                                            }
+                                                        }
+                                                        break;
+                                                    case 2:
+                                                        bool stayRemoveInvoice = true;
+                                                        while (stayRemoveInvoice)
+                                                        {
+                                                            int invoiceAddChoice = EnterValue.AskingNumber("Enter what you want to do\n1 : Choose the Invoice to remove\n2 : Go back to the previous menu", 1, 2);
+                                                            switch (invoiceAddChoice)
+                                                            {
+                                                                case 1:
+                                                                    int indexToRemove = GenericFunction.ChoosingInvoiceList(student.Invoices);
+                                                                    if (indexToRemove != -1)
+                                                                    {
+                                                                        student.Invoices.RemoveAt(indexToRemove);
+                                                                        Console.WriteLine("The invoices has been removed");
+                                                                    }
+                                                                    break;
+                                                                case 2:
+                                                                    stayRemoveInvoice = false;
+                                                                    break;
+                                                            }
+                                                        }
+                                                        break;
+                                                    case 3:
+                                                        GenericFunction.InvoicePaymentListInformation(student.Invoices);
+                                                        break;
+                                                    case 4:
+                                                        stayInInvoice = false;
+                                                        break;
+                                                }
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("This user isn't a student he doesn't have Invoices");
+                                        }
+                                        
+                                        break;
+                                    case 5:
                                         stayEdit = false;
                                     break;
                                 }
