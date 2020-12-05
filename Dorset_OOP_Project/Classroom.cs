@@ -257,7 +257,7 @@ namespace Dorset_OOP_Project
             {
                 information += " NaN";
             }
-            information += "\nDiscipline teaching :";
+            information += "\nFaculty teaching :";
             if (ClassRoomFaculties != null && ClassRoomFaculties.Count != 0)
             {
                 for (int indexFaculty = 0; indexFaculty < ClassRoomFaculties.Count; indexFaculty++)

@@ -42,6 +42,24 @@ namespace Dorset_OOP_Project
             }
             return information;
         }
+        public string SeeNotesFromADiscipline(Discipline discipline)
+        {
+            string information = "";
+            int notesInThisDiscipline = 0;
+            foreach (Note studentNotes in NotesReceive)
+            {
+                if (studentNotes.ExamNote.ExamDiscipline == discipline)
+                {
+                    information += studentNotes.Information() + "\n";
+                    notesInThisDiscipline++;
+                }
+            }
+            if (notesInThisDiscipline == 0)
+            {
+                information += $"No notes in this discipline : {discipline.DisciplineName}\n";
+            }
+            return information;
+        }
         public override string GeneralInformation()
         {
             string information = $"{base.GeneralInformation()}";
@@ -95,23 +113,7 @@ namespace Dorset_OOP_Project
                 Console.WriteLine(GenericFunction.AttendanceListInformation(Attendances));
             }
         }
-        public string SeeNotesFromADiscipline(Discipline discipline)
-        {
-            string information = "";
-            int notesInThisDiscipline = 0;
-            foreach (Note studentNotes in NotesReceive)
-            {
-                if (studentNotes.ExamNote.ExamDiscipline == discipline)
-                {
-                    information += studentNotes.Information() + "\n";
-                }
-            }
-            if (notesInThisDiscipline == 0)
-            {
-                information += "No notes in this discipline";
-            }
-            return information;
-        }
+    
         public Student() : base()
         {
             Attendances = new List<Attendance>();
