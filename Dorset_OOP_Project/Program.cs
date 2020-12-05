@@ -60,7 +60,7 @@ namespace Dorset_OOP_Project
                     break;
             }
             Application schoolApplication = new Application(path_UserDB, path_DisciplineDB, path_ExamDB, path_ClassroomDB, path_StudentAttendences, path_StudentNotes, path_LastID, path_StudentInvoices);
-            schoolApplication.StartingMenu();
+            schoolApplication.StartingMenu(path_UserDB, path_DisciplineDB, path_ExamDB, path_ClassroomDB, path_StudentAttendences, path_StudentNotes, path_LastID, path_StudentInvoices);
             /*
             Application saveSimpleDatabase = new Application();
             Discipline info = new Discipline("info");
@@ -82,7 +82,7 @@ namespace Dorset_OOP_Project
             Administrator secondAdministrator = new Administrator("adm2", "ad", "adm@app.com", "0");//userID=5 password=0
             saveSimpleDatabase.AddNewUser(secondAdministrator);
             saveSimpleDatabase.AddDiscipline(info);//disciplineID=1
-            saveSimpleDatabase.StartingMenu();
+            saveSimpleDatabase.StartingMenu(path_UserDB, path_DisciplineDB, path_ExamDB, path_ClassroomDB, path_StudentAttendences, path_StudentNotes, path_LastID, path_StudentInvoices);
             */
             Console.ReadLine();
         }

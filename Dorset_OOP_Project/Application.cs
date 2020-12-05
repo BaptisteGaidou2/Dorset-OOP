@@ -787,7 +787,8 @@ namespace Dorset_OOP_Project
 
         }
 
-        public void StartingMenu()
+        public void StartingMenu(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes, string path_LastID, string path_StudentInvoices)
+
         {
             bool closeApp = false;
             while (!closeApp)
@@ -806,10 +807,10 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(GenericFunction.UsersPublicInformation(UserList));
                         break;
                     case 3:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices.csv");
+                        FromAppToCSV(path_UserDB, path_DisciplineDB, path_ExamDB,path_ClassroomDB,path_StudentAttendences,path_StudentNotes,path_LastID,path_StudentInvoices);
                         break;
                     case 4:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices.csv");
+                        FromAppToCSV(path_UserDB, path_DisciplineDB, path_ExamDB,path_ClassroomDB,path_StudentAttendences,path_StudentNotes,path_LastID,path_StudentInvoices);
                         closeApp = true;
                         break;
                     case 5:
@@ -952,17 +953,18 @@ namespace Dorset_OOP_Project
             bool logout = false;
             while (!logout)
             {
+                Administrator currentAdministrator = (Administrator)UserList[CurrentIndexUser];
                 int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Go to the discipline menu\n4 : Go to the Classroom Menu\n5 : Go to the Exam menu\n6 : Go to the user menu\n7 : Log out", 1,7);
                 switch (answer)
                 {
                     case 1:
                         #region
-                        Console.WriteLine(UserList[CurrentIndexUser].PersonalInformation());
+                        Console.WriteLine(currentAdministrator.PersonalInformation());
                         break;
                     #endregion
                     case 2:
                         #region
-                        UserList[CurrentIndexUser].ChangeInformation();
+                        currentAdministrator.ChangeInformation();
                         break;
                     #endregion
                     case 3:
@@ -980,7 +982,7 @@ namespace Dorset_OOP_Project
                         break;
                     case 6:
                         #region
-                        UserMenu_Administrator();
+                        UserMenu_Administrator(currentAdministrator);
                         break;
                     #endregion
                     case 7:
@@ -1105,7 +1107,7 @@ namespace Dorset_OOP_Project
                 }
             }
         }
-        public void UserMenu_Administrator()
+        public void UserMenu_Administrator(Administrator currentAdministrator)
         {
             bool stay = true;
             while (stay)
@@ -1148,7 +1150,7 @@ namespace Dorset_OOP_Project
                                     Console.WriteLine(UserList[GenericFunction.IndexUserID(userID, UserList)].GeneralInformation());
                                     break;
                                 case 3:
-                                        if (userID == 0||userID==CurrentIndexUser)
+                                        if (userID==currentAdministrator.UserID)
                                         {
                                             Console.WriteLine("This administrator can't be removed");
                                         }
@@ -1923,8 +1925,6 @@ namespace Dorset_OOP_Project
         }
         public bool AddNewUser(int type, string firstName, string lastName, string email, string password)
         {
-            if (CurrentIndexUser != -1 && UserList[CurrentIndexUser] is Administrator)
-            {
                 switch (type)
                 {
                     case 1:
@@ -1939,7 +1939,6 @@ namespace Dorset_OOP_Project
                         AddNewAdministrator(firstName, lastName, email, password);
                         return true;
                 }
-            }
             return false;
         }
 
