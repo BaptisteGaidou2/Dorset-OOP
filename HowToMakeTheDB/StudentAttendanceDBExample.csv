@@ -1,0 +1,5 @@
+ID;StudentIDvalue;;
+Classroom;ClassroomIDValue;;
+TimeSlot;Week;Day(1-6);Hours
+Faculty_ID;FacultyIDValue;;
+etc;;;

@@ -1,0 +1,7 @@
+Type;TypeValue(Administrator/Student/Faculty)
+ID;UserIDValue
+FirstName;FirstNameValue
+LastName;LastNameValue
+Email;EmailValue
+Password;PasswordValue
+etc;

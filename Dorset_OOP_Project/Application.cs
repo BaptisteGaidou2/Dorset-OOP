@@ -188,13 +188,18 @@ namespace Dorset_OOP_Project
                             {
                                 for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
                                 {
-                                    int ID = Convert.ToInt32(columns[indexColumn]);
-                                    int index = GenericFunction.IndexUserID(ID, UserList);
-                                    if (index != -1 && UserList[index] is Student)
+                                    if (columns[indexColumn] != "")
                                     {
-                                        Student student = (Student)UserList[index];
-                                        Classrooms[Classrooms.Count - 1].ClassRoomStudents.Add(student);
-                                        student.ClassroomStudying.Add(Classrooms[Classrooms.Count - 1]);
+                                        int ID = Convert.ToInt32(columns[indexColumn]);
+                                        int index = GenericFunction.IndexUserID(ID, UserList);
+                                        if (index != -1 && UserList[index] is Student)
+                                        {
+                                            Student student = (Student)UserList[index];
+                                            Classrooms[Classrooms.Count - 1].ClassRoomStudents.Add(student);
+                                            student.ClassroomStudying.Add(Classrooms[Classrooms.Count - 1]);
+                                        }
+
+
                                     }
                                 }
                             }
@@ -253,6 +258,7 @@ namespace Dorset_OOP_Project
                 }
             }
             #endregion
+
             string[] line_StudentAttendences = System.IO.File.ReadAllLines(path_StudentAttendences);
             #region
             if (line_StudentAttendences.Length != 1)
@@ -300,7 +306,7 @@ namespace Dorset_OOP_Project
                     indexAttribute++;
                     if (indexAttribute == 5)
                     {
-                        if (indexStudent_Attendance != 1 && classroomIndex_Attendance != -1 && timeslotValue.Count == 3)
+                        if (indexStudent_Attendance != -1 && classroomIndex_Attendance != -1 && timeslotValue.Count == 3)
                         {
                             if (UserList[indexStudent_Attendance] is Student)
                             {
