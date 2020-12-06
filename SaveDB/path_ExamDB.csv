@@ -1,0 +1,21 @@
+ID;0
+Name;Info Exam
+Discipline_ID;1
+Week;5
+Day;6
+StartingHour;10
+EndingHour;12
+ID;1
+Name;Maths Exam
+Discipline_ID;1
+Week;5
+Day;6
+StartingHour;10
+EndingHour;12
+ID;2
+Name;Physics Exam
+Discipline_ID;0
+Week;6
+Day;4
+StartingHour;10
+EndingHour;12

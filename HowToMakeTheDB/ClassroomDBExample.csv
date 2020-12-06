@@ -1,0 +1,7 @@
+ID;ClassroomIDvalue;;;;;;;;
+Name;nameValue;;;;;;;;
+Discipline_ID;DisciplineIDValue;;;;;;;;
+Faculty_ID;FacultyIDValue;FacultyIDValue;etc;;;;;;
+Student_ID;StudentIDValue;StudentIDValue;etc;;;;;;
+TimeSlot;Week;Day(1-6);Hour;FacultyID;Week;Day(1-6);Hour;FacultyID;etc
+etc;;;;;;;;;

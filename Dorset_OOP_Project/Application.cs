@@ -27,339 +27,441 @@ namespace Dorset_OOP_Project
             int indexAttribute = 1;
             string[] lines_UserDB = System.IO.File.ReadAllLines(path_UserDB);
             #region
-            for (int indexLigne = 0; indexLigne < lines_UserDB.Length; indexLigne++)
+            if (lines_UserDB.Length != 1)
             {
+                for (int indexLigne = 0; indexLigne < lines_UserDB.Length; indexLigne++)
+                {
 
-                string[] columns = lines_UserDB[indexLigne].Split(';');
-                switch (indexAttribute)
-                {
-                    case 1:
-                        switch (columns[1])
-                        {
-                            case "Administrator":
-                                UserList.Add(new Administrator());
-                                break;
-                            case "Student":
-                                UserList.Add(new Student());
-                                break;
-                            case "Faculty":
-                                UserList.Add(new Faculty());
-                                break;
-                        }
-                        break;
-                    case 2:
-                        UserList[UserList.Count - 1].UserID = Convert.ToInt32(columns[1]);
-                        break;
-                    case 3:
-                        UserList[UserList.Count - 1].FirstName = columns[1];
-                        break;
-                    case 4:
-                        UserList[UserList.Count - 1].LastName = columns[1];
-                        break;
-                    case 5:
-                        UserList[UserList.Count - 1].Email = columns[1];
-                        break;
-                    case 6:
-                        UserList[UserList.Count - 1].Password = columns[1];
-                        break;
-                }
-                indexAttribute++;
-                if (indexAttribute == 7)
-                {
-                    indexAttribute = 1;
+                    string[] columns = lines_UserDB[indexLigne].Split(';');
+                    switch (indexAttribute)
+                    {
+                        case 1:
+                            switch (columns[1])
+                            {
+                                case "Administrator":
+                                    UserList.Add(new Administrator());
+                                    break;
+                                case "Student":
+                                    UserList.Add(new Student());
+                                    break;
+                                case "Faculty":
+                                    UserList.Add(new Faculty());
+                                    break;
+                            }
+                            break;
+                        case 2:
+                            UserList[UserList.Count - 1].UserID = Convert.ToInt32(columns[1]);
+                            break;
+                        case 3:
+                            UserList[UserList.Count - 1].FirstName = columns[1];
+                            break;
+                        case 4:
+                            UserList[UserList.Count - 1].LastName = columns[1];
+                            break;
+                        case 5:
+                            UserList[UserList.Count - 1].Email = columns[1];
+                            break;
+                        case 6:
+                            UserList[UserList.Count - 1].Password = columns[1];
+                            break;
+                    }
+                    indexAttribute++;
+                    if (indexAttribute == 7)
+                    {
+                        indexAttribute = 1;
+                    }
                 }
             }
             #endregion
             string[] lines_DisciplineDB = System.IO.File.ReadAllLines(path_DisciplineDB);
             #region
-            indexAttribute = 1;
-            for (int indexLigne = 0; indexLigne < lines_DisciplineDB.Length; indexLigne++)
+            if (lines_DisciplineDB.Length != 1)
             {
-                string[] columns = lines_DisciplineDB[indexLigne].Split(';');
-                switch (indexAttribute)
+                indexAttribute = 1;
+                for (int indexLigne = 0; indexLigne < lines_DisciplineDB.Length; indexLigne++)
                 {
-                    case 1:
-                        DisciplineList.Add(new Discipline());
-                        DisciplineList[DisciplineList.Count - 1].DisciplineID = Convert.ToInt32(columns[1]);
-                        break;
-                    case 2:
-                        DisciplineList[DisciplineList.Count - 1].DisciplineName = columns[1];
-                        break;
-                }
-                indexAttribute++;
-                if (indexAttribute == 3)
-                {
-                    indexAttribute = 1;
+                    string[] columns = lines_DisciplineDB[indexLigne].Split(';');
+                    switch (indexAttribute)
+                    {
+                        case 1:
+                            DisciplineList.Add(new Discipline());
+                            DisciplineList[DisciplineList.Count - 1].DisciplineID = Convert.ToInt32(columns[1]);
+                            break;
+                        case 2:
+                            DisciplineList[DisciplineList.Count - 1].DisciplineName = columns[1];
+                            break;
+                    }
+                    indexAttribute++;
+                    if (indexAttribute == 3)
+                    {
+                        indexAttribute = 1;
+                    }
                 }
             }
             #endregion
             string[] lines_ExamDB = System.IO.File.ReadAllLines(path_ExamDB);
             #region
-            indexAttribute = 1;
-            for (int indexLigne = 0; indexLigne < lines_ExamDB.Length; indexLigne++)
+            if (lines_ExamDB.Length != 1)
             {
-                string[] columns = lines_ExamDB[indexLigne].Split(';');
-                switch (indexAttribute)
+                indexAttribute = 1;
+                for (int indexLigne = 0; indexLigne < lines_ExamDB.Length; indexLigne++)
                 {
-                    case 1:
-                        Exams.Add(new Exam());
-                        Exams[Exams.Count - 1].ExamID = Convert.ToInt32(columns[1]);
-                        break;
-                    case 2:
-                        Exams[Exams.Count - 1].ExamName = columns[1];
-                        break;
-                    case 3:
-                        Exams[Exams.Count - 1].ExamDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(Convert.ToInt32(columns[1]),DisciplineList)];
-                        break;
-                    case 4:
-                        Exams[Exams.Count - 1].Week = Convert.ToInt32(columns[1]);
-                        break;
-                    case 5:
-                        Exams[Exams.Count - 1].Day = Convert.ToInt32(columns[1]);
-                        break;
-                    case 6:
-                        Exams[Exams.Count - 1].StartingHour = Convert.ToInt32(columns[1]);
-                        break;
-                    case 7:
-                        Exams[Exams.Count - 1].EndingHour = Convert.ToInt32(columns[1]);
-                        break;
-                }
-                indexAttribute++;
-                if (indexAttribute == 8)
-                {
-                    indexAttribute = 1;
+                    string[] columns = lines_ExamDB[indexLigne].Split(';');
+                    switch (indexAttribute)
+                    {
+                        case 1:
+                            Exams.Add(new Exam());
+                            Exams[Exams.Count - 1].ExamID = Convert.ToInt32(columns[1]);
+                            break;
+                        case 2:
+                            Exams[Exams.Count - 1].ExamName = columns[1];
+                            break;
+                        case 3:
+                            Exams[Exams.Count - 1].ExamDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(Convert.ToInt32(columns[1]), DisciplineList)];
+                            break;
+                        case 4:
+                            Exams[Exams.Count - 1].Week = Convert.ToInt32(columns[1]);
+                            break;
+                        case 5:
+                            Exams[Exams.Count - 1].Day = Convert.ToInt32(columns[1]);
+                            break;
+                        case 6:
+                            Exams[Exams.Count - 1].StartingHour = Convert.ToInt32(columns[1]);
+                            break;
+                        case 7:
+                            Exams[Exams.Count - 1].EndingHour = Convert.ToInt32(columns[1]);
+                            break;
+                    }
+                    indexAttribute++;
+                    if (indexAttribute == 8)
+                    {
+                        indexAttribute = 1;
+                    }
                 }
             }
             #endregion
             string[] lines_ClassroomDB = System.IO.File.ReadAllLines(path_ClassroomDB);
             #region
-            indexAttribute = 1;
-            for (int indexLigne = 0; indexLigne < lines_ClassroomDB.Length; indexLigne++)
+            if (lines_ClassroomDB.Length != 1)
             {
-                string[] columns = lines_ClassroomDB[indexLigne].Split(';');
-                switch (indexAttribute)
+                indexAttribute = 1;
+                for (int indexLigne = 0; indexLigne < lines_ClassroomDB.Length; indexLigne++)
                 {
-                    case 1:
-                        Classrooms.Add(new Classroom());
-                        Classrooms[Classrooms.Count - 1].ClassRoomID = Convert.ToInt32(columns[1]);
-                        break;
-                    case 2:
-                        Classrooms[Classrooms.Count - 1].ClassroomName = columns[1];
-                        break;
-                    case 3:
-                        if (columns.Length > 1)
-                        {      
-                            Classrooms[Classrooms.Count - 1].ClassRoomDiscipline= DisciplineList[GenericFunction.IndexDisciplineID(Convert.ToInt32(columns[1]), DisciplineList)];
-                        }
-                        break;
-                    case 4:
-                        if (columns.Length > 1)
-                        {
-                            for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
+                    string[] columns = lines_ClassroomDB[indexLigne].Split(';');
+                    switch (indexAttribute)
+                    {
+                        case 1:
+                            Classrooms.Add(new Classroom());
+                            Classrooms[Classrooms.Count - 1].ClassRoomID = Convert.ToInt32(columns[1]);
+                            break;
+                        case 2:
+                            Classrooms[Classrooms.Count - 1].ClassroomName = columns[1];
+                            break;
+                        case 3:
+                            if (columns.Length > 1)
                             {
-                                int ID = Convert.ToInt32(columns[indexColumn]);
-                                int index = GenericFunction.IndexUserID(ID, UserList);
-                                if (index != -1 && UserList[index] is Faculty)
-                                {
-                                    Faculty faculty = (Faculty)UserList[index];
-                                    Classrooms[Classrooms.Count - 1].ClassRoomFaculties.Add(faculty);
-                                    faculty.ClassroomsTeaching.Add(Classrooms[Classrooms.Count - 1]);
-                                }
+                                Classrooms[Classrooms.Count - 1].ClassRoomDiscipline = DisciplineList[GenericFunction.IndexDisciplineID(Convert.ToInt32(columns[1]), DisciplineList)];
                             }
-                        }
-                        break;
-                    case 5:
-                        if (columns.Length > 1)
-                        {
-                            for(int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
+                            break;
+                        case 4:
+                            if (columns.Length > 1)
                             {
-                                int ID = Convert.ToInt32(columns[indexColumn]);
-                                int index = GenericFunction.IndexUserID(ID, UserList);
-                                if (index != -1 &&UserList[index]is Student)
+                                for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
                                 {
-                                    Student student = (Student)UserList[index];
-                                    Classrooms[Classrooms.Count - 1].ClassRoomStudents.Add(student);
-                                    student.ClassroomStudying.Add(Classrooms[Classrooms.Count - 1]);
-                                }
-                            }
-                        }
-                        break;
-                    case 6:
-                        if (columns.Length > 1)
-                        {
-                            int indexTimeSlot = 1;
-                            int indexLastTimeTable = 0;
-                            int indexLastClassroom = 0;
-                            for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
-                            {
-                                switch (indexTimeSlot)
-                                {
-                                    case 1:
-                                        Classrooms[Classrooms.Count - 1].Timetables.Add(new TimeSlot());
-                                        indexLastClassroom = Classrooms.Count - 1;
-                                        indexLastTimeTable = Classrooms[indexLastClassroom].Timetables.Count - 1;
-                                        Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Week =Convert.ToInt32(columns[indexColumn]);
-                                        break;
-                                    case 2:
-                                        Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Day = Convert.ToInt32(columns[indexColumn]); 
-                                        break;
-                                    case 3:
-                                        Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].StartingTime = Convert.ToInt32(columns[indexColumn]);
-                                        break;
-                                    case 4:
-                                        if (Convert.ToInt32(columns[indexColumn]) != -1)
+                                    if (columns[indexColumn] != "")
+                                    {
+
+                                        int ID = Convert.ToInt32(columns[indexColumn]);
+                                        int index = GenericFunction.IndexUserID(ID, UserList);
+                                        if (index != -1 && UserList[index] is Faculty)
                                         {
-                                            int ID = Convert.ToInt32(columns[indexColumn]);
-                                            int index = GenericFunction.IndexUserID(ID, UserList);
-                                            if (index != -1 && UserList[index] is Faculty)
-                                            {
-                                                Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Teacher = (Faculty) UserList[index];
-                                            }
+                                            Faculty faculty = (Faculty)UserList[index];
+                                            Classrooms[Classrooms.Count - 1].ClassRoomFaculties.Add(faculty);
+                                            faculty.ClassroomsTeaching.Add(Classrooms[Classrooms.Count - 1]);
                                         }
-                                        break;
-                                }
-                                indexTimeSlot++;
-                                if (indexTimeSlot == 5)
-                                {
-                                    indexTimeSlot = 1;
+                                    }
                                 }
                             }
-                        }
-                        break;
-                }
-                indexAttribute++;
-                if (indexAttribute == 7)
-                {
-                    indexAttribute = 1;
+                            break;
+                        case 5:
+                            if (columns.Length > 1)
+                            {
+                                for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
+                                {
+                                    if (columns[indexColumn] != "")
+                                    {
+                                        int ID = Convert.ToInt32(columns[indexColumn]);
+                                        int index = GenericFunction.IndexUserID(ID, UserList);
+                                        if (index != -1 && UserList[index] is Student)
+                                        {
+                                            Student student = (Student)UserList[index];
+                                            Classrooms[Classrooms.Count - 1].ClassRoomStudents.Add(student);
+                                            student.ClassroomStudying.Add(Classrooms[Classrooms.Count - 1]);
+                                        }
+
+
+                                    }
+                                }
+                            }
+                            break;
+                        case 6:
+                            if (columns.Length > 1)
+                            {
+                                int indexTimeSlot = 1;
+                                int indexLastTimeTable = 0;
+                                int indexLastClassroom = 0;
+                                for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
+                                {
+                                    if (columns[indexColumn] != "")
+                                    {
+                                        switch (indexTimeSlot)
+                                        {
+                                            case 1:
+                                                Classrooms[Classrooms.Count - 1].Timetables.Add(new TimeSlot());
+                                                indexLastClassroom = Classrooms.Count - 1;
+                                                indexLastTimeTable = Classrooms[indexLastClassroom].Timetables.Count - 1;
+                                                Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Week = Convert.ToInt32(columns[indexColumn]);
+                                                break;
+                                            case 2:
+                                                Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Day = Convert.ToInt32(columns[indexColumn]);
+                                                break;
+                                            case 3:
+                                                Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].StartingTime = Convert.ToInt32(columns[indexColumn]);
+                                                break;
+                                            case 4:
+                                                if (Convert.ToInt32(columns[indexColumn]) != -1)
+                                                {
+                                                    int ID = Convert.ToInt32(columns[indexColumn]);
+                                                    int index = GenericFunction.IndexUserID(ID, UserList);
+                                                    if (index != -1 && UserList[index] is Faculty)
+                                                    {
+                                                        Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Teacher = (Faculty)UserList[index];
+                                                    }
+                                                }
+                                                break;
+                                        }
+                                    }
+                                    indexTimeSlot++;
+                                    if (indexTimeSlot == 5)
+                                    {
+                                        indexTimeSlot = 1;
+                                    }
+                                }
+                            }
+                            break;
+                    }
+                    indexAttribute++;
+                    if (indexAttribute == 7)
+                    {
+                        indexAttribute = 1;
+                    }
                 }
             }
             #endregion
+
             string[] line_StudentAttendences = System.IO.File.ReadAllLines(path_StudentAttendences);
             #region
-            indexAttribute = 1;
-            int indexStudent_Attendance = 0;
-            int classroomIndex_Attendance = 0;
-            List<int> timeslotValue = new List<int>();
-            int indexFaculty_Attendance = -1;
-            for (int indexLigne = 0; indexLigne < line_StudentAttendences.Length; indexLigne++)
+            if (line_StudentAttendences.Length != 1)
             {
-                string[] columns = line_StudentAttendences[indexLigne].Split(';');
-                switch (indexAttribute)
+                indexAttribute = 1;
+                int indexStudent_Attendance = 0;
+                int classroomIndex_Attendance = 0;
+                List<int> timeslotValue = new List<int>();
+                int indexFaculty_Attendance = -1;
+                for (int indexLigne = 0; indexLigne < line_StudentAttendences.Length; indexLigne++)
                 {
-                    case 1:
-                        int studentID = Convert.ToInt32(columns[1]);
-                        indexStudent_Attendance = GenericFunction.IndexUserID(studentID, UserList);
-                        break;
-                    case 2:
-                        int classroomID = Convert.ToInt32(columns[1]);
-                        classroomIndex_Attendance = GenericFunction.IndexClassroomID(classroomID, Classrooms);
-                        break;
-                    case 3:
-                        timeslotValue = new List<int>();
-                        if (columns.Length == 4)
-                        {
-                            for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
-                            {
-                                timeslotValue.Add(Convert.ToInt32(columns[indexColumn]));
-                            }
-                        }
-                        break;
-                    case 4:
-                        if (columns.Length > 1)
-                        {
-                            int facultyID = Convert.ToInt32(columns[1]);
-                            indexFaculty_Attendance = GenericFunction.IndexUserID(facultyID, UserList);
-                        }
-                        else
-                        {
-                            indexFaculty_Attendance = -1;
-                        }
-                        break;
-                }
-                indexAttribute++;
-                if (indexAttribute == 5)
-                {
-                    if (indexStudent_Attendance != 1 && classroomIndex_Attendance != -1 && timeslotValue.Count == 3)
+                    string[] columns = line_StudentAttendences[indexLigne].Split(';');
+                    switch (indexAttribute)
                     {
-                        if(UserList[indexStudent_Attendance] is Student)
-                        {
-                            Student student = (Student)UserList[indexStudent_Attendance];
-                            student.Attendances.Add(new Attendance());
-                            int indexLastAttendance = student.Attendances.Count - 1;
-                            student.Attendances[indexLastAttendance].AbsentClass = Classrooms[classroomIndex_Attendance];
-                            student.Attendances[indexLastAttendance].AbsentTimeSlot = new TimeSlot(timeslotValue[0], timeslotValue[1], timeslotValue[2]);
-                            if (indexFaculty_Attendance != -1&& UserList[indexFaculty_Attendance] is Faculty)
+                        case 1:
+                            int studentID = Convert.ToInt32(columns[1]);
+                            indexStudent_Attendance = GenericFunction.IndexUserID(studentID, UserList);
+                            break;
+                        case 2:
+                            int classroomID = Convert.ToInt32(columns[1]);
+                            classroomIndex_Attendance = GenericFunction.IndexClassroomID(classroomID, Classrooms);
+                            break;
+                        case 3:
+                            timeslotValue = new List<int>();
+                            if (columns.Length == 4)
                             {
-                                student.Attendances[indexLastAttendance].AbsentTimeSlot.Teacher = (Faculty)UserList[indexFaculty_Attendance];
+                                for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
+                                {
+                                    timeslotValue.Add(Convert.ToInt32(columns[indexColumn]));
+                                }
+                            }
+                            break;
+                        case 4:
+                            if (columns.Length > 1)
+                            {
+                                int facultyID = Convert.ToInt32(columns[1]);
+                                indexFaculty_Attendance = GenericFunction.IndexUserID(facultyID, UserList);
+                            }
+                            else
+                            {
+                                indexFaculty_Attendance = -1;
+                            }
+                            break;
+                    }
+                    indexAttribute++;
+                    if (indexAttribute == 5)
+                    {
+                        if (indexStudent_Attendance != -1 && classroomIndex_Attendance != -1 && timeslotValue.Count == 3)
+                        {
+                            if (UserList[indexStudent_Attendance] is Student)
+                            {
+                                Student student = (Student)UserList[indexStudent_Attendance];
+                                student.Attendances.Add(new Attendance());
+                                int indexLastAttendance = student.Attendances.Count - 1;
+                                student.Attendances[indexLastAttendance].AbsentClass = Classrooms[classroomIndex_Attendance];
+                                student.Attendances[indexLastAttendance].AbsentTimeSlot = new TimeSlot(timeslotValue[0], timeslotValue[1], timeslotValue[2]);
+                                if (indexFaculty_Attendance != -1 && UserList[indexFaculty_Attendance] is Faculty)
+                                {
+                                    student.Attendances[indexLastAttendance].AbsentTimeSlot.Teacher = (Faculty)UserList[indexFaculty_Attendance];
 
+                                }
                             }
                         }
+                        indexAttribute = 1;
                     }
-                    indexAttribute = 1;
                 }
             }
             #endregion
             string[] lines_StudentNotes = System.IO.File.ReadAllLines(path_StudentNotes);
             #region
-            indexAttribute = 1;
-            int indexStudent_NotesStudent = 0; 
-            int indexExam_NotesStudent = 0;
-            double note = 0;
-            for (int indexLigne = 0; indexLigne < lines_StudentNotes.Length; indexLigne++)
+            if (lines_StudentNotes.Length != 1)
             {
-                string[] columns = lines_StudentNotes[indexLigne].Split(';');
-                switch (indexAttribute)
+                indexAttribute = 1;
+                int indexStudent_NotesStudent = 0;
+                int indexExam_NotesStudent = 0;
+                double note = 0;
+                for (int indexLigne = 0; indexLigne < lines_StudentNotes.Length; indexLigne++)
                 {
-                    case 1:
-                        indexStudent_NotesStudent = GenericFunction.IndexUserID(Convert.ToInt32(columns[1]), UserList);
-                        break;
-                    case 2:
-                        indexExam_NotesStudent = GenericFunction.IndexExamID(Convert.ToInt32(columns[1]),Exams);
-                        break;
-                    case 3:
-                        note = Convert.ToDouble(columns[1]);
-                        break;
-                }
-                indexAttribute++;
-                if (indexAttribute == 4)
-                {
-                    if(indexExam_NotesStudent!=-1&& indexStudent_NotesStudent != -1)
+                    string[] columns = lines_StudentNotes[indexLigne].Split(';');
+                    switch (indexAttribute)
                     {
-                        if(UserList[indexStudent_NotesStudent]is Student)
-                        {
-                            Student student = (Student)UserList[indexStudent_NotesStudent];
-                            student.NotesReceive.Add(new Note(Exams[indexExam_NotesStudent], note));
-                        }
+                        case 1:
+                            indexStudent_NotesStudent = GenericFunction.IndexUserID(Convert.ToInt32(columns[1]), UserList);
+                            break;
+                        case 2:
+                            indexExam_NotesStudent = GenericFunction.IndexExamID(Convert.ToInt32(columns[1]), Exams);
+                            break;
+                        case 3:
+                            note = Convert.ToDouble(columns[1]);
+                            break;
                     }
-                    indexAttribute = 1;
+                    indexAttribute++;
+                    if (indexAttribute == 4)
+                    {
+                        if (indexExam_NotesStudent != -1 && indexStudent_NotesStudent != -1)
+                        {
+                            if (UserList[indexStudent_NotesStudent] is Student)
+                            {
+                                Student student = (Student)UserList[indexStudent_NotesStudent];
+                                student.NotesReceive.Add(new Note(Exams[indexExam_NotesStudent], note));
+                            }
+                        }
+                        indexAttribute = 1;
+                    }
                 }
             }
             #endregion
             string[] lines_LastID = System.IO.File.ReadAllLines(path_LastID);
             #region
-            indexAttribute = 1;
-            for (int indexLigne = 0; indexLigne < lines_LastID.Length; indexLigne++)
+            if (lines_LastID.Length != 1)
             {
-                string[] columns = lines_LastID[indexLigne].Split(';');
-                switch (indexAttribute)
+                indexAttribute = 1;
+                for (int indexLigne = 0; indexLigne < lines_LastID.Length; indexLigne++)
                 {
-                    case 1:
-                        LastUserID = Convert.ToInt32(columns[1]);
-                        break;
-                    case 2:
-                        LastDisciplineID = Convert.ToInt32(columns[1]);
-                        break;
-                    case 3:
-                        LastClassroomID = Convert.ToInt32(columns[1]);
-                        break;
-                    case 4:
-                        LastExamID = Convert.ToInt32(columns[1]);
-                        break;
+                    string[] columns = lines_LastID[indexLigne].Split(';');
+                    switch (indexAttribute)
+                    {
+                        case 1:
+                            LastUserID = Convert.ToInt32(columns[1]);
+                            break;
+                        case 2:
+                            LastDisciplineID = Convert.ToInt32(columns[1]);
+                            break;
+                        case 3:
+                            LastClassroomID = Convert.ToInt32(columns[1]);
+                            break;
+                        case 4:
+                            LastExamID = Convert.ToInt32(columns[1]);
+                            break;
+                    }
+                    indexAttribute++;
+                    if (indexAttribute == 5)
+                    {
+                        indexAttribute = 1;
+                    }
                 }
-                indexAttribute++;
-                if (indexAttribute == 3)
+            }
+            #endregion
+            string[] lines_Invoices = System.IO.File.ReadAllLines(path_StudentInvoices);
+            #region
+            if (lines_Invoices.Length != 1)
+            {
+                indexAttribute = 1;
+                int indexStudent_Invoices = 0;
+                double amount = 0;
+                double amountPayment = 0;
+                DateTime date = new DateTime();
+                int indexAttributePayment = 1;
+                string method = "";
+
+                for (int indexLigne = 0; indexLigne < lines_Invoices.Length; indexLigne++)
                 {
-                    indexAttribute = 1;
+                    string[] columns = lines_Invoices[indexLigne].Split(';');
+                    switch (indexAttribute)
+                    {
+                        case 1:
+                            if (columns.Length >= 2)
+                            {
+                                indexStudent_Invoices = GenericFunction.IndexUserID(Convert.ToInt32(columns[1]), UserList);
+                            }
+                            break;
+                        case 2:
+                            amount = Convert.ToDouble(columns[1]);
+                            if (indexStudent_Invoices != -1 && amount > 0)
+                            {
+                                Student student = (Student)UserList[indexStudent_Invoices];
+                                student.Invoices.Add(new Invoice(amount));
+
+                            }
+                            break;
+                        case 3:
+                            for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
+                            {
+                                switch (indexAttributePayment)
+                                {
+                                    case 1:
+                                        amountPayment = Convert.ToDouble(columns[indexColumn]);
+                                        break;
+                                    case 2:
+                                        date = Convert.ToDateTime(columns[indexColumn]);
+                                        break;
+                                    case 3:
+                                        method = columns[indexColumn];
+                                        break;
+                                }
+                                indexAttributePayment++;
+                                if (indexAttributePayment == 4)
+                                {
+                                    if (indexStudent_Invoices != -1 && amount > 0)
+                                    {
+                                        Student student = (Student)UserList[indexStudent_Invoices];
+                                        student.Invoices[student.Invoices.Count - 1].AddPayment(new Payment(amountPayment, date, method));
+                                    }
+                                    indexAttribute = 1;
+                                }
+                            }
+                            break;
+                    }
+                    indexAttribute++;
+                    if (indexAttribute == 4)
+                    {
+                        indexAttribute = 1;
+                    }
                 }
             }
             #endregion
@@ -464,73 +566,6 @@ namespace Dorset_OOP_Project
             }
             Invoices.Close();
             */
-            string[] lines_Invoices = System.IO.File.ReadAllLines(path_StudentInvoices);
-            #region
-            indexAttribute = 1;
-            int indexStudent_Invoices = 0;
-            double amount = 0;
-            double amountPayment = 0;
-            DateTime date = new DateTime();
-            int indexAttributePayment = 1;
-            string method = "";
-
-            for (int indexLigne = 0; indexLigne < lines_Invoices.Length; indexLigne++)
-            {
-                string[] columns = lines_Invoices[indexLigne].Split(';');
-                switch (indexAttribute)
-                {
-                    case 1:
-                        if (columns.Length >= 2)
-                        {
-                            indexStudent_Invoices = GenericFunction.IndexUserID(Convert.ToInt32(columns[1]), UserList);
-                        }
-                        break;
-                    case 2:
-                        amount = Convert.ToDouble(columns[1]);
-                        if (indexStudent_Invoices != -1 && amount > 0)
-                        {
-                            Student student = (Student)UserList[indexStudent_Invoices];
-                            student.Invoices.Add(new Invoice(amount));
-
-                        }
-                        break;
-                    case 3:
-                        for(int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
-                        {
-                            switch (indexAttributePayment)
-                            {
-                                case 1:
-                                    amountPayment = Convert.ToDouble(columns[indexColumn]);
-                                    break;
-                                case 2:
-                                    date = Convert.ToDateTime(columns[indexColumn]);
-                                    break;
-                                case 3:
-                                    method = columns[indexColumn];
-                                    break;
-                            }
-                            indexAttributePayment++;
-                            if (indexAttributePayment == 4)
-                            {
-                                if (indexStudent_Invoices != -1 && amount > 0)
-                                {
-                                    Student student = (Student)UserList[indexStudent_Invoices];
-                                    student.Invoices[student.Invoices.Count - 1].AddPayment(new Payment(amountPayment, date, method));
-                                }
-                                indexAttribute = 1;
-                            }
-                        }
-                        break;
-                }
-                indexAttribute++;
-                if (indexAttribute == 4)
-                {
-                    indexAttribute = 1;
-                }
-            }
-            #endregion
-
-
         }
         public void FromAppToCSV(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes,string path_LastID, string path_StudentInvoices)
         {
@@ -687,6 +722,28 @@ namespace Dorset_OOP_Project
             lastID.WriteLine($"LastExamID;{LastExamID}");
             lastID.Close();
             #endregion
+            StreamWriter Invoices = new StreamWriter(path_StudentInvoices);
+            #region
+            foreach (User user in UserList)
+            {
+                if (user is Student)
+                {
+                    Student student = (Student)user;
+                    foreach (Invoice invoice in student.Invoices)
+                    {
+                        Invoices.WriteLine($"Student ID;{student.UserID}");
+                        Invoices.WriteLine($"Amount;{invoice.Amount}");
+                        string information = "PAYMENTS";
+                        foreach (Payment payment in invoice.Payments)
+                        {
+                            information += $";{payment.Amount};{payment.Date};{payment.Method}";
+                        }
+                        Invoices.WriteLine(information);
+                    }
+                }
+            }
+            Invoices.Close();
+            #endregion
             /*
             StreamWriter Payments = new StreamWriter(path_StudentPayments);
             #region
@@ -727,28 +784,6 @@ namespace Dorset_OOP_Project
             Invoices.Close();
             #endregion
             */
-            StreamWriter Invoices = new StreamWriter(path_StudentInvoices);
-            #region
-            foreach (User user in UserList)
-            {
-                if (user is Student)
-                {
-                    Student student = (Student)user;
-                    foreach (Invoice invoice in student.Invoices)
-                    {
-                        Invoices.WriteLine($"Student ID;{student.UserID}");
-                        Invoices.WriteLine($"Amount;{invoice.Amount}");
-                        string information = "PAYMENTS";
-                        foreach(Payment payment in invoice.Payments)
-                        {
-                            information+=$";{payment.Amount};{payment.Date};{payment.Method}";
-                        }
-                        Invoices.WriteLine(information);
-                    }
-                }
-            }
-            Invoices.Close();
-            #endregion
         }
         public Application()
         {
@@ -765,7 +800,8 @@ namespace Dorset_OOP_Project
 
         }
 
-        public void StartingMenu()
+        public void StartingMenu(string path_UserDB, string path_DisciplineDB, string path_ExamDB, string path_ClassroomDB, string path_StudentAttendences, string path_StudentNotes, string path_LastID, string path_StudentInvoices)
+
         {
             bool closeApp = false;
             while (!closeApp)
@@ -784,10 +820,10 @@ namespace Dorset_OOP_Project
                         Console.WriteLine(GenericFunction.UsersPublicInformation(UserList));
                         break;
                     case 3:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices.csv");
+                        FromAppToCSV(path_UserDB, path_DisciplineDB, path_ExamDB,path_ClassroomDB,path_StudentAttendences,path_StudentNotes,path_LastID,path_StudentInvoices);
                         break;
                     case 4:
-                        FromAppToCSV("path_UserDB.csv", "path_DisciplineDB.csv", "path_ExamDB.csv", "path_ClassroomDB.csv", "path_StudentAttendences.csv", "path_StudentNotes.csv", "path_LastID.csv", "path_StudentInvoices.csv");
+                        FromAppToCSV(path_UserDB, path_DisciplineDB, path_ExamDB,path_ClassroomDB,path_StudentAttendences,path_StudentNotes,path_LastID,path_StudentInvoices);
                         closeApp = true;
                         break;
                     case 5:
@@ -803,7 +839,7 @@ namespace Dorset_OOP_Project
             bool endingLoginFuction = false;
             while (!endingLoginFuction)
             {
-                int userIDAnswer = EnterValue.AskingNumber("Enter your userID", 0, UserList[UserList.Count - 1].UserID);
+                int userIDAnswer = EnterValue.AskingNumber("Enter your userID", 0,LastUserID);
 
                 if (GenericFunction.ContainUserID(userIDAnswer,UserList))
                 {
@@ -930,17 +966,18 @@ namespace Dorset_OOP_Project
             bool logout = false;
             while (!logout)
             {
+                Administrator currentAdministrator = (Administrator)UserList[CurrentIndexUser];
                 int answer = EnterValue.AskingNumber("Enter what you want to do\n1 : See personal information\n2 : Change personal Information\n3 : Go to the discipline menu\n4 : Go to the Classroom Menu\n5 : Go to the Exam menu\n6 : Go to the user menu\n7 : Log out", 1,7);
                 switch (answer)
                 {
                     case 1:
                         #region
-                        Console.WriteLine(UserList[CurrentIndexUser].PersonalInformation());
+                        Console.WriteLine(currentAdministrator.PersonalInformation());
                         break;
                     #endregion
                     case 2:
                         #region
-                        UserList[CurrentIndexUser].ChangeInformation();
+                        currentAdministrator.ChangeInformation();
                         break;
                     #endregion
                     case 3:
@@ -958,7 +995,7 @@ namespace Dorset_OOP_Project
                         break;
                     case 6:
                         #region
-                        UserMenu_Administrator();
+                        UserMenu_Administrator(currentAdministrator);
                         break;
                     #endregion
                     case 7:
@@ -979,7 +1016,7 @@ namespace Dorset_OOP_Project
                 {
                     case 1:
                         #region
-                        if (DisciplineList != null || DisciplineList.Count == 0)
+                        if (DisciplineList != null && DisciplineList.Count != 0)
                         {
                             int week = EnterValue.AskingNumber("Enter the number of the week between 1 and 10", 1, 10);
                             int day = EnterValue.AskingNumber("Enter the day you want \n1=Monday\n2=Tuesday\n3=Wednesday\n4=Thursday\n5=Friday\n6=Saturday", 1, 6);
@@ -1083,7 +1120,7 @@ namespace Dorset_OOP_Project
                 }
             }
         }
-        public void UserMenu_Administrator()
+        public void UserMenu_Administrator(Administrator currentAdministrator)
         {
             bool stay = true;
             while (stay)
@@ -1126,7 +1163,7 @@ namespace Dorset_OOP_Project
                                     Console.WriteLine(UserList[GenericFunction.IndexUserID(userID, UserList)].GeneralInformation());
                                     break;
                                 case 3:
-                                        if (userID == 0||userID==CurrentIndexUser)
+                                        if (userID==currentAdministrator.UserID)
                                         {
                                             Console.WriteLine("This administrator can't be removed");
                                         }
@@ -1157,6 +1194,14 @@ namespace Dorset_OOP_Project
                                                         if (classroom.ClassRoomFaculties != null && classroom.ClassRoomFaculties.Contains(facultyRemoved))
                                                         {
                                                             classroom.ClassRoomFaculties.Remove(facultyRemoved);
+                                                            if (classroom.Timetables != null && classroom.Timetables.Count != 0)
+                                                                for (int indexTimeSlot = 0; indexTimeSlot < classroom.Timetables.Count; indexTimeSlot++)
+                                                                {
+                                                                    if (classroom.Timetables[indexTimeSlot].Teacher != null && classroom.Timetables[indexTimeSlot].Teacher == facultyRemoved)
+                                                                    {
+                                                                        classroom.Timetables[indexTimeSlot].Teacher = null;
+                                                                    }
+                                                                }
                                                         }
                                                     }
                                                 }
@@ -1353,21 +1398,20 @@ namespace Dorset_OOP_Project
                                     }
                                     break;
                             }
-                            if (!addADiscipline)
-                            {
-                                Classrooms.Add(new Classroom(classroomNameAnswer, facultiesAnswer, studentsAnswer));
-                                Classrooms[Classrooms.Count - 1].ClassRoomID = PutANewClassroomID();
-                                Console.WriteLine($"The classroom has been succesfully created\n{Classrooms[Classrooms.Count - 1].ClassRoomInformation()}");
-                            }
-                            foreach (Student student in Classrooms[Classrooms.Count - 1].ClassRoomStudents)
-                            {
-                                student.AddClassroom(Classrooms[Classrooms.Count - 1]);
-                            }
-                            foreach (Faculty faculty in Classrooms[Classrooms.Count - 1].ClassRoomFaculties)
-                            {
-                                faculty.AddClassroom(Classrooms[Classrooms.Count - 1]);
-                            }
-                            break;
+                        }
+                        if (!addADiscipline)
+                        {
+                            Classrooms.Add(new Classroom(classroomNameAnswer, facultiesAnswer, studentsAnswer));
+                            Classrooms[Classrooms.Count - 1].ClassRoomID = PutANewClassroomID();
+                            Console.WriteLine($"The classroom has been succesfully created\n{Classrooms[Classrooms.Count - 1].ClassRoomInformation()}");
+                        }
+                        foreach (Student student in Classrooms[Classrooms.Count - 1].ClassRoomStudents)
+                        {
+                            student.AddClassroom(Classrooms[Classrooms.Count - 1]);
+                        }
+                        foreach (Faculty faculty in Classrooms[Classrooms.Count - 1].ClassRoomFaculties)
+                        {
+                            faculty.AddClassroom(Classrooms[Classrooms.Count - 1]);
                         }
                         break;
                     #endregion
@@ -1380,7 +1424,7 @@ namespace Dorset_OOP_Project
                             bool stayInTheEditClassroom = true;
                             while (stayInTheEditClassroom)
                             {
-                                int editClassroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a student\n2 : Add a faculty\n3 : Switch the discipline\n4 : Switch the classroom name\n5 : Edit time slots of the classroom\n6 : See the classroom information\n7 : Edit the attendance of a student\n8 : Go back to the previous menu\n9 : Log out", 1, 9);
+                                int editClassroomAnswer = EnterValue.AskingNumber("Enter what you want to do\n1 : Add a student\n2 : Add a faculty\n3 : Switch the discipline\n4 : Switch the classroom name\n5 : Edit time slots of the classroom\n6 : See the classroom information\n7 : Edit the attendance of a student\n8 : Remove a user from the classroom\n9 : Go back to the previous menu\n10 : Log out", 1, 10);
                                 switch (editClassroomAnswer)
                                 {
                                     case 1:
@@ -1550,9 +1594,12 @@ namespace Dorset_OOP_Project
                                         break;
                                     #endregion
                                     case 8:
-                                        stayInTheEditClassroom = false;
+                                        choosenClassroom.RemoveStudentORFaculty();
                                         break;
                                     case 9:
+                                        stayInTheEditClassroom = false;
+                                        break;
+                                    case 10:
                                         stayInTheEditClassroom = false;
                                         stayInTheClassRoomMenu = false;
                                         logout = true;
@@ -1891,8 +1938,6 @@ namespace Dorset_OOP_Project
         }
         public bool AddNewUser(int type, string firstName, string lastName, string email, string password)
         {
-            if (CurrentIndexUser != -1 && UserList[CurrentIndexUser] is Administrator)
-            {
                 switch (type)
                 {
                     case 1:
@@ -1907,7 +1952,6 @@ namespace Dorset_OOP_Project
                         AddNewAdministrator(firstName, lastName, email, password);
                         return true;
                 }
-            }
             return false;
         }
 

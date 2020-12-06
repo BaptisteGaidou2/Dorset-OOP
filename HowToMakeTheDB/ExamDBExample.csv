@@ -1,0 +1,8 @@
+ID;ExamIDvalue
+Name;nameValue
+Discipline_ID;SisciplineIDvalue
+Week;week
+Day;day(1-6)
+StartingHour;hourValue
+EndingHour;hourValue
+etc;

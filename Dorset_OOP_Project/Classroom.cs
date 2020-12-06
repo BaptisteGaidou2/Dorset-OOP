@@ -126,6 +126,17 @@ namespace Dorset_OOP_Project
         public void RemoveFaculty(int userID)
         {
             ClassRoomFaculties[GenericFunction.IndexUserID_FacultyList(userID, ClassRoomFaculties)].RemoveClassroom_FromAnID(ClassRoomID);
+            if (Timetables != null && Timetables.Count != 0)
+            {
+                for (int indexTimeSlot = 0; indexTimeSlot < Timetables.Count; indexTimeSlot++)
+                {
+                    if (Timetables[indexTimeSlot].Teacher != null && Timetables[indexTimeSlot].Teacher == ClassRoomFaculties[GenericFunction.IndexUserID_FacultyList(userID, ClassRoomFaculties)])
+                    {
+                        Timetables[indexTimeSlot].Teacher = null;
+                    }
+                }
+            }
+               
             ClassRoomFaculties.RemoveAt(GenericFunction.IndexUserID_FacultyList(userID, ClassRoomFaculties));
         }
         public Classroom()
@@ -257,7 +268,7 @@ namespace Dorset_OOP_Project
             {
                 information += " NaN";
             }
-            information += "\nDiscipline teaching :";
+            information += "\nFaculty teaching :";
             if (ClassRoomFaculties != null && ClassRoomFaculties.Count != 0)
             {
                 for (int indexFaculty = 0; indexFaculty < ClassRoomFaculties.Count; indexFaculty++)
