@@ -9,7 +9,7 @@ Eliott TOURTOULOU	23409
 https://trello.com/b/Q4CN3h2e/oop-project-14
 
 Put all the csv files of the database at Dorset_OOP_Project\bin\Debug\netcoreapp2.1
-you need to have the netcoreapp2.1 folder and the csv files at the same page
+you need to not see any folder in the same place of the csv files
 
-Example for how to recreate the database  See the branche Example DB
+Example for how to recreate the database  See the branche ExampleDB, look at the csv files named by example
 
