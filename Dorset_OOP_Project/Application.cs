@@ -168,13 +168,17 @@ namespace Dorset_OOP_Project
                             {
                                 for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
                                 {
-                                    int ID = Convert.ToInt32(columns[indexColumn]);
-                                    int index = GenericFunction.IndexUserID(ID, UserList);
-                                    if (index != -1 && UserList[index] is Faculty)
+                                    if (columns[indexColumn] != "")
                                     {
-                                        Faculty faculty = (Faculty)UserList[index];
-                                        Classrooms[Classrooms.Count - 1].ClassRoomFaculties.Add(faculty);
-                                        faculty.ClassroomsTeaching.Add(Classrooms[Classrooms.Count - 1]);
+
+                                        int ID = Convert.ToInt32(columns[indexColumn]);
+                                        int index = GenericFunction.IndexUserID(ID, UserList);
+                                        if (index != -1 && UserList[index] is Faculty)
+                                        {
+                                            Faculty faculty = (Faculty)UserList[index];
+                                            Classrooms[Classrooms.Count - 1].ClassRoomFaculties.Add(faculty);
+                                            faculty.ClassroomsTeaching.Add(Classrooms[Classrooms.Count - 1]);
+                                        }
                                     }
                                 }
                             }
@@ -203,31 +207,34 @@ namespace Dorset_OOP_Project
                                 int indexLastClassroom = 0;
                                 for (int indexColumn = 1; indexColumn < columns.Length; indexColumn++)
                                 {
-                                    switch (indexTimeSlot)
+                                    if (columns[indexColumn] != "")
                                     {
-                                        case 1:
-                                            Classrooms[Classrooms.Count - 1].Timetables.Add(new TimeSlot());
-                                            indexLastClassroom = Classrooms.Count - 1;
-                                            indexLastTimeTable = Classrooms[indexLastClassroom].Timetables.Count - 1;
-                                            Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Week = Convert.ToInt32(columns[indexColumn]);
-                                            break;
-                                        case 2:
-                                            Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Day = Convert.ToInt32(columns[indexColumn]);
-                                            break;
-                                        case 3:
-                                            Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].StartingTime = Convert.ToInt32(columns[indexColumn]);
-                                            break;
-                                        case 4:
-                                            if (Convert.ToInt32(columns[indexColumn]) != -1)
-                                            {
-                                                int ID = Convert.ToInt32(columns[indexColumn]);
-                                                int index = GenericFunction.IndexUserID(ID, UserList);
-                                                if (index != -1 && UserList[index] is Faculty)
+                                        switch (indexTimeSlot)
+                                        {
+                                            case 1:
+                                                Classrooms[Classrooms.Count - 1].Timetables.Add(new TimeSlot());
+                                                indexLastClassroom = Classrooms.Count - 1;
+                                                indexLastTimeTable = Classrooms[indexLastClassroom].Timetables.Count - 1;
+                                                Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Week = Convert.ToInt32(columns[indexColumn]);
+                                                break;
+                                            case 2:
+                                                Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Day = Convert.ToInt32(columns[indexColumn]);
+                                                break;
+                                            case 3:
+                                                Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].StartingTime = Convert.ToInt32(columns[indexColumn]);
+                                                break;
+                                            case 4:
+                                                if (Convert.ToInt32(columns[indexColumn]) != -1)
                                                 {
-                                                    Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Teacher = (Faculty)UserList[index];
+                                                    int ID = Convert.ToInt32(columns[indexColumn]);
+                                                    int index = GenericFunction.IndexUserID(ID, UserList);
+                                                    if (index != -1 && UserList[index] is Faculty)
+                                                    {
+                                                        Classrooms[indexLastClassroom].Timetables[indexLastTimeTable].Teacher = (Faculty)UserList[index];
+                                                    }
                                                 }
-                                            }
-                                            break;
+                                                break;
+                                        }
                                     }
                                     indexTimeSlot++;
                                     if (indexTimeSlot == 5)
@@ -826,7 +833,7 @@ namespace Dorset_OOP_Project
             bool endingLoginFuction = false;
             while (!endingLoginFuction)
             {
-                int userIDAnswer = EnterValue.AskingNumber("Enter your userID", 0, UserList[UserList.Count - 1].UserID);
+                int userIDAnswer = EnterValue.AskingNumber("Enter your userID", 0,LastUserID);
 
                 if (GenericFunction.ContainUserID(userIDAnswer,UserList))
                 {
